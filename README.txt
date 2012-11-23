@@ -1,0 +1,3 @@
+﻿GameCore　/Javascript
+
+作成中...

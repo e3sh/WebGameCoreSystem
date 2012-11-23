@@ -1,0 +1,9 @@
+// GameSpriteFontControl
+//
+
+function GameSpriteFontControl() {
+
+
+    //–¢’…Žè
+
+}
