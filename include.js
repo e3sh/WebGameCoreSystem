@@ -1,25 +1,9 @@
 // include
 //
-/*
-document.write('<script type="text/javascript" src="GameAssetManager.js"></script>');
-document.write('<script type="text/javascript" src="GameTaskControl.js"></script>');
-document.write('<script type="text/javascript" src="GameCore.js"></script>');
-
-document.write('<script type="text/javascript" src="inputKeyboard.js"></script>');
-document.write('<script type="text/javascript" src="inputMouse.js"></script>');
-//document.write('<script type="text/javascript" src="screen.js"></script>');
-document.write('<script type="text/javascript" src="DisplayControl.js"></script>');
-document.write('<script type="text/javascript" src="offScreen.js"></script>');
-
-document.write('<script type="text/javascript" src="GameTask_Test.js"></script>');
-document.write('<script type="text/javascript" src="GameTask_Test2.js"></script>');
-
-document.write('<script type="text/javascript" src="main.js"></script>');
-*/
 
 var w = [
     //SystemControl
-    "GameAssetManager.js",
+    "Controller/GameAssetManager.js",
     "Controller/GameTaskControl.js",
     "Controller/GameCore.js",
 
@@ -28,6 +12,8 @@ var w = [
     "Controller/inputMouse.js",
     "Controller/DisplayControl.js",
     "Controller/offScreen.js",
+    "Controller/offScreenTypeB.js",
+
 
     //UserGameTasks
     "GameTask/GameTask_ClearDisp.js",
@@ -35,9 +21,12 @@ var w = [
 
     "GameTask/GameTask_Test.js",
     "GameTask/GameTask_Test2.js",
-    
+    "GameTask/GameTask_Test3.js",
+
+    //GameData
     "Asset/spdata.js",
 
+    //main
     "main.js" 
 ];
 

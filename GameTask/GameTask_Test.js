@@ -76,8 +76,8 @@ function GameTask_Test( id) {
 
 	    g.dsp.putchr8(st, 0, 200);
 
-	    g.dsp.putchr8c(st, 0, 220, 1);
-	    g.dsp.putchr8c(st, 0, 230, 2);
+	    g.dsp.putchr8c(st, 0, 220, 1, 1.5);
+	    g.dsp.putchr8c(st, 0, 230, 2, 2);
 	    g.dsp.putchr8c(st, 0, 240, 3);
 
 	    g.dsp.put("Ship", 100, 480 - (i % 480));

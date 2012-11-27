@@ -17,15 +17,26 @@ function DisplayControl(canvas_id, c_w, c_h) {
     //指定してあるのでここでは、操作する解像度を指定する。
 
     var buffer_ = new offScreen();
+    //var buffer_ = new offScreenTypeB(c_w, c_h);
+
 
     //    alert("!");
     //キャラクタパターンテクスチャー
     //　以下はSprite及びSpriteFontに含ませ外部に出す
-    var tex_p = new Image();
-    tex_p.src = "pict/cha.png";
+    var tex_p;// = new Image();
+    //tex_p.src = "pict/cha.png";
 
-    var tex_c = new Image();
-    tex_c.src = "pict/aschr.png"
+    this.spImage = function (spImg) {
+        tex_p = spImg;
+    }
+
+    var tex_c;// = new Image();
+    //tex_c.src = "pict/aschr.png"
+
+    this.fontImage = function (fontImg) {
+        tex_c = fontImg
+    }
+
     //↑↑
 
     //　以下はSprite及びSpriteFontに含ませ外部に出す
@@ -42,6 +53,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
     this.cw = canvas.width;
     this.ch = canvas.height;
 
+    /*
     //　以下はSprite及びSpriteFontに含ませ外部に出す
     //画像の読込処理などはAssetの方でコントロールさせる。
     var spReady = false;
@@ -49,9 +61,9 @@ function DisplayControl(canvas_id, c_w, c_h) {
 
     this.sprite_texture_ready = spReady;
     this.character_texture_ready = chReady;
-
+    */
     device.font = "16px 'Arial'";
-
+    /*
     tex_p.onload = function () {
         spReady = true;
     }
@@ -64,6 +76,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
         this.sprite_texture_ready = spReady;
         this.character_texture_ready = chReady;
     }
+    */
 
    var sp_ptn = spdata();
 
@@ -249,7 +262,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
     /// スプライトを文字として表示(パターン配置をSpace～[~]のASCII配列と仮定で)
     /// 引数 S : 文字列 X,Y : 座標 z:zoom
     //-------------------------------------------------------------
-    //表示位置はx,yが左上となるように表示されます。
+    //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
 
     //    this.putchr = chr8x8put;
     this.putchr = function (str, x, y, z) {
@@ -317,7 +330,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
     /// スプライトを文字として表示(パターン配置をSpace～[~]のASCII配列と仮定で)
     /// 引数 S : 文字列 X,Y : 座標 c:color (0:white 1:red 2:green 3:blue) z:zoom
     //-------------------------------------------------------------
-    //表示位置はx,yが左上となるように表示されます。
+    //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
     this.putchr8c = function (str, x, y, c, z) {
 
         if (!Boolean(z)) { z = 1.0; }

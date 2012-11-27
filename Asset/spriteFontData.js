@@ -1,0 +1,9 @@
+// SpriteFontData
+//
+
+function SpriteFontData() {
+
+
+    //–¢’…Žè
+
+}

@@ -6,4 +6,10 @@ function GameSpriteFontControl() {
 
     //–¢’…Žè
 
+
+
+
+
+
+
 }

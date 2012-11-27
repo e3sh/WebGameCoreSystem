@@ -41,6 +41,8 @@ function GameCore() {
 
 	var task_ = new GameTaskControl( this );
 
+    //assetsetup (assetLoad)
+	var asset_ = new GameAssetManager();
 
 	//device setup
 	var keyboard_ = new inputKeyboard();
