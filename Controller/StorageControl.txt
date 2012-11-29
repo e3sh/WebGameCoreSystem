@@ -1,0 +1,19 @@
+//GameStorageControl
+//
+
+function GameStorageControl(){
+
+	//
+	// .load
+	// .save
+	// .upload
+	// .download 
+	//etc.etc.
+
+	//localstorageや
+	//xmlHttpRequest等でのサーバへのやりとりも
+	//透過でおこなう。
+	//
+	//websocketなど使う場合はnetworkControlとすべきかも
+
+}
