@@ -88,7 +88,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
                 x: 12 * j,
                 y: 16 * i,
                 w: 12,
-                h: 16,
+                h: 16
             }
 
             sp_ch_ptn.push(ptn);
