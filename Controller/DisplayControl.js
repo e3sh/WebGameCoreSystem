@@ -18,7 +18,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
 
     var buffer_ = new offScreen();
     //var buffer_ = new offScreenTypeB(c_w, c_h);
-
+    this.buffer = buffer_;
 
     //    alert("!");
     //キャラクタパターンテクスチャー

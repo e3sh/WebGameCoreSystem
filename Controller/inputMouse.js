@@ -1,7 +1,8 @@
-﻿//InputMouse
+﻿
+//InputMouse
 //
 
-function inputMouse() {
+function inputMouse(){
 
     var state = { x: 0, y: 0, button: 0, wheel: 0 };
 

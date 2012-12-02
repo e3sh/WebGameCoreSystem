@@ -1,8 +1,9 @@
-﻿// offScreenクラス
+﻿
+// offScreenクラス
 // (offscreen buffer)
 //
 
-function offScreen() {
+function offScreen(){
 
     //描画オブジェクトバッファ(性能により調整）
     var BUFFER_SIZE = 1500;

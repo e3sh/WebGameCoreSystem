@@ -3,7 +3,13 @@
 
 function main() {
 
-	var game = new GameCore();
+    var sysParam = [
+        { canvasId: "layer0", resolution: { w: 640, h: 480 } },
+        { canvasId: "Canvas1", resolution: { w: 320, h: 240 } },
+        { canvasId: "layer0", resolution: { w: 640, h: 480 } }
+        ]
+
+	var game = new GameCore( sysParam );
 
     //Game Asset Setup
     // assetSetup( game )?
@@ -22,7 +28,14 @@ function main() {
     // deviceSetUp( game )?
 
 	game.dsp.spImage( spImg_ );
-	game.dsp.fontImage( fontImg_ );
+	game.screen[1].spImage(spImg_);
+
+	var spfd = SpriteFontData();
+	for (var i in spfd) {
+	    game.setSpFont(spfd[i]);
+	}
+  
+	game.dsp.fontImage(fontImg_);
     
     //Game Task Setup
 	//var tasktest_ = new GameTask_Test("test");

@@ -13,7 +13,8 @@ var w = [
     "Controller/DisplayControl.js",
     "Controller/offScreen.js",
     "Controller/offScreenTypeB.js",
-
+    "Controller/spriteControl.js",
+    "Controller/spriteFontControl.js",
 
     //UserGameTasks
     "GameTask/GameTask_ClearDisp.js",
@@ -25,6 +26,7 @@ var w = [
 
     //GameData
     "Asset/spdata.js",
+    "Asset/spriteFontData.js",
 
     //main
     "main.js" 

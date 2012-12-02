@@ -7,18 +7,35 @@ function spriteData() {
     // x, y, w, h, r, flipv, fliph
     // wait = 0 : no animation
 
-	var w = {
-		image : "imagename", 
-		wait : 10,
-		pattern : [
-			[ x, y, w, h, r, false, false],
-			[ x, y, w, h, r, false, false],
-			[ x, y, w, h, r, false, false],
-			[ x, y, w, h, r, false, false],
-		]
-	}	
-		
-		
+    //fv, fh = false and systemPalamater r=0 
+
+
+    var w = {
+        image: "imagename",
+        wait: 10,
+        pattern: [
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
+        ]
+    }
+
+    var w = {
+        image: "imagename",
+        wait: 10,
+        pattern: [
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+            { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
+        ]
+    }
+
+
+
 
 
 

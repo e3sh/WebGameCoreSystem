@@ -8,20 +8,22 @@
 
 システムの宣言
 
-	var game = new GameCore();
+	システム初期パラメータ（表示対象のキャンバスと解像度の指定）
+	
+	例：
+	var sysParam = [
+        	{ canvasId: "layer0", resolution: { w: 640, h: 480 } }
+        ]	
+
+	(複数キャンバス指定可能、対象指定時、順番にscreen[0～]となる。）
+
+	var game = new GameCore( sysParam );
 
 ゲームループの開始
 
 	game.run();
 
 	requestAnimationFrameの周期毎にタスクを実行する。
-
-
-現状では、
-処理の対象になるCanvasが、暫定で
-id="Layer0" 解像度が640x480に決めうちになっています。
-変更する場合は、GameCore.js内または、
-DisplayControl.jsの内容を直接変更する事。
 
 ゲームタスク
 
@@ -73,12 +75,41 @@ Imageやaudioオブジェクトを管理
 ----------------------------------------
 スプライトやイメージ表示
 
-今の所、仮で今まで作成したシステム流用してるので仕様固まらず。
+今の所、仮で今まで作成したシステム流用で仮表示。
 
 	game.dsp.put( SpriteID, x, y, r, alpha, zoom);
-	game.dsp.print(text, x, y);
+	game.dsp.print(text, x, y); 
+
+(調整中）
+	game.sprite.set( spNumber, PatternID )
+	game.sprite.put
+	game.sprite.setPattern(
 
 など
+
+スプライトフォント
+
+	game.font[ fontID ].putchr( text, x, y, zoom );
+	
+	(表示先の変更:
+		game.font[ fontID ].useScreen( screen no );
+	)
+
+	game.run()の前に事前セットアップ要。
+
+	(ascii code [space]～[~]まで）
+	var fontParam = {
+		name: fontID
+		id: 使用するassetImageのID
+		pattern: [
+			{x: ,y: ,w: ,h: ], //space
+				|
+			{x: ,y: ,w: ,h: ] //~
+		]
+	}
+	
+	game.setSpFont( fontParam );
+
 
 入力
 キーボード

@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameTask", "GameTask", "{35
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Asset", "Asset", "{B38AC11B-FF86-4797-A45F-F894F63A43B9}"
 	ProjectSection(SolutionItems) = preProject
+		Asset\BGmapData.js = Asset\BGmapData.js
 		Asset\motionPtn.js = Asset\motionPtn.js
 		Asset\spdata.js = Asset\spdata.js
 		Asset\spriteData.js = Asset\spriteData.js
@@ -29,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Asset", "Asset", "{B38AC11B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controller", "Controller", "{4B7A7241-5B4B-45CD-937F-522A5A25F126}"
 	ProjectSection(SolutionItems) = preProject
+		Controller\BGmapControl.js = Controller\BGmapControl.js
 		Controller\DisplayControl.js = Controller\DisplayControl.js
 		Controller\GameAssetManager.js = Controller\GameAssetManager.js
 		Controller\GameCore.js = Controller\GameCore.js

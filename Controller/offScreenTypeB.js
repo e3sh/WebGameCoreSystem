@@ -1,4 +1,5 @@
-﻿// offScreenクラス
+﻿
+// offScreenクラス
 // (offscreen buffer)
 //
 // backBuffer用キャンバスに随時描画する。
@@ -9,7 +10,7 @@
 // 
 //
 
-function offScreenTypeB( w, h ) {
+function offScreenTypeB( w, h ){
 
     //描画オブジェクトバッファ
 

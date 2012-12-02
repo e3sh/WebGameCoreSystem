@@ -1,7 +1,8 @@
-﻿//InputKeyboard
+﻿
+//InputKeyboard
 //
 
-function inputKeyboard() {
+function inputKeyboard(){
 
     var keymap = [];
 

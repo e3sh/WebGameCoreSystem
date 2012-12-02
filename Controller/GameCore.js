@@ -1,7 +1,11 @@
 // GameCore
 //
 
-function GameCore() {
+function GameCore( sysParam ) {
+
+    //var sysParam = [
+    //{ canvasId: "Layer0", resolution: { w: 640, h: 480 } }
+    //]
 
     // requestAnimationFrame
     var fps_ = 60; //fps
@@ -47,15 +51,34 @@ function GameCore() {
 	//device setup
 	var keyboard_ = new inputKeyboard();
 	var mouse_ = new inputMouse();
-	//var dsp_ = new Screen("layer0", 640, 480);
-    var dsp_ = new DisplayControl("layer0", 640, 480);
-	//var canvas = document.getElementById("layer0");
-	//canvas.width = 640;
-	//canvas.height = 480;
-	//var device = canvas.getContext("2d");
-    
-    //var dsp_ = new offScreen("layer0", 640, 480);
 
+    //
+	var screen_ = [];
+
+	for (var i in sysParam) {
+	    var wsysp = sysParam[i];
+	    screen_[i] = new DisplayControl(wsysp.canvasId, wsysp.resolution.w, wsysp.resolution.h);
+	}
+	if (sysParam.length > 0) { var dsp_ = screen_[0]; }
+
+    //
+	var sprite_ = new GameSpriteControl(this);
+    
+    //
+	var font_ = [];
+
+	this.setSpFont = function (fontParam) {
+
+	    var fprm = {
+	        Image : asset_.image[ fontParam.id ],
+	        pattern: fontParam.pattern
+	    }
+	    var wf = new GameSpriteFontControl(this, fprm);
+
+	    font_[fontParam.name] = wf;
+	}
+
+    //var BG
 
 	//assetsetup
 	var asset_ = new GameAssetManager();
@@ -70,7 +93,6 @@ function GameCore() {
 	        task_.step();
 
 	        task_.draw();
-	        //dsp_.flip(device);
 	        //run
 	        requestAnimationFrame(arguments.callee);
 	    } else {
@@ -86,8 +108,14 @@ function GameCore() {
 	this.keyboard = keyboard_;
 	this.mouse = mouse_;
 	this.dsp = dsp_;
-	//
-	//
+	this.screen = screen_;
+    //
+	this.sprite = sprite_;
+	this.font = font_;
+
+    // init
+	sprite_.useScreen(0);
+    //
 	//
 	this.run = function () {
 	    runStatus_ = true;
@@ -105,6 +133,5 @@ function GameCore() {
 	//
 	//
 	//
-
 }
 

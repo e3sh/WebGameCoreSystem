@@ -2,8 +2,11 @@
 //
 
 function main() {
+	var sysParam = [
+        { canvasId: "layer0", resolution: { w: 640, h: 480 } }
+        ]
 
-	var game = new GameCore();
+	var game = new GameCore( sysParam );
 
     //Game Asset Setup
 
@@ -13,7 +16,12 @@ function main() {
     //Game Device Setup
 
 	game.dsp.spImage( spImg_ );
-	game.dsp.fontImage( fontImg_ );
+	//game.dsp.fontImage( fontImg_ );
+
+	var spfd = SpriteFontData();
+	for (var i in spfd) {
+	    game.setSpFont(spfd[i]);
+	}
     
     //Game Task Setup
 	game.task.add(new GameTask_Test("test"));
@@ -70,13 +78,13 @@ function GameTask_Test(id) {
 
         g.dsp.print(st, 0, 50);
 
-        g.dsp.putchr(st, 0, 100);
+        g.font["std"].putchr(st, 0, 100);
 
-        g.dsp.putchr8(st, 0, 200);
+        g.font["8x8white"].putchr(st, 0, 200);
 
-        g.dsp.putchr8c(st, 0, 220, 1, 1.5);
-        g.dsp.putchr8c(st, 0, 230, 2, 2);
-        g.dsp.putchr8c(st, 0, 240, 3);
+        g.font["8x8red"].putchr(st, 0, 220, 1.5);
+        g.font["8x8green"].putchr(st, 0, 230, 2);
+        g.font["8x8blue"].putchr(st, 0, 240);
 
         g.dsp.put("Ship", 100, 480 - (i % 480));
         g.dsp.put("Ship", 640 - (i % 640), 480 - (i % 480), 0, -45, 255, 1.5);
@@ -157,3 +165,56 @@ function spdata() {
 
     return sp_ptn;
 }
+
+// SpriteFontData
+//
+
+function SpriteFontData() {
+
+    var sp_ch_ptn = [];
+
+    for (i = 0; i < 7; i++) {
+        for (j = 0; j < 16; j++) {
+            ptn = {
+                x: 12 * j,
+                y: 16 * i,
+                w: 12,
+                h: 16
+            }
+
+            sp_ch_ptn.push(ptn);
+        }
+    }
+    //12_16_font
+
+    var sp8 = []; //spchrptn8(color)
+    var cname = ["white", "red", "green", "blue"];
+
+    for (var t = 0; t <= 3; t++) {
+
+        var ch = [];
+
+        for (i = 0; i < 7; i++) {
+            for (j = 0; j < 16; j++) {
+                ptn = {
+                    x: 8 * j + ((t % 2 == 0) ? 0 : 128),
+                    y: 8 * i + 128 + ((t >= 2) ? 64 : 0),
+                    w: 8,
+                    h: 8
+                };
+                ch.push(ptn);
+            }
+        }
+        sp8[ cname[t] ] = ch;
+    }
+    //Å™Å™
+
+    return [
+        { name: "std"     , id: "FontGraph", pattern: sp_ch_ptn },
+        { name: "8x8white", id: "FontGraph", pattern: sp8["white"] },
+        { name: "8x8red"  , id: "FontGraph", pattern: sp8["red"] },
+        { name: "8x8green", id: "FontGraph", pattern: sp8["green"] },
+        { name: "8x8blue" , id: "FontGraph", pattern: sp8["blue"] }
+    ]
+}
+

@@ -43,6 +43,7 @@ function GameTask_FlipDisp( id ) {
 	this.draw = function ( g ) {
 
 	    g.dsp.draw();
+	    g.screen[1].draw();
 
 	}
 
