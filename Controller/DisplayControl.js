@@ -77,7 +77,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
         this.character_texture_ready = chReady;
     }
     */
-
+    /*
    var sp_ptn = spdata();
 
     var bg_ptn = [];
@@ -129,14 +129,14 @@ function DisplayControl(canvas_id, c_w, c_h) {
         sp8[t] = ch;
     }
     //↑↑
-
+    */
 
     //World => View変換を使用
     //this.view_tr_enable = false;
 
     //加算合成を使用する。
     this.lighter_enable = true;//現在無効
-
+    /*
     //-------------------------------------------------------------
     ///スプライト描画
     ///引数（m,r,alpha,zは省略するとデフォルト使用）
@@ -215,7 +215,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
 
         }
     }
-
+    */
     //-------------------------------------------------------------
     ///マップチップ用パターン描画
     ///引数（省略不可
@@ -257,7 +257,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
 
     }
     //ここからSpriteFontに
-
+    /*
     //-------------------------------------------------------------
     /// スプライトを文字として表示(パターン配置をSpace～[~]のASCII配列と仮定で)
     /// 引数 S : 文字列 X,Y : 座標 z:zoom
@@ -355,7 +355,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
         //
     }
     //ここまでSpriteFontに
-
+    */
     //------------------------------------------------------------
     // 画像イメージを直接取得して表示させる。
     // 引数 G :画像(イメージデータ X,Y: 座標

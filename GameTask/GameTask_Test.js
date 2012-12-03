@@ -38,6 +38,25 @@ function GameTask_Test( id) {
 
 	    g.font["8x8white"].useScreen(1);
 
+	    g.sprite.setPattern("Player", {
+	        image: "SPGraph",
+	        wait: 10,
+	        pattern: [
+                { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
+	            ]
+	        }
+        )
+
+	    g.sprite.setPattern("Enemy", {
+	        image: "SPGraph",
+	        wait: 10,
+	        pattern: [
+                { x:  64, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x:  96, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x: 128, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
+	            ]
+    	    }
+        )
 
 	    g.sprite.setPattern( "dummy",  {
 	        image: "SPGraph",
@@ -47,12 +66,13 @@ function GameTask_Test( id) {
                 { x: 32, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
                 { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
                 { x: 32, y: 0, w: 32, h: 32, r: 0, fv: false, fh: true }
- 	        ]
-	    }
+ 	            ]
+    	    }
 	    )
 
-
-	    g.sprite.set(0, "dummy");
+	    g.sprite.set(0, "Player");
+	    g.sprite.set(1, "Enemy");
+	    g.sprite.set(2, "dummy");
 
 	    //g.dsp.clear("black");
 	    //paramater reset etc
@@ -87,7 +107,7 @@ function GameTask_Test( id) {
 
 	    //g.dsp.reset();
 	    //g.dsp.clear("black");
-	    g.sprite.put(0, 100, 100);
+	    g.sprite.put(2, 100, 100);
 
 	    g.dsp.print(st, 0, 50);
 
@@ -103,10 +123,11 @@ function GameTask_Test( id) {
 
 
 	    g.font["std"].putchr(st, 0, 300);
-	    g.font["8x8white"].putchr(st, 0, 320, 1.5);
+	    g.font["8x8white"].putchr(st, 0, 160, 1.5);
 	    g.font["8x8red"].putchr(st, 0, 330, 2);
 	    g.font["8x8green"].putchr(st, 0, 340);
 
+        /*
 	    g.dsp.put("Ship", 100, 480 - (i % 480));
 	    g.dsp.put("Ship", 640 - (i % 640), 480 - (i % 480), 0, -45, 255, 1.5);
 
@@ -115,6 +136,18 @@ function GameTask_Test( id) {
 	    g.dsp.put("Enemy1", 640 - (i % 640), 200);
 
 	    g.screen[1].put("Boss", x, y);
+        */
+
+	    g.sprite.put(0, 100, 480 - (i % 480));
+	    g.sprite.put(0, 640 - (i % 640), 480 - (i % 480), -45, 1.5);
+
+	    g.sprite.put(1, x, y);
+
+	    g.sprite.put(1, 640 - (i % 640), 200);
+
+	    //g.screen[1].put("Boss", x, y);
+
+
 
 	    //g.dsp.draw();
 

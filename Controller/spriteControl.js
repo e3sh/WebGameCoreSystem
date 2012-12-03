@@ -76,8 +76,15 @@ function GameSpriteControl(g) {
         }
     }
 
+    this.pos = function (num, x, y) {
+        var sw = sprite_[num];
+
+        sw.x = x;
+        sw.y = y;
+    }
+
     this.useScreen = function( num ){
-        buffer_ = g.screen[ num ];
+        buffer_ = g.screen[num].buffer;
     }
 
     this.put = function (num, x, y, r, z) {
@@ -89,9 +96,9 @@ function GameSpriteControl(g) {
         sw.z = z;
 
         if (!Boolean(pattern_[sw.id])){
-            buffer_.print( num + " " + sw.count , x, y);
+            buffer_.fillText( num + " " + sw.count , x, y);
         }else{
-            buffer_.putPattern(pattern_[sw.id].image, pattern_[sw.id].pattern[sw.pcnt], x, y, 32, 32);
+            spPut(pattern_[sw.id].image, pattern_[sw.id].pattern[sw.pcnt], x, y, r, z);
             sw.count++;
             if (sw.count > pattern_[sw.id].wait) { sw.count = 0; sw.pcnt++; }
             if (sw.pcnt > pattern_[sw.id].pattern.length - 1) { sw.pcnt = 0; }
@@ -111,4 +118,67 @@ function GameSpriteControl(g) {
 
         //collisionTest
     }
+
+    function spPut(img, d, x, y, r, z, alpha) {
+
+        //var simple = true;
+
+        if (!Boolean(r)) { r = d.r; }
+        if (!Boolean(alpha)) { alpha = 255; }
+        if (!Boolean(z)) { z = 1.0; }
+
+        var simple = ((!d.fv) && (!d.fh) && (r == 0) && (alpha == 255));
+
+        //var simple = false;
+        if (simple) {
+            buffer_.drawImgXYWHXYWH(
+                img,
+                d.x, d.y, d.w, d.h,
+                x + (-d.w / 2) * z,
+                y + (-d.h / 2) * z,
+                d.w * z,
+                d.h * z
+            );
+
+        } else {
+
+            var FlipV = d.fv?1.0:-1.0;
+            var FlipH = d.fh?1.0:-1.0;
+
+            /*
+            switch (m) {
+                case 0:
+                    break;
+                case 1:
+                    FlipV = -1.0;
+                    break;
+                case 2:
+                    FlipH = -1.0;
+                    break;
+                case 3:
+                    FlipV = -1.0;
+                    FlipH = -1.0;
+                    break;
+                default:
+                    break;
+            }
+            */
+            //o.light_enable = this.light_enable;
+
+            buffer_.spPut(
+                img,
+                d.x, d.y, d.w, d.h,
+                (-d.w / 2) * z,
+                (-d.h / 2) * z,
+                d.w * z,
+                d.h * z,
+                FlipV, 0, 0, FlipH,
+                x, y,
+                alpha, r
+            );
+
+            buffer_.fillText(r+" ", x, y);
+        }
+    }
+
 }
