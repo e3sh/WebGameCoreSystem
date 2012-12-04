@@ -10,13 +10,10 @@ function main() {
 
     //Game Asset Setup
 
-	var fontImg_ = game.asset.imageLoad( "FontGraph","pict/aschr.png" );
-	var spImg_ = game.asset.imageLoad( "SPGraph","pict/cha.png" );
+	game.asset.imageLoad( "FontGraph","pict/aschr.png" );
+	game.asset.imageLoad( "SPGraph","pict/cha.png" );
 
     //Game Device Setup
-
-	game.dsp.spImage( spImg_ );
-	//game.dsp.fontImage( fontImg_ );
 
 	var spfd = SpriteFontData();
 	for (var i in spfd) {
@@ -52,7 +49,44 @@ function GameTask_Test(id) {
     var sm = "";
 
     this.init = function (g) { }
-    this.pre = function (g) { }
+    this.pre = function (g) {
+        g.sprite.setPattern("Player", {
+            image: "SPGraph",
+            wait: 0,
+            pattern: [
+                { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
+            ]
+        }
+        )
+
+        g.sprite.setPattern("Enemy", {
+            image: "SPGraph",
+            wait: 10,
+            pattern: [
+                { x: 64, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x: 96, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x: 128, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
+            ]
+        }
+        )
+
+        g.sprite.setPattern("dummy", {
+            image: "SPGraph",
+            wait: 10,
+            pattern: [
+                { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x: 32, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false },
+                { x: 32, y: 0, w: 32, h: 32, r: 0, fv: false, fh: true }
+            ]
+        }
+	    )
+
+        g.sprite.set(0, "Player");
+        g.sprite.set(1, "Enemy");
+        g.sprite.set(2, "dummy");
+        g.sprite.set(3, "Player");
+    }
 
     this.step = function (g) {
         i++;
@@ -73,10 +107,10 @@ function GameTask_Test(id) {
         document.getElementById("console").innerHTML
             = st;
 
-        g.dsp.reset();
-        g.dsp.clear("black");
+        g.screen[0].reset();
+        g.screen[0].clear("black");
 
-        g.dsp.print(st, 0, 50);
+        g.screen[0].print(st, 0, 50);
 
         g.font["std"].putchr(st, 0, 100);
 
@@ -86,14 +120,15 @@ function GameTask_Test(id) {
         g.font["8x8green"].putchr(st, 0, 230, 2);
         g.font["8x8blue"].putchr(st, 0, 240);
 
-        g.dsp.put("Ship", 100, 480 - (i % 480));
-        g.dsp.put("Ship", 640 - (i % 640), 480 - (i % 480), 0, -45, 255, 1.5);
+        g.sprite.put(2, 100, 480 - (i % 480));
+        g.sprite.put(3, 640 - (i % 640), 480 - (i % 480), -45, 1.5);
+        g.sprite.put(0, 640 - (i % 640), 100, i % 360);
 
-        g.dsp.put("Boss", x, y);
+        g.sprite.put(1, x, y);//cursor
 
-        g.dsp.put("Enemy1", 640 - (i % 640), 200);
+        g.sprite.put(1, 640 - (i % 640), 200);
 
-        g.dsp.draw();
+        g.screen[0].draw();
     }
 
     this.post = function (g) { }
@@ -124,6 +159,7 @@ function GameTask_Test2(id) {
 
     this.init = function (g) { }
     this.pre = function (g) { }
+
     this.step = function (g) {
 
         oldtime = newtime;
@@ -152,18 +188,6 @@ function GameTask_Test2(id) {
     }
 
     this.post = function (g) { }
-}
-
-// asset ==================================================================
-function spdata() {
-
-    var sp_ptn = [];
-
-    sp_ptn["Ship"] = { x: 0, y: 0, w: 31, h: 31 };
-    sp_ptn["Enemy1"] = { x: 64, y: 0, w: 31, h: 31 };
-    sp_ptn["Boss"] = { x: 0, y: 64, w: 31, h: 31 };
-
-    return sp_ptn;
 }
 
 // SpriteFontData

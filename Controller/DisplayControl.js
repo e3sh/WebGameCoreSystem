@@ -1,47 +1,14 @@
 ﻿// DisplayControlクラス
 //
 
-//変更したいところ多数
-// image
-// dsp = new DisplayControl()
-//
-// dsp.sprite.animation
-// dsp.font.
-// dsp.direct->
-//     L offscreenbuffer -> display(canvas)
-//
-//
-
 function DisplayControl(canvas_id, c_w, c_h) {
     //キャンバスID、キャンバス幅、高さ指定。画面表示サイズはCSSのSTYLEで
     //指定してあるのでここでは、操作する解像度を指定する。
 
     var buffer_ = new offScreen();
     //var buffer_ = new offScreenTypeB(c_w, c_h);
+
     this.buffer = buffer_;
-
-    //    alert("!");
-    //キャラクタパターンテクスチャー
-    //　以下はSprite及びSpriteFontに含ませ外部に出す
-    var tex_p;// = new Image();
-    //tex_p.src = "pict/cha.png";
-
-    this.spImage = function (spImg) {
-        tex_p = spImg;
-    }
-
-    var tex_c;// = new Image();
-    //tex_c.src = "pict/aschr.png"
-
-    this.fontImage = function (fontImg) {
-        tex_c = fontImg
-    }
-
-    //↑↑
-
-    //　以下はSprite及びSpriteFontに含ませ外部に出す
-    var sp_ch_ptn = []; //スプライトキャラクタパターン
-    //↑↑
 
     var canvas = document.getElementById(canvas_id);
 
@@ -53,169 +20,11 @@ function DisplayControl(canvas_id, c_w, c_h) {
     this.cw = canvas.width;
     this.ch = canvas.height;
 
-    /*
-    //　以下はSprite及びSpriteFontに含ませ外部に出す
-    //画像の読込処理などはAssetの方でコントロールさせる。
-    var spReady = false;
-    var chReady = false;
-
-    this.sprite_texture_ready = spReady;
-    this.character_texture_ready = chReady;
-    */
     device.font = "16px 'Arial'";
-    /*
-    tex_p.onload = function () {
-        spReady = true;
-    }
-
-    tex_c.onload = function () {
-        chReady = true;
-    }
-
-    this.readystate_check = function () {
-        this.sprite_texture_ready = spReady;
-        this.character_texture_ready = chReady;
-    }
-    */
-    /*
-   var sp_ptn = spdata();
-
-    var bg_ptn = [];
-
-    for (i = 0; i < 7; i++) {
-        for (j = 0; j < 16; j++) {
-            ptn = {
-                x: 12 * j,
-                y: 16 * i,
-                w: 12,
-                h: 16
-            }
-
-            sp_ch_ptn.push(ptn);
-        }
-    }
-
-    var sp_ch_ptn8 = []; //スプライトキャラクタパターン(8x8)
-
-    for (i = 0; i < 7; i++) {
-        for (j = 0; j < 16; j++) {
-            ptn = {
-                x: 8 * j,
-                y: 8 * i + 128,
-                w: 8,
-                h: 8
-            };
-        sp_ch_ptn8.push(ptn);
-    }
-    }
-
-    var sp8 = []; //spchrptn8(color)
-
-    for (var t = 0; t <= 3; t++) {
-
-        var ch = [];
-
-        for (i = 0; i < 7; i++) {
-            for (j = 0; j < 16; j++) {
-                ptn = {
-                    x: 8 * j + ((t % 2 == 0) ? 0 : 128),
-                    y: 8 * i + 128 + ((t >= 2) ? 64 : 0),
-                    w: 8,
-                    h: 8
-                };
-                ch.push(ptn);
-            }
-        }
-        sp8[t] = ch;
-    }
-    //↑↑
-    */
-
-    //World => View変換を使用
-    //this.view_tr_enable = false;
 
     //加算合成を使用する。
     this.lighter_enable = true;//現在無効
-    /*
-    //-------------------------------------------------------------
-    ///スプライト描画
-    ///引数（m,r,alpha,zは省略するとデフォルト使用）
-    ///	Sp : スプライト番号	X,Y : 表示位置
-    ///	M : 上下左右反転 ( 0 NORMAL 1:上下反転 2 :左右反転 )
-    ///	R : 回転角度 (0 - 359 )
-    ///	alpha: アルファ値（透明度）0:透明～255:不透明）
-    ///	z: Zoom（拡大率）
-    //-------------------------------------------------------------
-    //表示位置はx,yが表示中心となるように表示されます。
-    this.put = function (sp, x, y, m, r, alpha, z) {
 
-        var d = sp_ptn[sp];
-
-        //Debug(error回避)用
-        if (!Boolean(d)) {
-            buffer_.fillText(sp, x, y, "green");
-            return
-        }
-
-        //var simple = true;
-
-        if (!Boolean(m)) { m = 0; }
-        if (!Boolean(r)) { r = 0; }
-        if (!Boolean(alpha)) { alpha = 255; }
-        if (!Boolean(z)) { z = 1.0; }
-
-        var simple = ((m == 0) && (r == 0) && (alpha == 255));
-
-        //var simple = false;
-        if (simple) {
-            buffer_.drawImgXYWHXYWH(
-                tex_p,
-                d.x,d.y,d.w,d.h,
-                x + (-d.w / 2) * z,
-                y + (-d.h / 2) * z,
-                d.w * z,
-                d.h * z
-            );
-
-        } else {
-
-            var FlipV = 1.0;
-            var FlipH = 1.0;
-
-            switch (m) {
-                case 0:
-                    break;
-                case 1:
-                    FlipV = -1.0;
-                    break;
-                case 2:
-                    FlipH = -1.0;
-                    break;
-                case 3:
-                    FlipV = -1.0;
-                    FlipH = -1.0;
-                    break;
-                default:
-                    break;
-            }
-
-            //o.light_enable = this.light_enable;
-
-            buffer_.spPut(
-                tex_p,
-                d.x,d.y,d.w,d.h,
-                (-d.w / 2) * z,
-                (-d.h / 2) * z,
-                d.w * z,
-                d.h * z,
-                FlipH, 0, 0, FlipV,
-                x, y,
-                alpha, r
-            );
-
-        }
-    }
-    */
     //-------------------------------------------------------------
     ///マップチップ用パターン描画
     ///引数（省略不可
@@ -256,106 +65,7 @@ function DisplayControl(canvas_id, c_w, c_h) {
         buffer_.fillText(str,x,y,c);
 
     }
-    //ここからSpriteFontに
-    /*
-    //-------------------------------------------------------------
-    /// スプライトを文字として表示(パターン配置をSpace～[~]のASCII配列と仮定で)
-    /// 引数 S : 文字列 X,Y : 座標 z:zoom
-    //-------------------------------------------------------------
-    //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
 
-    //    this.putchr = chr8x8put;
-    this.putchr = function (str, x, y, z) {
-        //    dummy = function (str, x, y, z) {
-
-        var zflag = false;
-        if (!Boolean(z)) {
-            z = 1.0;
-
-        } else {
-            if (z != 1.0) zflag = true;
-        }
-
-        for (var i = 0, loopend = str.length; i < loopend; i++) {
-            var n = str.charCodeAt(i);
-
-            if ((n >= 32) && (n < 128)) { // space ～ "~" まで
-                var d = sp_ch_ptn[n - 32];
-
-                var wx  = x + i * (12 * z);
-                var wy = y;
-                if (zflag) {
-                    wx += (-d.w / 2) * z;
-                    wy += (-d.h / 2) * z;
-                }
-
-                buffer_.drawImgXYWHXYWH(
-                    tex_c,
-                    d.x,d.y,d.w,d.h,
-                    wx, wy,
-                    d.w*z, d.h*z
-                );
-            }
-        }
-        //
-    }
-
-    //-------------------------------------------------------------
-    /// スプライトを文字として表示(パターン配置をSpace～[~]のASCII配列と仮定で)
-    /// 引数 S : 文字列 X,Y : 座標
-    //-------------------------------------------------------------
-    //表示位置はx,yが左上となるように表示されます。
-    this.putchr8 = chr8x8put;
-
-    function chr8x8put(str, x, y) {
-
-        for (i = 0; i < str.length; i++) {
-            var n = str.charCodeAt(i);
-
-            if ((n >= 32) && (n < 128)) { // space ～ "~" まで
-                var d = sp_ch_ptn8[n - 32];
-
-                buffer_.drawImgXYWHXYWH(
-                    tex_c,
-                    d.x,d.y,d.w,d.h,
-                    x + i * 8,
-                    y,
-                    d.w, d.h);
-            }
-        }
-        //
-    }
-
-    //-------------------------------------------------------------
-    /// スプライトを文字として表示(パターン配置をSpace～[~]のASCII配列と仮定で)
-    /// 引数 S : 文字列 X,Y : 座標 c:color (0:white 1:red 2:green 3:blue) z:zoom
-    //-------------------------------------------------------------
-    //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
-    this.putchr8c = function (str, x, y, c, z) {
-
-        if (!Boolean(z)) { z = 1.0; }
-
-        for (i = 0; i < str.length; i++) {
-            var n = str.charCodeAt(i);
-
-            if ((n >= 32) && (n < 128)) { // space ～ "~" まで
-
-                var d = sp8[c][n - 32];
-
-                buffer_.drawImgXYWHXYWH(
-                    tex_c,
-                    d.x,d.y,d.w,d.h,
-                    x + i * (8 * z) + (-d.w / 2) * z,
-                    y + (-d.h / 2) * z,
-                    d.w * z,
-                    d.h * z
-                );
-            }
-        }
-        //
-    }
-    //ここまでSpriteFontに
-    */
     //------------------------------------------------------------
     // 画像イメージを直接取得して表示させる。
     // 引数 G :画像(イメージデータ X,Y: 座標

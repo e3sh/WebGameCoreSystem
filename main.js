@@ -14,8 +14,8 @@ function main() {
     //Game Asset Setup
     // assetSetup( game )?
 
-	var fontImg_ = game.asset.imageLoad( "FontGraph","pict/aschr.png" );
-	var spImg_ = game.asset.imageLoad( "SPGraph","pict/cha.png" );
+	game.asset.imageLoad( "FontGraph","pict/aschr.png" );
+	game.asset.imageLoad( "SPGraph","pict/cha.png" );
 	game.asset.imageLoad( "Dummy","dummy.png" );
 
 	game.asset.soundLoad("Effect1", "sound/bomb");
@@ -27,15 +27,10 @@ function main() {
     //Game Device Setup
     // deviceSetUp( game )?
 
-	game.dsp.spImage( spImg_ );
-	game.screen[1].spImage(spImg_);
-
 	var spfd = SpriteFontData();
 	for (var i in spfd) {
 	    game.setSpFont(spfd[i]);
 	}
-  
-	game.dsp.fontImage(fontImg_);
     
     //Game Task Setup
 	//var tasktest_ = new GameTask_Test("test");

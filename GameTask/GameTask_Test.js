@@ -40,7 +40,7 @@ function GameTask_Test( id) {
 
 	    g.sprite.setPattern("Player", {
 	        image: "SPGraph",
-	        wait: 10,
+	        wait: 0,
 	        pattern: [
                 { x: 0, y: 0, w: 32, h: 32, r: 0, fv: false, fh: false }
 	            ]
@@ -74,9 +74,6 @@ function GameTask_Test( id) {
 	    g.sprite.set(1, "Enemy");
 	    g.sprite.set(2, "dummy");
 
-	    //g.dsp.clear("black");
-	    //paramater reset etc
-	    //alert("pre");
 	    //this.preFlag = true;
 	}
 
@@ -109,54 +106,28 @@ function GameTask_Test( id) {
 	    //g.dsp.clear("black");
 	    g.sprite.put(2, 100, 100);
 
-	    g.dsp.print(st, 0, 50);
-
-	    //g.dsp.putchr(st, 0, 100);
-
-        /*
-	    g.dsp.putchr8(st, 0, 200);
-
-	    g.dsp.putchr8c(st, 0, 220, 1, 1.5);
-	    g.dsp.putchr8c(st, 0, 230, 2, 2);
-	    g.dsp.putchr8c(st, 0, 240, 3);
-        */
-
+	    g.screen[0].print(st, 0, 50);
 
 	    g.font["std"].putchr(st, 0, 300);
 	    g.font["8x8white"].putchr(st, 0, 160, 1.5);
 	    g.font["8x8red"].putchr(st, 0, 330, 2);
 	    g.font["8x8green"].putchr(st, 0, 340);
 
-        /*
-	    g.dsp.put("Ship", 100, 480 - (i % 480));
-	    g.dsp.put("Ship", 640 - (i % 640), 480 - (i % 480), 0, -45, 255, 1.5);
-
-	    g.dsp.put("Boss", x, y);
-
-	    g.dsp.put("Enemy1", 640 - (i % 640), 200);
-
-	    g.screen[1].put("Boss", x, y);
-        */
-
 	    g.sprite.put(0, 100, 480 - (i % 480));
 	    g.sprite.put(0, 640 - (i % 640), 480 - (i % 480), -45, 1.5);
+
+	    g.sprite.put(0, 640 - (i % 640), 100, i%360, 1.5);
 
 	    g.sprite.put(1, x, y);
 
 	    g.sprite.put(1, 640 - (i % 640), 200);
-
-	    //g.screen[1].put("Boss", x, y);
-
-
 
 	    //g.dsp.draw();
 
 
 	}
 
-
-
-	//
+    //
 	//
 	//
 	this.post = function ( g ) {

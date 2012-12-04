@@ -2,6 +2,7 @@
 
 作成中...
 
+
 ----------------------------------------
 
 実行方法
@@ -75,27 +76,47 @@ Imageやaudioオブジェクトを管理
 ----------------------------------------
 スプライトやイメージ表示
 
-今の所、仮で今まで作成したシステム流用で仮表示。
 
-	game.dsp.put( SpriteID, x, y, r, alpha, zoom);
-	game.dsp.print(text, x, y); 
+スプライトの表示　他
+	
+	表示するスプライトの設定
+	game.sprite.set( spNumber, PatternID, [bool: colisionEnable], [int: colWidth], [int: colHeight] );
 
-(調整中）
-	game.sprite.set( spNumber, PatternID )
-	game.sprite.put
-	game.sprite.setPattern(
+	(表示先の変更:
+		game.sprite.useScreen( screen no );
+	)
 
-など
+	game.sprite.put( spNumber, x, y, [r], [zoom] )　//スプライトの表示
+
+	game.sprite.check()//(未実装)衝突チェック
+
+
+スプライトパターン定義
+
+	game.sprite.setPattern( PatternID ,{
+		image: ImageId,
+		wait: アニメーション変更間隔（フレーム数）
+		pattern: [
+		{ x:  , y:  , w:  , h:  , r:  , fv:(bool), fh:(bool) },
+		{ x:  , y:  , w:  , h:  , r:  , fv:(bool), fh:(bool) },
+		
+		{ x:  , y:  , w:  , h:  , r:  , fv:(bool), fh:(bool) }
+			]
+		}
+	)
+	x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
+	fv:trueで上下反転　fh:trueで左右反転
+
 
 スプライトフォント
 
-	game.font[ fontID ].putchr( text, x, y, zoom );
+	game.font[ fontID ].putchr( text, x, y, [zoom] );
 	
 	(表示先の変更:
 		game.font[ fontID ].useScreen( screen no );
 	)
 
-	game.run()の前に事前セットアップ要。
+スプライトフォント定義（できれは、game.run()の前に事前セットアップ要。）
 
 	(ascii code [space]～[~]まで）
 	var fontParam = {
@@ -156,4 +177,4 @@ Imageやaudioオブジェクトを管理
 
 ----------------------------------------
 追加するjsファイルはincludeで追加しないとロードエラーになります。
-自分でもソース確認しないとわからなくなってます。
+

@@ -142,28 +142,8 @@ function GameSpriteControl(g) {
 
         } else {
 
-            var FlipV = d.fv?1.0:-1.0;
-            var FlipH = d.fh?1.0:-1.0;
-
-            /*
-            switch (m) {
-                case 0:
-                    break;
-                case 1:
-                    FlipV = -1.0;
-                    break;
-                case 2:
-                    FlipH = -1.0;
-                    break;
-                case 3:
-                    FlipV = -1.0;
-                    FlipH = -1.0;
-                    break;
-                default:
-                    break;
-            }
-            */
-            //o.light_enable = this.light_enable;
+            var FlipV = d.fv?-1.0:1.0;
+            var FlipH = d.fh?-1.0:1.0;
 
             buffer_.spPut(
                 img,
@@ -172,12 +152,12 @@ function GameSpriteControl(g) {
                 (-d.h / 2) * z,
                 d.w * z,
                 d.h * z,
-                FlipV, 0, 0, FlipH,
+                FlipH, 0, 0, FlipV,
                 x, y,
                 alpha, r
             );
 
-            buffer_.fillText(r+" ", x, y);
+            //buffer_.fillText(r+" ", x, y);
         }
     }
 
