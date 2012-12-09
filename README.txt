@@ -80,15 +80,29 @@ Imageやaudioオブジェクトを管理
 スプライトの表示　他
 	
 	表示するスプライトの設定
-	game.sprite.set( spNumber, PatternID, [bool: colisionEnable], [int: colWidth], [int: colHeight] );
+	game.sprite.set( spNumber, PatternID, 
+		[bool: colisionEnable], 
+		[int: colWidth], [int: colHeight] );
 
 	(表示先の変更:
 		game.sprite.useScreen( screen no );
 	)
 
-	game.sprite.put( spNumber, x, y, [r], [zoom] )　//スプライトの表示
+	game.sprite.pos( spNumber, x, y, [r], [zoom] ) //スプライト表示位置指定　	
+	(game.sprite.put( spNumber, x, y, [r], [zoom] )　//スプライトの表示(個別))
+	game.sprite.allDrawSprite(); //登録中スプライトの表示
 
-	game.sprite.check()//(未実装)衝突チェック
+
+	簡易移動
+	game.sprite.setMove( spNumber, 方向(0-359),
+		 1フレームの移動量, 消えるまでのフレーム数(0:消えない));
+
+	衝突判定
+	game.sprite.check( spNumber ); return 衝突しているSpNumberの配列[]
+
+	状態確認		
+	game.sprite.get( spNumber ); return spState
+	game.sprite.get(); return 表示していない(空きの）SpNumber
 
 
 スプライトパターン定義

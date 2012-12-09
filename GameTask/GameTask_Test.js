@@ -20,7 +20,8 @@ function GameTask_Test( id) {
 
 	var sk = "";
 	var sm = "";
-	//
+	var sc = "";
+    //
 	//
 	//
 	this.init = function ( g ) {
@@ -70,11 +71,12 @@ function GameTask_Test( id) {
     	    }
 	    )
 
-	    g.sprite.set(0, "Player");
-	    g.sprite.set(1, "Enemy");
-	    g.sprite.set(2, "dummy");
+	    g.sprite.set(0, "Player", true, 32, 32);
+	    g.sprite.set(1, "Enemy", true, 32, 32);
+	    g.sprite.set(2, "dummy", true, 32, 32);
 
 	    //this.preFlag = true;
+	    g.sprite.pos(2, 100, 100);
 	}
 
 	//
@@ -90,6 +92,14 @@ function GameTask_Test( id) {
 
 	    x = mstate.x;
 	    y = mstate.y;
+
+	    var c = g.sprite.check(2);
+
+	    sc = "";
+	    for (var lp in c) {
+	        sc += c[lp] + ",";
+	    }
+
 	}
 
 	//
@@ -104,23 +114,31 @@ function GameTask_Test( id) {
 
 	    //g.dsp.reset();
 	    //g.dsp.clear("black");
-	    g.sprite.put(2, 100, 100);
+	    //g.sprite.pos(2, 100, 100);
 
 	    g.screen[0].print(st, 0, 50);
+	    g.screen[0].print(sc, 0, 76);
 
 	    g.font["std"].putchr(st, 0, 300);
 	    g.font["8x8white"].putchr(st, 0, 160, 1.5);
 	    g.font["8x8red"].putchr(st, 0, 330, 2);
 	    g.font["8x8green"].putchr(st, 0, 340);
 
-	    g.sprite.put(0, 100, 480 - (i % 480));
-	    g.sprite.put(0, 640 - (i % 640), 480 - (i % 480), -45, 1.5);
+        //g.sprite.put(0, 100, 480 - (i % 480));
+	    //g.sprite.pos(0, 640 - (i % 640), 480 - (i % 480), -45, 1.5);
 
-	    g.sprite.put(0, 640 - (i % 640), 100, i%360, 1.5);
+	    g.sprite.pos(0, 640 - (i % 640), 200, i % 360, 1.5);
 
-	    g.sprite.put(1, x, y);
+	    if (i % 10 == 0) {
+	        var n = g.sprite.get();
+	        g.sprite.set(n, "Enemy", true, 32, 32);
+	        g.sprite.pos(n, 640 - (i % 640), 200);
+	        g.sprite.setMove(n, i % 360, 2, 220);
+	    }
+	    //g.sprite.pos(1, x, y);
 
-	    g.sprite.put(1, 640 - (i % 640), 200);
+	    g.sprite.pos(1, 640 - (i % 640), 300);
+        
 
 	    //g.dsp.draw();
 
