@@ -83,7 +83,9 @@ function GameCore( sysParam ) {
 	//assetsetup
 	var asset_ = new GameAssetManager();
 
-	//
+    // sound‚Íasset‚ğQÆ‚·‚é‚Ì‚Åª‚ÌŒã‚ÅéŒ¾‚·‚éB
+    var sound_ = new soundControl( asset_ );
+
 	document.getElementById("console").innerHTML = "START GAME CORE";
 	// mainloop
 
@@ -109,6 +111,8 @@ function GameCore( sysParam ) {
 	this.mouse = mouse_;
 	this.dsp = dsp_;
 	this.screen = screen_;
+
+	this.sound = sound_;
     //
 	this.sprite = sprite_;
 	this.font = font_;

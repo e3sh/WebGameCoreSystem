@@ -93,6 +93,10 @@ function GameTask_Test( id) {
 	    x = mstate.x;
 	    y = mstate.y;
 
+	    if (mstate.button == 1) {
+	        g.sound.effect("Effect1");
+	    }
+
 	    var c = g.sprite.check(2);
 
 	    sc = "";

@@ -11,6 +11,7 @@ var w = [
     "Controller/inputKeyboard.js",
     "Controller/inputMouse.js",
     "Controller/DisplayControl.js",
+    "Controller/soundControl.js",
     "Controller/offScreen.js",
     "Controller/offScreenTypeB.js",
     "Controller/spriteControl.js",

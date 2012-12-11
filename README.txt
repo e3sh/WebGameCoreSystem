@@ -178,8 +178,8 @@ Imageやaudioオブジェクトを管理
 
 サウンド
 
-(未実装)
-	game.sound.play( id );とか
+	game.sound.play( id ); //id: assetで読み込ませたsoundのID 
+
 
 ストレージ
 

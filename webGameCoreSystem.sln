@@ -39,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controller", "Controller", 
 		Controller\inputMouse.js = Controller\inputMouse.js
 		Controller\offScreen.js = Controller\offScreen.js
 		Controller\offScreenTypeB.js = Controller\offScreenTypeB.js
+		Controller\soundControl.js = Controller\soundControl.js
 		Controller\spriteControl.js = Controller\spriteControl.js
 		Controller\spriteFontControl.js = Controller\spriteFontControl.js
 	EndProjectSection
