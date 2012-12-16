@@ -165,9 +165,14 @@ Imageやaudioオブジェクトを管理
 		}
 	}
 
-現状だと面倒なので、主要キーはBoolで返すプロパティを用意することも検討中
-(game.keyboard,upkey とか　game.keyboard,zkey とか)
+主要キーはBoolで返すプロパティあり。
 
+	game.keyboard
+		.upkey; .downkey; .leftkey; .rightkey;
+		.shift; .ctrl; .alt; .space;
+		.qkey; .wkey; .ekey;
+		.akey; .skey; .dkey;
+		.zkey; .xkey; .ckey;
 
 マウス
 
@@ -179,6 +184,7 @@ Imageやaudioオブジェクトを管理
 サウンド
 
 	game.sound.play( id ); //id: assetで読み込ませたsoundのID 
+	game.sound.effect( id ); // 最初から再生
 
 
 ストレージ

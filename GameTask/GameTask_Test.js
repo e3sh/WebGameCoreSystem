@@ -85,7 +85,14 @@ function GameTask_Test( id) {
 	this.step = function ( g ) {
 	    i++;
 
-	    sk = g.keyboard.state();
+	    var w = g.keyboard.check();
+
+	    sk = "";
+
+	    for (var li in w) {
+	        sk += "[" + li + "]" + ((w[li]) ? "*" : ".");
+	    }
+
 	    var mstate = g.mouse.check();
 
 	    sm = mstate.x + " " + mstate.y + " " + mstate.button + " " + mstate.wheel;
@@ -122,6 +129,8 @@ function GameTask_Test( id) {
 
 	    g.screen[0].print(st, 0, 50);
 	    g.screen[0].print(sc, 0, 76);
+
+	    g.screen[0].print(g.keyboard.space + " ", 0, 96);
 
 	    g.font["std"].putchr(st, 0, 300);
 	    g.font["8x8white"].putchr(st, 0, 160, 1.5);

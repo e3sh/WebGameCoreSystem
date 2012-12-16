@@ -91,7 +91,14 @@ function GameTask_Test(id) {
     this.step = function (g) {
         i++;
 
-        sk = g.keyboard.state();
+        sk = ""
+
+        var w = g.keyboard.check();
+
+        for (var li in w) {
+            sk += "[" + li + "]" + ((w[li]) ? "*" : ".");
+        }
+
         var mstate = g.mouse.check();
 
         sm = mstate.x + " " + mstate.y + " " + mstate.button + " " + mstate.wheel;
