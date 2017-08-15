@@ -1,13 +1,13 @@
 ﻿GameCore　/Javascript
-
-作成中...
+===
+作成中...???
 
 
 ----------------------------------------
 
-実行方法
+**実行方法**
 
-システムの宣言
+*システムの宣言*
 
 	システム初期パラメータ（表示対象のキャンバスと解像度の指定）
 	
@@ -20,13 +20,13 @@
 
 	var game = new GameCore( sysParam );
 
-ゲームループの開始
+*ゲームループの開始*
 
 	game.run();
 
 	requestAnimationFrameの周期毎にタスクを実行する。
 
-ゲームタスク
+*ゲームタスク*
 
 ----------------------------------------
 	game.task.add( new gametask( id );
@@ -35,7 +35,7 @@
 
 id：管理用に任意の重複しない文字列や数字を指定する。
 
-タスクの雛形
+*タスクの雛形*
  
 	function gametask( id ){};
 	this.id = id;	
@@ -55,7 +55,7 @@ gにはGameCoreオブジェクトが入るので、
 これ経由でデバイスやアセットにアクセスする。
 （他タスクのコントロールをして階層制御なども考えられる）
 
-アセット管理
+**アセット管理**
 
 ----------------------------------------
 Imageやaudioオブジェクトを管理
@@ -71,13 +71,13 @@ Imageやaudioオブジェクトを管理
 各種データも管理(未実装)
 
 
-デバイス管理
+**デバイス管理**
 
 ----------------------------------------
-スプライトやイメージ表示
+*スプライトやイメージ表示*
 
 
-スプライトの表示　他
+*スプライトの表示　他*
 	
 	表示するスプライトの設定
 	game.sprite.set( spNumber, PatternID, 
@@ -105,7 +105,7 @@ Imageやaudioオブジェクトを管理
 	game.sprite.get(); return 表示していない(空きの）SpNumber
 
 
-スプライトパターン定義
+*スプライトパターン定義*
 
 	game.sprite.setPattern( PatternID ,{
 		image: ImageId,
@@ -122,7 +122,7 @@ Imageやaudioオブジェクトを管理
 	fv:trueで上下反転　fh:trueで左右反転
 
 
-スプライトフォント
+*スプライトフォント*
 
 	game.font[ fontID ].putchr( text, x, y, [zoom] );
 	
@@ -130,7 +130,7 @@ Imageやaudioオブジェクトを管理
 		game.font[ fontID ].useScreen( screen no );
 	)
 
-スプライトフォント定義（できれは、game.run()の前に事前セットアップ要。）
+*スプライトフォント定義* （できれは、game.run()の前に事前セットアップ要。）
 
 	(ascii code [space]～[~]まで）
 	var fontParam = {
@@ -146,8 +146,8 @@ Imageやaudioオブジェクトを管理
 	game.setSpFont( fontParam );
 
 
-入力
-キーボード
+**入力**  
+*キーボード*
 
 	game.keyboard.check();
 	戻り値: 配列[キーコード]がtureで押下/falseまたは値が無い場合は押していない状態
@@ -174,26 +174,26 @@ Imageやaudioオブジェクトを管理
 		.akey; .skey; .dkey;
 		.zkey; .xkey; .ckey;
 
-マウス
+*マウス*
 
 	game.mouse.check();
 	game.mouse.check_last(); 最後に実行したcheckの戻り値を返す。
 	戻り値: {} *.x *.y *.button *.wheel
 
 
-サウンド
+**サウンド**
 
 	game.sound.play( id ); //id: assetで読み込ませたsoundのID 
 	game.sound.effect( id ); // 最初から再生
 
 
-ストレージ
+**ストレージ**
 
 (未実装)
 	game.storage.save( key ,data );とか
 
 
-他
+**他**
 
 ----------------------------------------
 追加するjsファイルはincludeで追加しないとロードエラーになります。
