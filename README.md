@@ -9,14 +9,15 @@
 
 *システムの宣言*
 
-	システム初期パラメータ（表示対象のキャンバスと解像度の指定）
+システム初期パラメータ（表示対象のキャンバスと解像度の指定）
 	
-	例：
-	var sysParam = [
-        	{ canvasId: "layer0", resolution: { w: 640, h: 480 } }
-        ]	
+例： 
 
-	(複数キャンバス指定可能、対象指定時、順番にscreen[0～]となる。）
+     var sysParam = [  
+         	{ canvasId: "layer0", resolution: { w: 640, h: 480 } }  
+         ]  	
+  
+(複数キャンバス指定可能、対象指定時、順番にscreen[0～]となる。）
 
 	var game = new GameCore( sysParam );
 
@@ -24,7 +25,7 @@
 
 	game.run();
 
-	requestAnimationFrameの周期毎にタスクを実行する。
+requestAnimationFrameの周期毎にタスクを実行する。
 
 *ゲームタスク*
 
@@ -52,7 +53,7 @@ id：管理用に任意の重複しない文字列や数字を指定する。
 
 
 gにはGameCoreオブジェクトが入るので、
-これ経由でデバイスやアセットにアクセスする。
+これ経由でデバイスやアセットにアクセスする。  
 （他タスクのコントロールをして階層制御なども考えられる）
 
 **アセット管理**
@@ -79,28 +80,35 @@ Imageやaudioオブジェクトを管理
 
 *スプライトの表示　他*
 	
-	表示するスプライトの設定
-	game.sprite.set( spNumber, PatternID, 
-		[bool: colisionEnable], 
-		[int: colWidth], [int: colHeight] );
+表示するスプライトの設定  
 
-	(表示先の変更:
-		game.sprite.useScreen( screen no );
-	)
+	game.sprite.set( spNumber, PatternID,   
+		[bool: colisionEnable],   
+		[int: colWidth], [int: colHeight] );  
+		
+
+(表示先の変更:  
+
+		game.sprite.useScreen( screen no );  
+		
+)  
 
 	game.sprite.pos( spNumber, x, y, [r], [zoom] ) //スプライト表示位置指定　	
 	(game.sprite.put( spNumber, x, y, [r], [zoom] )　//スプライトの表示(個別))
 	game.sprite.allDrawSprite(); //登録中スプライトの表示
 
 
-	簡易移動
+簡易移動  
+
 	game.sprite.setMove( spNumber, 方向(0-359),
 		 1フレームの移動量, 消えるまでのフレーム数(0:消えない));
 
-	衝突判定
+衝突判定  
+
 	game.sprite.check( spNumber ); return 衝突しているSpNumberの配列[]
 
-	状態確認		
+状態確認  
+
 	game.sprite.get( spNumber ); return spState
 	game.sprite.get(); return 表示していない(空きの）SpNumber
 
@@ -118,17 +126,19 @@ Imageやaudioオブジェクトを管理
 			]
 		}
 	)
-	x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
-	fv:trueで上下反転　fh:trueで左右反転
+x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
+fv:trueで上下反転　fh:trueで左右反転
 
 
-*スプライトフォント*
+*スプライトフォント*  
 
 	game.font[ fontID ].putchr( text, x, y, [zoom] );
 	
-	(表示先の変更:
-		game.font[ fontID ].useScreen( screen no );
-	)
+(表示先の変更:  
+
+		game.font[ fontID ].useScreen( screen no );  
+		
+)  
 
 *スプライトフォント定義* （できれは、game.run()の前に事前セットアップ要。）
 
@@ -149,10 +159,11 @@ Imageやaudioオブジェクトを管理
 **入力**  
 *キーボード*
 
-	game.keyboard.check();
-	戻り値: 配列[キーコード]がtureで押下/falseまたは値が無い場合は押していない状態
+	game.keyboard.check();  
+	
+戻り値: 配列[キーコード]がtureで押下/falseまたは値が無い場合は押していない状態
 
-	Boolean(戻り値配列[キーコード])　が偽の場合も押していない状態。
+Boolean(戻り値配列[キーコード])　が偽の場合も押していない状態。
 
 注意点として入力チェックするときは 値の有無チェック後実行しないとエラーになる。
 
@@ -176,15 +187,19 @@ Imageやaudioオブジェクトを管理
 
 *マウス*
 
-	game.mouse.check();
-	game.mouse.check_last(); 最後に実行したcheckの戻り値を返す。
-	戻り値: {} *.x *.y *.button *.wheel
+	game.mouse.check();  
+	game.mouse.check_last(); 最後に実行したcheckの戻り値を返す。  
+	
+戻り値: {} *.x *.y *.button *.wheel
 
 
 **サウンド**
 
-	game.sound.play( id ); //id: assetで読み込ませたsoundのID 
-	game.sound.effect( id ); // 最初から再生
+	game.sound.play( id ); 
+	//id: assetで読み込ませたsoundのID   
+	
+	game.sound.effect( id );  
+	// 最初から再生
 
 
 **ストレージ**
