@@ -1,6 +1,6 @@
 ﻿GameCore　/Javascript
 ===
-作成中...???
+作成中...
 
 
 ----------------------------------------
@@ -37,7 +37,8 @@ requestAnimationFrameの周期毎にタスクを実行する。
 id：管理用に任意の重複しない文字列や数字を指定する。
 
 *タスクの雛形*
-    class gametask( id ) extends Gametask {
+
+	class gametask( id ) extends Gametask {
 		constructor(id){
 			super(id);
 			//new　で実行される。
