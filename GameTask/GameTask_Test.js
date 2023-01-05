@@ -1,43 +1,19 @@
 // GameTaskTemplate
 //
+class GameTask_Test extends GameTask {
 
-function GameTask_Test( id) {
+	#i = 0;
 
-    this.id = id; //taskid
-    
-    //
-	//
-	this.enable = true; // true : run step  false: pasue step
-	this.visible = true; // true: run draw  false: pasue draw
+	#x = 0;	#y = 0;
 
-	this.preFlag = false;
-
-
-	var i = 0;
-
-	var x = 0;
-	var y = 0;
-
-	var sk = "";
-	var sm = "";
-	var sc = "";
-    //
-	//
-	//
-	this.init = function ( g ) {
-
-	    //asset(contents) load
-	    //alert("init");
-	    //this.enable = false;
-	    //this.visible = false;
+	#sk = ""; #sm = ""; #sc = "";
+	
+	constructor(id){
+		super(id);
 	}
 
-	//
-	//
-	//
-	this.pre = function ( g ) {
-
-	    g.font["8x8white"].useScreen(1);
+	pre(g){// 最初の実行時に実行。
+ 	    g.font["8x8white"].useScreen(1);
 
 	    g.sprite.setPattern("Player", {
 	        image: "SPGraph",
@@ -79,26 +55,23 @@ function GameTask_Test( id) {
 	    g.sprite.pos(2, 100, 100);
 	}
 
-	//
-	//
-	//
-	this.step = function ( g ) {
+	step(g){// this.enable が true時にループ毎に実行される。
 	    i++;
 
 	    var w = g.keyboard.check();
 
-	    sk = "";
+	    this.#sk = "";
 
 	    for (var li in w) {
-	        sk += "[" + li + "]" + ((w[li]) ? "*" : ".");
+	        this.#sk += "[" + li + "]" + ((w[li]) ? "*" : ".");
 	    }
 
 	    var mstate = g.mouse.check();
 
-	    sm = mstate.x + " " + mstate.y + " " + mstate.button + " " + mstate.wheel;
+	    this.#sm = mstate.x + " " + mstate.y + " " + mstate.button + " " + mstate.wheel;
 
-	    x = mstate.x;
-	    y = mstate.y;
+	    this.#x = mstate.x;
+	    this.#y = mstate.y;
 
 	    if (mstate.button == 1) {
 	        g.sound.effect("Effect1");
@@ -106,18 +79,14 @@ function GameTask_Test( id) {
 
 	    var c = g.sprite.check(2);
 
-	    sc = "";
+	    this.#sc = "";
 	    for (var lp in c) {
-	        sc += c[lp] + ",";
+	        this.#sc += c[lp] + ",";
 	    }
-
 	}
 
-	//
-	//
-	//
-	this.draw = function (g) {
-	    var st = "running " + i + "<br>" + sk + "<br>" + sm + "<br>"
+	draw(g){// this.visible が true時にループ毎に実行される。
+	    var st = "running " + this.#i + "<br>" + this.#sk + "<br>" + this.#sm + "<br>"
             + g.task.count() + "<br>" + g.task.namelist() + "<br>" + g.dsp.count() + " " + g.screen.length;
 
 	    document.getElementById("console").innerHTML
@@ -128,7 +97,7 @@ function GameTask_Test( id) {
 	    //g.sprite.pos(2, 100, 100);
 
 	    g.screen[0].print(st, 0, 50);
-	    g.screen[0].print(sc, 0, 76);
+	    g.screen[0].print(this.#sc, 0, 76);
 
 	    g.screen[0].print(g.keyboard.space + " ", 0, 96);
 
@@ -152,20 +121,7 @@ function GameTask_Test( id) {
 
 	    g.sprite.pos(1, 640 - (i % 640), 300);
         
-
 	    //g.dsp.draw();
 
-
 	}
-
-    //
-	//
-	//
-	this.post = function ( g ) {
-
-
-
-
-	}
-
 }

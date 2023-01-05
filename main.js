@@ -4,7 +4,7 @@
 function main() {
 
     var sysParam = [
-        { canvasId: "layer0", resolution: { w: 640, h: 480 } },
+        { canvasId: "layer0", resolution: { w: 1024, h: 768 } },
         { canvasId: "Canvas1", resolution: { w: 320, h: 240 } },
         { canvasId: "layer0", resolution: { w: 640, h: 480 } }
         ]

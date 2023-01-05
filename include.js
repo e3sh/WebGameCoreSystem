@@ -17,6 +17,9 @@ var w = [
     "Controller/spriteControl.js",
     "Controller/spriteFontControl.js",
 
+    //class
+    "Controller/GameTaskClass.js",
+
     //UserGameTasks
     "GameTask/GameTask_ClearDisp.js",
     "GameTask/GameTask_FlipDisp.js",

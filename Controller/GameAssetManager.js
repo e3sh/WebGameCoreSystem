@@ -37,24 +37,31 @@ function GameAssetManager(){
     this.image = img_;
 
     var snd_ = [];
+    var s_uri = [];
+    var s_pos = [];
+    var s_stat = [];
 
-    this.soundLoad = function (id, uri) { //Šg’£q–³‚µ‚Åw’è
+    this.soundLoad = function (id, uri) { //æ‹¡å¼µå­ç„¡ã—ã§æŒ‡å®š
         
         var ext = ".mp3";
-        if ((new Audio()).canPlayType("audio/ogg") == "maybe") { ext = ".ogg"; }
+        //if ((new Audio()).canPlayType("audio/ogg") == "maybe") { ext = ".ogg"; }
 
-        var aud = new Audio(uri + ext);
+        snd_[ id ] = new Audio(uri + ext);
 
-        aud.ready = false;
-        aud.addEventListener("loadeddata", function (e) { this.ready = true; });
+        snd_[ id ].ready = false;
+        snd_[ id ].addEventListener("loadeddata", function (e) { this.ready = true; });
 
-        snd_[ id ] = aud;
+        s_uri[ id ] = uri;
+        s_pos[ id ] = 0;
+        s_stat[ id ] = snd_[ id ].ready;
 
-        return aud;
+        //snd_[ id].play();
+
+        return snd_[ id ];
     }
 
     this.sound = snd_;
-
+    
     this.check = function () {
 
         var st = "<br>";
@@ -62,17 +69,15 @@ function GameAssetManager(){
         for (var i in img_) {
             var stw = img_[i].src.split("/", 20)
             st += i + " " + img_[i].name +" " + stw[stw.length-1] + " " + (img_[i].ready?"o":"x") + "<br>";
-            //img ‚ÅreadyState@‚ÍIE‚Ì‚İ‚Ìˆ×Ag—p‚µ‚È‚¢B
+            //img ã§readyStateã€€ã¯IEã®ã¿ã®ç‚ºã€ä½¿ç”¨ã—ãªã„ã€‚
         }
 
         for (var i in snd_) {
             var stw = snd_[i].src.split("/", 20)
             st += i + " " + snd_[i].name + " " + stw[stw.length - 1] + " " + (snd_[i].ready ? "o" : "x") + "<br>";
-            //img ‚ÅreadyState@‚ÍIE‚Ì‚İ‚Ìˆ×Ag—p‚µ‚È‚¢B
         }
 
         return st;
     }
-
     //
 }

@@ -1,88 +1,46 @@
 // GameTaskTemplate
 //
+class GameTask_Test2 extends GameTask{
+	
+	#oldtime;
+	#newtime = Date.now();
+	#cnt = 0;
 
-function GameTask_Test2( id ) {
+	#fps_log = [];
+	#log_cnt = 0;
+	#log_max = 0;
 
-    this.id = id; //taskid
-    
-    //
-	//
-	this.enable = true; // true : run step  false: pasue step
-	this.visible = true; // true: run draw  false: pasue draw
+    #interval;
 
-	this.preFlag = false;
-
-	var oldtime;
-	var newtime = Date.now();
-	var cnt = 0;
-
-	var fps_log = [];
-	var log_cnt = 0;
-	var log_max = 0;
-
-    var interval;
-
-	var fps = 0;
-	//
-	//
-	//
-	this.init = function ( g ) {
-
-	    //asset(contents) load
+	#fps = 0;
+	
+	constructor(id){
+		super(id);
 	}
 
-	//
-	//
-	//
-	this.pre = function ( g ) {
+	step(g){// this.enable が true時にループ毎に実行される。
+	    this.#oldtime = this.#newtime;
+	    this.#newtime = Date.now();
 
-	    //paramater reset etc
+	    this.#interval = this.#newtime - this.#oldtime;
 
-	    //this.preFlag = true;
-	}
+	    if (this.#log_cnt > this.#log_max) this.#log_max = this.#log_cnt;
+	    this.#fps_log[this.#log_cnt] = this.#interval;
 
-	//
-	//
-	//
-	this.step = function ( g ) {
-
-	    oldtime = newtime;
-	    newtime = Date.now();
-
-	    interval = newtime - oldtime;
-
-	    if (log_cnt > log_max) log_max = log_cnt;
-	    fps_log[log_cnt] = interval;
-
-	    log_cnt++;
-	    if (log_cnt > 59) log_cnt = 0;
+	    this.#log_cnt++;
+	    if (this.#log_cnt > 59) this.#log_cnt = 0;
 
 	    var w = 0;
-	    for (var i = 0; i <= log_max; i++) {
-	        w += fps_log[i];
+	    for (var i = 0; i <= this.#log_max; i++) {
+	        w += this.#fps_log[i];
 	    }
 
-	    cnt++;
+	    this.#cnt++;
 
-	    fps = parseInt(1000 / (w / (log_max + 1)));
+	    this.#fps = parseInt(1000 / (w / (this.#log_max + 1)));
 	}
 
-	//
-	//
-	//
-	this.draw = function ( g ) {
-	    document.getElementById("console").innerHTML += "<br>fps:" + fps;
-
+	draw(g){// this.visible が true時にループ毎に実行される。
+	    document.getElementById("console").innerHTML += "<br>fps:" + this.#fps;
 	}
-
-	//
-	//
-	//
-	this.post = function ( g ) {
-
-
-
-
-	}
-
 }

@@ -1,60 +1,17 @@
 // GameTaskTemplate
 //
+class GameTask_Test3 extends GameTask{
+	
+	#st;
+	
+	constructor(id){
+		super(id);	}
 
-function GameTask_Test3( id ) {
+	step(g){// this.enable が true時にループ毎に実行される。
+	    this.#st = g.asset.check();
+	}		
 
-    this.id = id;
-	//
-	//
-	this.enable = true; // true : run step  false: pasue step
-	this.visible = true; // true: run draw  false: pasue draw
-
-	this.preFlag = false;
-
-	var st;
-	//
-	//
-	//
-	this.init = function ( g ) {
-
-		//asset(contents) load
+	draw(g){// this.visible が true時にループ毎に実行される。
+		document.getElementById("console").innerHTML += this.#st;
 	}
-
-	//
-	//
-	//
-	this.pre = function ( g ) {
-
-	    //paramater reset etc
-
-	    //this.preFlag = true;
-	}
-
-	//
-	//
-	//
-	this.step = function ( g ) {
-
-	    st = g.asset.check();
-	}
-
-	//
-	//
-	//
-	this.draw = function ( g ) {
-
-	    document.getElementById("console").innerHTML += st;
-
-	}
-
-	//
-	//
-	//
-	this.post = function ( g ) {
-
-
-
-
-	}
-
 }

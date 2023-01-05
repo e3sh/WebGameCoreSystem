@@ -13,15 +13,15 @@ div {
 
 div#console 
 {
-	top :480px ;
+	top :768px ;
 	left:0px ;
 	position : absolute;
 }
 
 canvas
 {
-	width : 640px;
-	height :480px;
+	width : 1024px;
+	height :768px;
 	top :0px ;
 	left:0px ;
 	position : absolute;

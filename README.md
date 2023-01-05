@@ -30,27 +30,27 @@ requestAnimationFrameの周期毎にタスクを実行する。
 *ゲームタスク*
 
 ----------------------------------------
-	game.task.add( new gametask( id );
-	game.task.del( new gametask( id );
+	game.task.add( new gametask( id ));
+	game.task.del(  id );
 	game.task.read( id );
 
 id：管理用に任意の重複しない文字列や数字を指定する。
 
 *タスクの雛形*
- 
-	function gametask( id ){};
-	this.id = id;	
+    class gametask( id ) extends Gametask {
+		constructor(id){
+			super(id);
+			//new　で実行される。
+		}
+		init( g ){}// task.add時に実行される。
+		pre( g ){} // 最初の実行時に実行。
+		step( g ){}// this.enable が true時にループ毎に実行される。　
+		draw( g ){}// this.visible が true時にループ毎に実行される。
+		post( g ){}// task.delで終了時に実行される。
+	}
 
 	this.enable = true; // true : run step  false: pause step
 	this.visible = true; // true: run draw  false: pause draw
-	this.preFlag = false;
-
-	task.init( g ){}// task.add時に実行される。
-	task.pre( g ){} // 最初の実行時に実行。
-	task.step( g ){}// this.enable が true時にループ毎に実行される。　
-	task.draw( g ){}// this.visible が true時にループ毎に実行される。
-	task.post( g ){}// task.delで終了時に実行される。
-
 
 gにはGameCoreオブジェクトが入るので、
 これ経由でデバイスやアセットにアクセスする。  
@@ -70,7 +70,7 @@ Imageやaudioオブジェクトを管理
 	game.asset.*.ready //true:ロード完了　false:ロード未完了または失敗
 
 各種データも管理(未実装)
-
+遅延ロード(未実装)
 
 **デバイス管理**
 
@@ -192,15 +192,23 @@ Boolean(戻り値配列[キーコード])　が偽の場合も押していない
 	
 戻り値: {} *.x *.y *.button *.wheel
 
+*タッチパネル*
+(未実装）マルチタッチ
+
+*ゲームパッド*
+(未実装:Gamepad APIで可能だが、機種やモードDirectInput・XInputで
+レバーやキーアサインが変わるので設定画面も必要)
 
 **サウンド**
-
+(昔はなんとなく動いて鳴ったが、
+現時点では研究不足でうまく動かせません。WebAudioAPI対応に変更要)
 	game.sound.play( id ); 
 	//id: assetで読み込ませたsoundのID   
 	
 	game.sound.effect( id );  
 	// 最初から再生
 
+(未実装:Web Audio API対応)
 
 **ストレージ**
 

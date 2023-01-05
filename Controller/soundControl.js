@@ -3,8 +3,8 @@
 
 function soundControl( gameAsset ) {
 
-    //‚Ù‚Æ‚ñ‚Çgame.asset.sound(id).`‚Å’¼Ú‘€ì‚·‚ê‚Î‚æ‚¢“à—eB
-    //ƒQ[ƒ€‚Ì“à—e‚É‚æ‚Á‚Ä‚³‚ç‚Éƒ‰ƒbƒv‚·‚é•K—v‚ ‚é‚Æv‚í‚ê‚éB
+    //ã»ã¨ã‚“ã©game.asset.sound(id).ï½ã§ç›´æ¥æ“ä½œã™ã‚Œã°ã‚ˆã„å†…å®¹ã€‚
+    //ã‚²ãƒ¼ãƒ ã®å†…å®¹ã«ã‚ˆã£ã¦ã•ã‚‰ã«ãƒ©ãƒƒãƒ—ã™ã‚‹å¿…è¦ã‚ã‚‹ã¨æ€ã‚ã‚Œã‚‹ã€‚
 
     var sd = gameAsset.sound;
 
@@ -19,10 +19,15 @@ function soundControl( gameAsset ) {
 
     this.effect = function( id ) {
 
-        var p = sd[id];
+        if (Boolean(sd[ id ])) {
 
-        p.currentTime = 0;
-        p.play();
+            sd[ id ].currentTime = 0;
+            sd[ id ].play();
+
+            //var audioCtx = new AudioContext;
+            //var source = audioCtx.createMediaElementSource( sd[ id ]);
+            //source.play();
+        }
     }
 
     this.running = function ( id ) 
