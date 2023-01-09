@@ -15,11 +15,12 @@ class GameTask{
 		this.preFlag = false;
 	}
 
-	init(g){// task.add時に実行される。
+	init(g){// task.add時に実行される。TaskControllerから
 		//asset(contents) load
+		//constuctorで実行で良いのでは？思案中。
 	}
 
-	pre(g){// 最初の実行時に実行。
+	pre(g){// 最初の実行時に実行。TaskControllerから
     	//paramater reset etc
 	    //this.preFlag = true;　フラグの変更はTaskControlで実行されるので継承側でも実行する必要なし。
 	}
