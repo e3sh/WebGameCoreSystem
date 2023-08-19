@@ -45,9 +45,9 @@ function GameTaskControl( game ) {
 	//
 	this.del = function( taskid  ){
 		//task post process
-		task_[task.id].post(); //deconstract
+		task_[taskid].post(); //deconstract
 		//task delete
-		delete task_[task.id];
+		delete task_[taskid];
 
 		taskCheck();
 	}
