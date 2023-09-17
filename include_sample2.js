@@ -4,6 +4,7 @@
 var w = [
     //WebGameCoreSystem Files
     //SystemControl
+    /*
     "proc/func/GameAssetManager.js",
     "proc/func/GameTaskControl.js",
     "proc/GameCore.js",
@@ -20,8 +21,8 @@ var w = [
     "proc/func/spriteFontControl.js",
     "proc/func/fontPrintControl.js",
     "proc/task/GameTaskClass.js",
-
-    //"coremin.js",
+    */
+    "coremin.js",
     "main_sample2.js" 
 ];
 
