@@ -2,11 +2,11 @@ GameCore　/Javascript
 ===
 **Personal Web Game Library.**
 
-作成中...
+https://e3sh.github.io/WebGameCoreSystem/sample1.html
+https://e3sh.github.io/WebGameCoreSystem/sample2.html
 
- UPDATE 2023.08.19.
- 
- フォルダ構成の変更など。
+ UPDATE 2024.02.21. ↑↑↑ サンプルのリンクを追加 ↑↑↑ 　
+ UPDATE 2023.08.19. フォルダ構成の変更など。
 
 ----------------------------------------
 
