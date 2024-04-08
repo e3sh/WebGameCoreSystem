@@ -1,39 +1,30 @@
 // main
-//
+// Sample1 Sprite and Mouse Input Sample
 
 function main() {
 
-    var sysParam = {
+    let sysParam = {
 		canvasId: "layer0",
         screen: [
-        { resolution: { w: 1024, h: 768 , x:0, y:0 } },
-        //{ resolution: { w: 1024, h: 768 , x:0, y:0 } },
-        //{ resolution: { w: 1024, h: 768 , x:0, y:0 } }
-		{ resolution: { w: 320, h: 240 , x:0, y:0 } },
-        { resolution: { w: 640, h: 480 , x:0, y:0 } }
+        { resolution: { w: 1024, h: 768 , x:0, y:0 } }
+		,{ resolution: { w: 320, h: 240 , x:0, y:0 } }
+        ,{ resolution: { w: 640, h: 480 , x:0, y:0 } }
         ]
 	}
 
-	var game = new GameCore( sysParam );
+	let game = new GameCore( sysParam );
 
     //Game Asset Setup
     // assetSetup( game )?
 
 	game.asset.imageLoad( "FontGraph","pict/aschr.png" );
 	game.asset.imageLoad( "SPGraph","pict/cha.png" );
-	//game.asset.imageLoad( "Dummy","dummy.png" );
 
-	game.asset.soundLoad("Effect1", "sound/bomb");
-	game.asset.soundLoad("Effect2", "sound/bow");
-	game.asset.soundLoad("Effect3", "sound/damage");
-	game.asset.soundLoad("Effect4", "sound/swing");
-	//game.asset.soundLoad("Effect5", "hit");
-
-    //Game Device Setup
+	//Game Device Setup
     // deviceSetUp( game )?
 
-	var spfd = SpriteFontData();
-	for (var i in spfd) {
+	let spfd = SpriteFontData();
+	for (let i in spfd) {
 	    game.setSpFont(spfd[i]);
 	}
     
@@ -44,8 +35,8 @@ function main() {
 	game.screen[0].setBackgroundcolor("black"); 
     game.screen[0].setInterval(1); 
     game.screen[1].setInterval(1); 
-    game.screen[2].setInterval(1); 
-
+	game.screen[2].setInterval(1); 
+    
 	game.run();
 }
 
@@ -54,20 +45,7 @@ function main() {
 
 function SpriteFontData() {
 
-    //fontid
-    //" "-"~"
-    /*
-    var spf = {
-        name: "fontname",
-        id: "imageid",
-        pattern:[
-            {x:0,y:0,w:0,h:0},
-
-            {x:0,y:0,w:0,h:0}
-        ]
-    }
-    */
-    var sp_ch_ptn = [];
+	let sp_ch_ptn = [];
 
     for (i = 0; i < 7; i++) {
         for (j = 0; j < 16; j++) {
@@ -83,12 +61,12 @@ function SpriteFontData() {
     }
     //12_16_font
 
-    var sp8 = []; //spchrptn8(color)
-    var cname = ["white", "red", "green", "blue"];
+    let sp8 = []; //spchrptn8(color)
+    let cname = ["white", "red", "green", "blue"];
 
-    for (var t = 0; t <= 3; t++) {
+    for (let t = 0; t <= 3; t++) {
 
-        var ch = [];
+        let ch = [];
 
         for (i = 0; i < 7; i++) {
             for (j = 0; j < 16; j++) {
@@ -164,8 +142,10 @@ class GameTask_Test extends GameTask {
 	    )
 
 	    g.sprite.set(0, "Player", true, 32, 32);
-	    g.sprite.set(1, "Enemy", true, 32, 32);
+	    g.sprite.set(1, "dummy", true, 32, 32);
 	    g.sprite.set(2, "dummy", true, 32, 32);
+	    g.sprite.set(3, "dummy", true, 32, 32);
+	    g.sprite.set(4, "dummy", true, 32, 32);
 
 	    //this.preFlag = true;
 	    g.sprite.pos(2, 100, 100);
@@ -177,53 +157,54 @@ class GameTask_Test extends GameTask {
 	    i++;
 		this.#i = i;
 
-	    var w = g.keyboard.check();
+	    let w = g.keyboard.check();
 
 	    this.#sk = "";
 
-	    for (var li in w) {
+	    for (let li in w) {
 	        this.#sk += "[" + li + "]" + ((w[li]) ? "*" : ".");
 	    }
 
-	    var mstate = g.mouse.check();
+	    let mstate = g.mouse.check();
 
 	    this.#sm = "x" + mstate.x + " y" + mstate.y + " b" + mstate.button + " w" + mstate.wheel;
 
 	    this.#x = mstate.x;
 	    this.#y = mstate.y;
 
-	    if (mstate.button == 1) {
-	        g.sound.effect("Effect1");
-	    }
+	    if (mstate.button == 0) {
+	        let n = g.sprite.get();//空値の場合は未使用スプライトの番号を返す。
+	        g.sprite.set(n, "Enemy", true, 32, 32);
+	        g.sprite.pos(n, mstate.x, mstate.y);
+	        g.sprite.setMove(n, i % 360, 8, 320);// number, r, speed, lifetime
+		}
+	  
+		for (let i=1; i<=4; i++){
+			let c = g.sprite.check(i);//対象のSpriteに衝突しているSpriteNoを返す
 
-	    var c = g.sprite.check(2);
-
-	    this.#sc = "";
-	    for (var lp in c) {
-	        this.#sc += c[lp] + ",";
-	    }
+			this.#sc = "";
+			for (let lp in c) {
+				this.#sc += c[lp] + ",";
+				let spitem = g.sprite.get(c[lp]);//SpNo指定の場合は、SpriteItem
+				spitem.vx = spitem.vx*-1;
+				spitem.vy = spitem.vy*-1;
+				//spItemのrは更新されない(undefined):2024/04/08時点のバグ) 
+			}
+		}
 	}
 
 	draw(g){// this.visible が true時にループ毎に実行される。
 
-		//	g.screen[0].reset();
-	    //    g.screen[0].clear("black");
-	    //   g.screen[1].clear();
-	    //   g.screen[2].clear();
-		
-	    var st = "running " 
-			+ this.#i + "<br>" 
-			+ this.#sk + "<br>" 
-			+ this.#sm + "<br>"
-            + ":" + g.task.count() + "<br>" 
-			+ ":" + g.task.namelist() + "<br>"; 
+		let r = g.fpsload.result(); 
 
-	    document.getElementById("console").innerHTML
-            = st;
+	    let st = "FPS:" + Math.trunc(r.fps) + " Time:" 
+			+ Math.trunc(g.time()) + ", " 
+			+ "KEYCODE:"+ this.#sk + ", " 
+			+ "MOUSE:" + this.#sm + ", ";
+        //    + ":" + g.task.count() + "<br>" 
+		//	+ ":" + g.task.namelist() + "<br>"; 
 
-	    //g.dsp.reset();
-	    //g.dsp.clear("black");
-	    //g.sprite.pos(2, 100, 100);
+	    //document.getElementById("console").innerHTML = st;
 
 	    g.screen[0].print(st, 0, 50);
 	    g.screen[0].print(this.#sc, 0, 76);
@@ -241,23 +222,25 @@ class GameTask_Test extends GameTask {
 	    g.sprite.pos(0, 640 - (i % 640), 200, i % 360, 1.5);
 
 	    if (i % 10 == 0) {
-	        var n = g.sprite.get();
+	        let n = g.sprite.get();//空値の場合は未使用スプライトの番号を返す。
 	        g.sprite.set(n, "Enemy", true, 32, 32);
 	        g.sprite.pos(n, 640 - (i % 640), 200);
-	        g.sprite.setMove(n, i % 360, 2, 220);
+	        g.sprite.setMove(n, i % 360, 4, 320);// number, r, speed, lifetime
 	    }
 	    //g.sprite.pos(1, x, y);
+		
+	    g.sprite.pos(1, 320 + Math.cos((Math.PI/ 320)*i)*180, 200 + Math.sin((Math.PI/ 320)*i)*180);
+	    g.sprite.pos(2, 320 - Math.cos((Math.PI/ 320)*i)*180, 200 - Math.sin((Math.PI/ 320)*i)*180);
+		g.sprite.pos(3, (i % 640), 16);
+		g.sprite.pos(4, 640 - (i % 640), 368);
+		//    g.sprite.allDrawSprite();
+		//    g.screen[0].draw();
+		//    g.screen[1].draw();
+		//    g.screen[2].draw();
 
-	    g.sprite.pos(1, 640 - (i % 640), 300);
-        
-    //    g.sprite.allDrawSprite();
-    //    g.screen[0].draw();
-    //    g.screen[1].draw();
-    //    g.screen[2].draw();
+		//let r = g.fpsload.result(); 
 
-		let r = g.fpsload.result(); 
-
-	    document.getElementById("console").innerHTML += "<br>fps:" + r.fps;
-		document.getElementById("console").innerHTML += "<br>" + g.asset.check();
+	    //document.getElementById("console").innerHTML += "<br>fps:" + r.fps;
+		//document.getElementById("console").innerHTML += "<br>" + g.asset.check();
 	}
 }
