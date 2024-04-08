@@ -186,8 +186,8 @@ class GameTask_Test extends GameTask {
 			for (let lp in c) {
 				this.#sc += c[lp] + ",";
 				let spitem = g.sprite.get(c[lp]);//SpNo指定の場合は、SpriteItem
-				spitem.vx = spitem.vx*-1;
-				spitem.vy = spitem.vy*-1;
+				spitem.vx = spitem.vx*-1.1;
+				spitem.vy = spitem.vy*-1.1;
 				//spItemのrは更新されない(undefined):2024/04/08時点のバグ) 
 			}
 		}
