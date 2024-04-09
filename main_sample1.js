@@ -1,7 +1,7 @@
 // main
 // Sample1 Sprite and Mouse Input Sample(and Debug)
 //　実績がないので、Sampleと動作確認を兼ねる。
-
+//----------------------------------------------------------------------
 function main() {
 
     let sysParam = {
@@ -43,12 +43,12 @@ function main() {
 
 // SpriteFontData
 //
-
+//----------------------------------------------------------------------
 function SpriteFontData() {
 
 	let sp_ch_ptn = [];
 
-    for (i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) {
         for (j = 0; j < 16; j++) {
             ptn = {
                 x: 12 * j,
@@ -69,8 +69,8 @@ function SpriteFontData() {
 
         let ch = [];
 
-        for (i = 0; i < 7; i++) {
-            for (j = 0; j < 16; j++) {
+        for (let i = 0; i < 7; i++) {
+            for (let j = 0; j < 16; j++) {
                 ptn = {
                     x: 8 * j + ((t % 2 == 0) ? 0 : 128),
                     y: 8 * i + 128 + ((t >= 2) ? 64 : 0),
@@ -94,21 +94,22 @@ function SpriteFontData() {
     ]
 }
 
-// GameTaskTemplate
+// GameTaskTemplate//----------------------------------------------------------------------
 //
 class GameTask_Test extends GameTask {
 
 	#i = 0;
 	#x = 0;	#y = 0;
-	#sk = ""; #sm = ""; #sc = "";
-	#tc = 0; #dt = ""; #dc = 0;
-	#sp = [];
-	#block;
+	#sk = ""; #sm = ""; #sc = ""; //KEYBOARD TEXT,MOUSE TEXT, COLISION TEXT
+	#tc = 0; #dt = ""; #dc = 0;   //DELAYTIME ,DELTATIME TEXT/ DESTROYBLOCKCOUNT
+	#dtt = 0;//DELAYTRIGGER
+	#sp = []; //SPRITETABLE
+	#block; #bbam; #bhtm; //BLOCK,BLOCKBREAKAFTERMAP,BLOCKHITMAP
 	
 	constructor(id){
 		super(id);
 	}
-
+//----------------------------------------------------------------------
 	pre(g){// 最初の実行時に実行。
  	    //g.font["8x8white"].useScreen(1);
 
@@ -144,6 +145,15 @@ class GameTask_Test extends GameTask {
     	    }
 	    )
 
+	    g.sprite.setPattern("block", {
+	        image: "SPGraph",
+	        wait: 0,
+	        pattern: [
+                { x: 0, y: 0, w: 2, h: 2, r: 0, fv: false, fh: false }
+	            ]
+	        }
+        )
+
 	    g.sprite.set(0, "Player", true, 32, 32);
 	    g.sprite.set(1, "dummy", true, 32, 32);
 	    g.sprite.set(2, "dummy", true, 32, 32);
@@ -161,22 +171,33 @@ class GameTask_Test extends GameTask {
 
 		g.screen[0].setBackgroundcolor("black");
 
-		this.#block = this.#resetblock();
-
+		this.#block = this.#resetblock(true);
+		this.#bbam = this.#resetblock(false);
+		this.#bbam[24].fill(true);
+		this.#bhtm = this.#resetblock(false);
+	
+		this.#i = 0;
 	}
 
-	#resetblock(){
-		let blk = new Array(48);
-		for (let j=0; j<25; j++){
-			blk[j] = new Array(32);
-			blk[j].fill(true);
+	#resetblock(sw){
+		const ROW = 32;
+		const COL = 25;
+
+		let blk = new Array(COL);
+		for (let j=0; j<COL; j++){
+			blk[j] = new Array(ROW);
+			blk[j].fill(sw);
 		}
 		return blk;
 	}	
-
+//----------------------------------------------------------------------
 	step(g){// this.enable が true時にループ毎に実行される。
-	    i++;
-		this.#i = i;
+		const ROW = 32;
+		const COL = 25;
+
+		//i++;
+		this.#i++; //= i;
+		//this.#i+=3; //= i;
 
 	    let w = g.keyboard.check();
 
@@ -193,22 +214,34 @@ class GameTask_Test extends GameTask {
 	    this.#x = mstate.x;
 	    this.#y = mstate.y;
 
+		
+
 	    if (mstate.button == 0) {
-	        let n = g.sprite.get();//空値の場合は未使用スプライトの番号を返す。
-	        g.sprite.set(n, "Enemy", true, 32, 32);
-	        g.sprite.pos(n, mstate.x, mstate.y);
-	        g.sprite.setMove(n, i % 360, 8, 320);// number, r, speed, lifetime
-			this.#sp.push(g.sprite.get(n));
+			if (this.#dtt < g.time()) {
+				this.#dtt = g.time()+250;
+
+				let n = g.sprite.get();//空値の場合は未使用スプライトの番号を返す。
+				g.sprite.set(n, "Enemy", true, 32, 32);
+				g.sprite.pos(n, mstate.x, mstate.y);
+				g.sprite.setMove(n, this.#i % 360, 8, 320);// number, r, speed, lifetime
+				this.#sp.push(g.sprite.get(n));
+			}
 		}
 	  
 		if (this.#tc < g.time()) {
+
 			this.#tc = g.time()+500;
 			this.#sc = "";
 			this.#dt = "";
 			
 			this.#sp = flashsp(this.#sp);
 
-			if (this.#dc <=0){this.#block = this.#resetblock();}
+			if (this.#dc <=0){
+				this.#block = this.#resetblock(true);
+				this.#bbam = this.#resetblock(false);
+				this.#bhtm = this.#resetblock(false);
+				this.#bbam[23].fill(true);
+			}
 		}
 		for (let i=0; i<=4; i++){
 			let c = g.sprite.check(i);//対象のSpriteに衝突しているSpriteNoを返す
@@ -216,8 +249,8 @@ class GameTask_Test extends GameTask {
 			for (let lp in c) {
 				this.#sc += c[lp] + ",";
 				let spitem = g.sprite.get(c[lp]);//SpNo指定の場合は、SpriteItem
-				spitem.vx = spitem.vx*-1.1;
-				spitem.vy = spitem.vy*-1.1;
+				spitem.vx = spitem.vx*-1.05;
+				spitem.vy = spitem.vy*-1.05;
 				//spItemのrは更新されない(undefined):2024/04/08時点のバグ) 
 			}
 		}
@@ -232,7 +265,7 @@ class GameTask_Test extends GameTask {
 			}
 			return ar;
 		}
-
+		//---------------------breakcheck(block sprite hit check
 		for (let i in this.#sp){
 			let p = this.#sp[i];
 			let cx = Math.trunc(p.x/32);
@@ -240,15 +273,69 @@ class GameTask_Test extends GameTask {
 			if (cy < this.#block.length){
 				if (cx < this.#block[cy].length){
 					if (this.#block[cy][cx]){
-						this.#block[cy][cx] = false;
-						p.vx = p.vx*-1.1;
-						p.vy = p.vy*-1.1;
+						if (p.id == "Enemy"){
+							this.#block[cy][cx] = false;
+							//this.#bbam[cy][cx] = true;
+							this.#bhtm[cy][cx] = true;
+							p.vx = p.vx*-1.05;
+							p.vy = p.vy*-1.05;
+						}else{
+							if (p.id == "block"){
+								if (cy>=1){
+								this.#block[cy-1][cx] = true;
+								this.#bbam[cy-1][cx] = false;
+								//this.#bhtm[cy-1][cx] = false;
+								p.visible = false;
+								}
+							}
+							//p.vx = p.vx*-1.1;
+							//p.vy = p.vy*-1.1;
+						}
 					}
 				}
 			}
 		}
+		//-scan
+		
+		let f = false;
+		let c = []; 
+		for (let i=0; i<=ROW; i++){
+			for (let j=COL-1; j>=0; j--){
+				if (this.#block[j][i]){
+						if (!f){
+							c.push({x:i,y:j});
+						}
+						f = true;
+					}else{
+						//this.#bbam[j][i] = true;		
+						f = false;
+					continue;
+				}	
+			}
+		}
+		/*
+		for (let i in c){
+			if (!this.#bbam[c[i].y][c[i].x]){
+				this.#bbam[c[i].y][c[i].x] = true;
+			}else{
+				delete c[i];
+			}
+		}
+		*/
+		for (let i in c){
+			if (!this.#bbam[c[i].y][c[i].x]){
+				this.#bbam[c[i].y][c[i].x] = true;
+				this.#block[c[i].y][c[i].x] = false;
+				let n = g.sprite.get();//空値の場合は未使用スプライトの番号を返す。
+				g.sprite.set(n, "block", true, 32, 32);
+				g.sprite.pos(n, c[i].x*32, c[i].y*32+32);
+				g.sprite.setMove(n, 180, 6, 500);// number, r, speed, lifetime
+				this.#sp.push(g.sprite.get(n));
+			}
+		}
+		
 	}
-
+//----------------------------------------------------------------------
 	draw(g){// this.visible が true時にループ毎に実行される。
 
 		let r = g.fpsload.result(); 
@@ -270,11 +357,13 @@ class GameTask_Test extends GameTask {
 		let s=""; for (let i in this.#sp){s+= i+"."}
 
 	    g.font["std"].putchr("" + st, 0, 300);
-	    g.font["8x8green"].putchr("Col:" + this.#sc, 0, 324);
-	    g.font["8x8red"].putchr("SPACE KEY:" + g.keyboard.space + ", Sprite:" + this.#sp.length + "/" +s, 0, 340);
-	    g.font["8x8white"].putchr("DeltaT:" + g.deltaTime().toString().substring(0, 5), 0, 356);
+	    g.font["8x8green"].putchr("Col:" + this.#sc.length*2 + "/s", 0, 324);
+	    //g.font["8x8red"].putchr("SPACE KEY:" + g.keyboard.space + ", Sprite:" + this.#sp.length + "/" +s, 0, 340);
+	    g.font["8x8red"].putchr("Sprite:" + this.#sp.length, 0, 340);
+		g.font["8x8white"].putchr("DeltaT:" + g.deltaTime().toString().substring(0, 5), 0, 356);
 		this.#dt += Math.round(60/1000*g.deltaTime()).toString().substring(0, 5) + ",";
-		g.font["8x8white"].putchr("block:" + this.#dc + " 1/60  :" + this.#dt, 0, 364);
+		g.font["8x8white"].putchr("block:" + this.#dc, 0, 364);
+//		g.font["8x8white"].putchr("block:" + this.#dc + " 1/60  :" + this.#dt, 0, 364);
 		//g.font["std"].putchr(st, 0, 300);
 
 
@@ -285,21 +374,25 @@ class GameTask_Test extends GameTask {
         //g.sprite.put(0, 100, 480 - (i % 480));
 	    //g.sprite.pos(0, 640 - (i % 640), 480 - (i % 480), -45, 1.5);
 
-	    g.sprite.pos(0, 640 - (i % 640), 200, i % 360, 1.5);
+	    g.sprite.pos(0, 640 - (this.#i % 640), 200, this.#i % 360, 1);
 
-	    if (i % 10 == 0) {
+		this.#x = 640 - (this.#i % 640);
+
+	    if (this.#i % 20 == 0) {
 	        let n = g.sprite.get();//空値の場合は未使用スプライトの番号を返す。
 	        g.sprite.set(n, "Enemy", true, 32, 32);
-			g.sprite.pos(n, 640 - (i % 640) + Math.cos((Math.PI/ 320)*i)*48, 200 + Math.sin((Math.PI/ 320)*i)*48);
-			g.sprite.setMove(n, i % 360, 4, 320);// number, r, speed, lifetime
+			g.sprite.pos(n, 640 - ( this.#i % 640) + Math.cos((Math.PI/ 320)*this.#i)*64, 200 + Math.sin((Math.PI/ 320)*i)*64);
+			g.sprite.setMove(n, this.#i % 360, 4, 800);// number, r, speed, lifetime
 			this.#sp.push(g.sprite.get(n));
 	    }
 	    //g.sprite.pos(1, x, y);
 		
-	    g.sprite.pos(1, 320 + Math.cos((Math.PI/ 320)*i)*180, 200 + Math.sin((Math.PI/ 320)*i)*180);
-	    g.sprite.pos(2, 320 - Math.cos((Math.PI/ 320)*i)*180, 200 - Math.sin((Math.PI/ 320)*i)*180);
-		g.sprite.pos(3, (i % 640), 16);
-		g.sprite.pos(4, 640 - (i % 640), 368);
+	    g.sprite.pos(1, this.#x + Math.cos((Math.PI/320)*this.#i)*180, 200 + Math.sin((Math.PI/320)*this.#i)*180);
+	    g.sprite.pos(2, this.#x + Math.cos((Math.PI/320)*-this.#i)*180, 200 + Math.sin((Math.PI/320)*-this.#i)*180);
+	    g.sprite.pos(3, this.#x - Math.cos((Math.PI/320)*this.#i)*180, 200 - Math.sin((Math.PI/320)*this.#i)*180);
+	    g.sprite.pos(4, this.#x - Math.cos((Math.PI/320)*-this.#i)*180, 200 - Math.sin((Math.PI/320)*-this.#i)*180);
+		//g.sprite.pos(3, (this.#i % 640), 16);
+		//g.sprite.pos(4, 640 - (this.#i % 640), 368);
 		//    g.sprite.allDrawSprite();
 		//    g.screen[0].draw();
 		//    g.screen[1].draw();
@@ -314,11 +407,26 @@ class GameTask_Test extends GameTask {
 		for (let i=0; i<32; i++){
 			for (let j=0; j<24; j++){
 				if (this.#block[j][i]){
-					g.screen[0].fill(i*32,j*32,31,31,"rgb(" + (i*8)%256 + "," + (j*8)%256 + ",255)");
+					g.screen[0].fill(i*32,j*32+8,31,23,"rgb(" + (i*8)%256 + "," + (j*8)%256 + ",255)");
 					this.#dc++;
 				}
+				if ((!this.#bbam[j][i])&&(!this.#bhtm[j][i])){
+					g.screen[0].fill(i*32+8,j*32,16,7,"rgb(" + (i*8)%256 + "," + (j*8)%256 + ",255)");
+					//g.screen[0].fill(i*32,j*32,15,15,"rgb(" + (i*8)%64 + "," + (j*8)%64 + ",127)");
+				}
+				if (this.#bhtm[j][i]){
+					g.screen[0].fill(i*32+2,j*32+2,4,2,"rgb(" + (i*8)%64+128 + "," + (j*8)%64+128 + ",127)");
+				}
+			}
+		}
+
+		for (let i in this.#sp){
+			let p = this.#sp[i];
+			if (p.id == "block"){
+				g.screen[0].fill(p.x,p.y-32,31,23,"rgb(" + (Math.trunc(p.x/32)*8)%256 + "," + (Math.trunc((p.y-32)/32)*8)%256 + ",255)");
 			}
 		}
 		//g.screen[0].fill(0,768-350,1024,768-350,"blue");
 	}
 }
+//----------------------------------------------------------------------
