@@ -1,0 +1,152 @@
+@charset "Shift_JIS";
+
+* {
+	margin:0; padding:0; 	/*全要素のマージン・パディングをリセット*/
+} 
+/*
+div {
+	visibility: visible ;
+	border-radius: 10px;
+	position : absolute;
+	border : 3px solid DimGray ;
+	border-top-width : 1px;
+	border-left-width : 1px;
+	
+}
+
+div#manual_1 
+{
+	width : 1020px;
+	height :188px;
+	top :0x ;
+	left:1px ;
+	z-index: 2;
+	color : #FFFFFF ;
+	visibility : hidden;
+}
+	
+div#manual_2 
+{
+	width : 320px;
+	height :280px;
+	top :196px ;
+	left:700px ;
+	z-index: 2;
+	color : #FFFFFF ;
+	visibility : hidden;
+}
+
+div#undermenu 
+{
+	height :72px;
+	left:0px ;
+	visibility : hidden;
+}
+
+div#console 
+{
+	left:0px ;
+	z-index: 2;
+	color : #FFFFFF ;
+	visibility : hidden;
+}
+*/
+canvas
+{
+	top :0px ;
+	left:0px ;
+	position : absolute;
+}
+
+@media (max-width : 599px){
+	canvas
+	{
+		width : 320px;
+		height :200px;
+	}
+	/*
+	div#undermenu 
+	{
+		width : 316px;
+		top :240px ;
+	}
+	div#console 
+	{
+		width : 320px;
+		height :160px;
+		top :80px ;
+	}
+	*/
+}
+@media (min-width : 600px){
+	canvas
+	{
+		width : 640px;
+		height :400px;
+	}
+	/*
+	div#undermenu 
+	{
+		width : 636px;
+		top :480px ;
+	}
+
+	div#console 
+	{
+		width : 640px;
+		height :160px;
+		top :320px ;
+	}
+	*/
+}
+@media (min-width : 1025px){
+	canvas
+	{
+		width : 1024px;
+		height :640px;
+	}
+	/*
+	div#undermenu 
+	{
+		width : 1020px;
+		top :768px ;
+	}
+
+	div#console 
+	{
+		width : 640px;
+		height :160px;
+		top :600px ;
+	}
+	*/
+}
+.resizeimage * { width: 100%; }
+
+/*
+canvas#Layer1
+{
+	width : 512px;
+	height :384px;
+	top :0px ;
+	left:512px ;
+	position : absolute;
+}
+
+canvas#Layer2
+{
+	width : 0px;
+	height :384px;
+	top :384px ;
+	left:0px ;
+	position : absolute;
+}
+
+canvas#Layer3
+{
+	width : 320px;
+	height :200px;
+	top :384px ;
+	left:512px ;
+	position : absolute;
+}
+*/
