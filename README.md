@@ -2,9 +2,11 @@ GameCore　/Javascript
 ===
 **Personal Web Game Library.**
 
-https://e3sh.github.io/WebGameCoreSystem/sample1.html
+UPDATE 2024.04.13. スプライト周りを変更したのでサンプルが動作しなくなっています。
 
-https://e3sh.github.io/WebGameCoreSystem/sample2.html
+https://e3sh.github.io/WebGameCoreSystem/sample/sample1.html
+
+https://e3sh.github.io/WebGameCoreSystem/sample/sample2.html
 
 
  UPDATE 2024.02.21. ↑↑↑ 動作サンプルのリンクを追加 ↑↑↑ 　
@@ -140,38 +142,59 @@ Imageやaudioオブジェクトを管理
 
 *スプライトの表示　他*
 	
-表示するスプライトの設定  
-
+	表示するスプライトの設定  
+	(2024/04/12-)//New Function Method
 	game.sprite.set( spNumber, PatternID,   
 		[bool: colisionEnable],   
 		[int: colWidth], [int: colHeight] );  
-		
+	
+ 	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) return item	
 
-(表示先の変更:  
+	.spriteItem
+    		.view()/Hide() visible true/false
+    		.pos = function(x, y, r=0, z=0)
+    		.move = function(dir, speed, aliveTime)
+    		.stop = function()
+    		.dispose = function()
+    		.put = function (x, y, r, z) 
+    		//.reset = function()
+
+	(2024/04/12-)
+	//New Function Method
+	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) return item
+	.itemList = function() return SpriteTable
+	.itemFlash = function()
+	.itemIndexRefresh = function()
+	.CollisionCheck = function()
+
+	 (表示先の変更:  
 
 		game.sprite.useScreen( screen no );  
 		
-)  
+	)	  
 
 	game.sprite.pos( spNumber, x, y, [r], [zoom] ) //スプライト表示位置指定　	
 	(game.sprite.put( spNumber, x, y, [r], [zoom] )　//スプライトの表示(個別))
-	game.sprite.allDrawSprite(); //登録中スプライトの表示
 
 
-簡易移動  
+ 
+ 	.manualDraw = function (bool) (modeChange)
+ 	//game.sprite.allDrawSprite(); //登録中スプライトの表示　システムが自動的に呼びます。
+
+
+	簡易移動  
 
 	game.sprite.setMove( spNumber, 方向(0-359),
 		 1フレームの移動量, 消えるまでのフレーム数(0:消えない));
 
-衝突判定  
+	衝突判定  
 
 	game.sprite.check( spNumber ); return 衝突しているSpNumberの配列[]
 
-状態確認  
+	状態確認  
 
 	game.sprite.get( spNumber ); return spState
 	game.sprite.get(); return 表示していない(空きの）SpNumber
-
 
 *スプライトパターン定義*
 
@@ -186,15 +209,15 @@ Imageやaudioオブジェクトを管理
 			]
 		}
 	)
-x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
-fv:trueで上下反転　fh:trueで左右反転
+	x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
+	fv:trueで上下反転　fh:trueで左右反転
 
 
 *スプライトフォント*  
 
 	game.font[ fontID ].putchr( text, x, y, [zoom] );
 	
-表示先の変更:  
+	表示先の変更:  
 
 	game.font[ fontID ].useScreen( screen no );  
   
@@ -220,11 +243,11 @@ fv:trueで上下反転　fh:trueで左右反転
 
 	game.keyboard.check();  
 	
-戻り値: 配列[キーコード]がtureで押下/falseまたは値が無い場合は押していない状態
+	戻り値: 配列[キーコード]がtureで押下/falseまたは値が無い場合は押していない状態
 
-Boolean(戻り値配列[キーコード])　が偽の場合も押していない状態。
+	Boolean(戻り値配列[キーコード])　が偽の場合も押していない状態。
 
-注意点として入力チェックするときは 値の有無チェック後実行しないとエラーになる。
+	注意点として入力チェックするときは 値の有無チェック後実行しないとエラーになる。
 
 例：
 
