@@ -193,29 +193,36 @@ Imageやaudioオブジェクトを管理
 
 	Propaty）
 	//任意のプロパティを追加する場合は上のメソッドと以下のプロパティに重複しないよう個別変数を割り当てる
-        this.x  = 0;
-        this.y  = 0;
-        this.r  = 0;
-        this.z  = 0;//Reserb
-        this.vx = 0;
-        this.vy = 0;
-	表示順(数値が大きいほど手前に表示)	
-        this.priority = 0;
-        this.collisionEnable = true;
-        this.collision = {w:0,h:0};
-        this.id = "";
-        this.visible = false;
-	CollisionCheckで衝突しているitemのオブジェクトが入る	
-        this.hit = [];
-        this.alive = 0;
-        this.index = 0; 
-        this.living = true;
-	通常のスプライトを表示するかどうか	
+        .x  = 0;
+        .y  = 0;
+        .r  = 0;
+        .z  = 0;//Reserb
+        .vx = 0;
+        .vy = 0;
+	
+    表示順(数値が大きいほど手前に表示)	
+        .priority = 0;
+
+        .collisionEnable = true;
+        .collision = {w:0,h:0};
+        .id = "";
+        .visible = false;
+	
+    CollisionCheckで衝突しているitemのオブジェクトが入る	
+        .hit = [];
+     
+        .alive = 0;
+        .index = 0; 
+        .living = true;
+	
+    通常のスプライトを表示するかどうか	
         .normalDrawEnable = true;
+	
     castomDrawがnormalDrawの前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
-	    .beforeCustomDraw = false;
-	通常は空/内容あるものに変えると処理される
-	    .customDraw = function(g, screen){};
+        .beforeCustomDraw = false;
+	
+    通常は空/内容あるものに変えると処理される
+        .customDraw = function(g, screen){};
 
 	//--------------------------------------------------------
 
