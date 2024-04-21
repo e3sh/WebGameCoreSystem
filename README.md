@@ -2,18 +2,17 @@ GameCore　/Javascript
 ===
 **Personal Web Game Library.**
 
-UPDATE 2024.04.13. スプライト周りを変更したのでサンプルが動作しなくなっています。
+UPDATE 2024.04.21　使用リポリトジ(サンプル)
 
-https://e3sh.github.io/WebGameCoreSystem/sample/sample1.html
+https://e3sh.github.io/BBD/BLOCKDROPdnc.html
 
-https://e3sh.github.io/WebGameCoreSystem/sample/sample2.html
+https://e3sh.github.io/ERA-T/ERATANKdnc.html
 
+UPDATE 2024.04.13. スプライト周りを変更したのsampleフォルダ内のサンプルは動作しません
 
- UPDATE 2024.02.21. ↑↑↑ 動作サンプルのリンクを追加 ↑↑↑ 　
- 
- UPDATE 2023.08.19. フォルダ構成の変更など。
+UPDATE 2023.08.19. フォルダ構成の変更など。
 
- FirstCommit [committed on Nov 23, 2012] ...← 注)現時点でも10年以上前からほとんど変わってません
+ FirstCommit [committed on Nov 23, 2012] ...← 注)現時点でも10年以上前からほとんど変わってません。
 
 ----------------------------------------
 特徴
@@ -140,61 +139,85 @@ Imageやaudioオブジェクトを管理
 *スプライトやイメージ表示*
 
 
-*スプライトの表示　他*
+*スプライトの表示　他*　function GameSpriteControl(g)
 	
-	表示するスプライトの設定  
+	表示するスプライトの定義  
 	(2024/04/12-)//New Function Method
 	game.sprite.set( spNumber, PatternID,   
 		[bool: colisionEnable],   
 		[int: colWidth], [int: colHeight] );  
-	
- 	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) return item	
-
-	.spriteItem
-    		.view()/Hide() visible true/false
-    		.pos = function(x, y, r=0, z=0)
-    		.move = function(dir, speed, aliveTime)
-    		.stop = function()
-    		.dispose = function()
-    		.put = function (x, y, r, z) 
-    		//.reset = function()
 
 	(2024/04/12-)
 	//New Function Method
-	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) return item
+	スプライトアイテム登録/生成
+ 	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) 
+	return item	
+
+	個別スプライト操作
+	.spriteItem　//スプライト
+		表示/非表示
+    		.view()/Hide() visible true/false
+		表示位置指定
+    		.pos = function(x, y, r=0, z=0)
+		移動  	
+    		.move = function(dir, speed, aliveTime)
+			frame毎に.moveFuncが呼ばれる(通常は直線移動だが差し替えるとその内容で移動)	
+				
+		移動停止
+			.stop = function()
+    	廃棄
+			.dispose = function()
+    	表示
+			.put = function (x, y, r, z) 
+    		//.reset = function()
+
+	スプライトリスト操作
+	リスト取得
 	.itemList = function() return SpriteTable
+
+	リストリセット
 	.itemFlash = function()
+
+	リストから廃棄済みのスプライトを削除して再インデックス
 	.itemIndexRefresh = function()
+
+	衝突判定（リスト内すべてに対して行われる、個別スプライトのhit配列にオブジェクトで返す）  
 	.CollisionCheck = function()
 
-	 (表示先の変更:  
-
-		game.sprite.useScreen( screen no );  
-		
-	)	  
-
-	game.sprite.pos( spNumber, x, y, [r], [zoom] ) //スプライト表示位置指定　	
-	(game.sprite.put( spNumber, x, y, [r], [zoom] )　//スプライトの表示(個別))
-
-
- 
+	 表示先SCREENの選択  
+    .useScreen( screen no );  
+		  
  	.manualDraw = function (bool) (modeChange)
  	//game.sprite.allDrawSprite(); //登録中スプライトの表示　システムが自動的に呼びます。
+	↑moveFuncも自動更新の場合に処理される。
 
+	Propaty）
+	//任意のプロパティを追加する場合は上のメソッドと以下のプロパティに重複しないよう個別変数を割り当てる
+        this.x  = 0;
+        this.y  = 0;
+        this.r  = 0;
+        this.z  = 0;//Reserb
+        this.vx = 0;
+        this.vy = 0;
+	表示順(数値が大きいほど手前に表示)	
+        this.priority = 0;
+        this.collisionEnable = true;
+        this.collision = {w:0,h:0};
+        this.id = "";
+        this.visible = false;
+	CollisionCheckで衝突しているitemのオブジェクトが入る	
+        this.hit = [];
+        this.alive = 0;
+        this.index = 0; 
+        this.living = true;
+	通常のスプライトを表示するかどうか	
+        .normalDrawEnable = true;
+    castomDrawがnormalDrawの前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
+	    .beforeCustomDraw = false;
+	通常は空/内容あるものに変えると処理される
+	    .customDraw = function(g, screen){};
 
-	簡易移動  
-
-	game.sprite.setMove( spNumber, 方向(0-359),
-		 1フレームの移動量, 消えるまでのフレーム数(0:消えない));
-
-	衝突判定  
-
-	game.sprite.check( spNumber ); return 衝突しているSpNumberの配列[]
-
-	状態確認  
-
-	game.sprite.get( spNumber ); return spState
-	game.sprite.get(); return 表示していない(空きの）SpNumber
+	//--------------------------------------------------------
 
 *スプライトパターン定義*
 
