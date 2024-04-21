@@ -136,12 +136,10 @@ Imageやaudioオブジェクトを管理
 **デバイス管理**
 
 ----------------------------------------
-*スプライトやイメージ表示*
-
-
-*スプライトの表示　他*　function GameSpriteControl(g)
+**スプライトの表示**　
 	
-	表示するスプライトの定義  
+表示するスプライトの定義
+ 
 	(2024/04/12-)//New Function Method
 	game.sprite.set( spNumber, PatternID,   
 		[bool: colisionEnable],   
@@ -153,7 +151,8 @@ Imageやaudioオブジェクトを管理
  	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) 
 	return item	
 
-	個別スプライト操作
+個別スプライト操作
+ 
 	.spriteItem　//スプライト
 		表示/非表示
     		.view()/Hide() visible true/false
@@ -171,27 +170,29 @@ Imageやaudioオブジェクトを管理
 			.put = function (x, y, r, z) 
     		//.reset = function()
 
-	スプライトリスト操作
+スプライトリスト操作
+ 
 	リスト取得
-	.itemList = function() return SpriteTable
+	    .itemList = function() return SpriteTable
 
 	リストリセット
-	.itemFlash = function()
+	    .itemFlash = function()
 
 	リストから廃棄済みのスプライトを削除して再インデックス
-	.itemIndexRefresh = function()
+	    .itemIndexRefresh = function()
 
 	衝突判定（リスト内すべてに対して行われる、個別スプライトのhit配列にオブジェクトで返す）  
-	.CollisionCheck = function()
+	    .CollisionCheck = function()
 
-	 表示先SCREENの選択  
-    .useScreen( screen no );  
+	表示先SCREENの選択  
+            .useScreen( screen no );  
 		  
- 	.manualDraw = function (bool) (modeChange)
- 	//game.sprite.allDrawSprite(); //登録中スプライトの表示　システムが自動的に呼びます。
-	↑moveFuncも自動更新の場合に処理される。
+ 	    .manualDraw = function (bool) (modeChange)
+ 	    //game.sprite.allDrawSprite(); //登録中スプライトの表示　システムが自動的に呼びます。
+	    ↑moveFuncも自動更新の場合に処理される。
 
-	Propaty）
+プロパティ
+
 	//任意のプロパティを追加する場合は上のメソッドと以下のプロパティに重複しないよう個別変数を割り当てる
         .x  = 0;
         .y  = 0;
