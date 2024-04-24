@@ -2,6 +2,7 @@
 // update 2024/04/13
 // . inputGamepad   - inputGamepad()    0番-Standard以外での動作不具合対策（そのまま動くはず）        
 // . spriteControl  - GameSpriteControl() 使いにくかったので使用方法変更（sample書換要
+//                    2024/04/22-23 customMove/Draw機能追加、DeltaTime補正追加
 
 const w = [
     //WebGameCoreSystem Files
@@ -19,7 +20,7 @@ const w = [
     ,"proc/dev/soundControl.js"
     ,"proc/dev/offScreen.js"
     ,"proc/dev/offScreenTypeC.js"
-    ,"proc/func/spriteControl2.js"  //2024/04/13更新
+    ,"proc/func/spriteControl2.js"  //2024/04/23更新
     ,"proc/func/spriteFontControl.js"
     ,"proc/func/fontPrintControl.js"
     ,"proc/task/GameTaskClass.js"
