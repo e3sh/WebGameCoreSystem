@@ -319,12 +319,21 @@ Imageやaudioオブジェクトを管理
 	game.joystick.check();
 
 **サウンド**
+*オーディオ再生*
 
 	game.sound.play( id ); 
 	//id: assetで読み込ませたsoundのID   
 	
 	game.sound.effect( id );  
 	// 最初から再生
+
+*BEEP/SoundGenerator*
+	https://e3sh.github.io/BeepFunction
+
+	note = game.beep.noteCreate();
+	//score [{[name.],Freq:,Vol;,time:,use:false},..]
+
+	note.play(score, starttime(game.time();));
 
 **ストレージ**
 

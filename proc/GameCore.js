@@ -52,6 +52,8 @@ function GameCore( sysParam ) {
 	var touchpad_ = new inputTouchPad( sysParam.canvasId );//<=とりあえずにscreen[4-]のキャンバス指定
 	var vGpad_ = new inputVirtualPad(mouse_, touchpad_);
 
+	let beep_ = new Beepcore();
+
 	var screen_ = [];
 
 	var canvas = document.getElementById(sysParam.canvasId);
@@ -118,6 +120,7 @@ function GameCore( sysParam ) {
 			//if (blinkCounter > BLINK_ITVL) blinkCounter = 0; 	
 
 			task_.step();
+			beep_.step(t);//beep play再生用
 
 			//document.getElementById("manual_1").innerHTML = "";
 			//ctx.clearRect(0,0,1024,800);
@@ -176,6 +179,7 @@ function GameCore( sysParam ) {
 	this.screen = screen_;
 
 	this.sound = sound_;
+	this.beep = beep_;
     //
 	this.sprite = sprite_;
 	this.font = font_;

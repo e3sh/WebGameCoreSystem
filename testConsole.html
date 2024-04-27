@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src= "include.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    // main
+    //----------------------------------------------------------------------
+    function main() {
+
+        const sysParam = {
+            canvasId: "layer0",
+            screen: [ 
+                { resolution: { w: 640, h: 480 , x:0, y:0 } }
+            ]
+        }
+        const game = new GameCore( sysParam );
+
+        //Game Asset Setup
+        pictdata(game);
+
+        game.kanji = new fontPrintControl(
+            game
+            ,game.asset.image["ASCII"].img,	 6, 8
+            ,game.asset.image["JISLV1"].img,12, 8
+        )
+
+        //Game Task Setup
+        game.task.add(new GameTask_Main("main"));
+
+        //
+        game.screen[0].setBackgroundcolor("black");//"Navy"); 
+        game.screen[0].setInterval(1); 
+
+        game.run();
+    }
+
+    //----------------------------------------------------------------------
+    //Image Asset Setup
+    function pictdata(g){
+        g.asset.imageLoad( "JISLV1" ,"pict/k12x8_jisx0208c.png");
+        g.asset.imageLoad( "ASCII"  ,"pict/k12x8_jisx0201c.png");
+    }
+
+    // ----------------------------------------------------------------------
+    // GameTask
+    class GameTask_Main extends GameTask {
+
+        scene;
+
+        constructor(id){
+            super(id);
+        }
+        //----------------------------------------------------------------------
+        pre(g){// 最初の実行時に実行。
+            this.scene = [];
+
+            this.scene[	"Gpad"	] = new SceneGPad();
+            this.scene[	"VGpad"	] = new SceneVGPad();
+
+            g.kanji.useScreen(0);
+
+            g.beep.oscSetup(1);
+
+            let note = g.beep.createNote(1);
+            note.on(0);
+
+            let score =["C5","C6"];
+            let s = g.beep.makeScore(score, 100, 1);
+            note.play(s, g.time());
+        }
+        //----------------------------------------------------------------------
+        step(g){// this.enable が true時にループ毎に実行される。
+
+            const RESO_X = 640;
+            const RESO_Y = 480;
+
+            // Input Keyboard ENTRY Check
+            let w = g.keyboard.check();
+
+            let akey = false; if (Boolean(w[65])) {if (w[65]) akey = true;}
+            let dkey = false; if (Boolean(w[68])) {if (w[68]) dkey = true;}
+            let wkey = false; if (Boolean(w[87])) {if (w[87]) wkey = true;}
+            let skey = false; if (Boolean(w[83])) {if (w[83]) skey = true;}
+            let qkey = false; if (Boolean(w[81])) {if (w[81]) qkey = true;}
+            let ekey = false; if (Boolean(w[69])) {if (w[69]) ekey = true;}
+
+            let upkey	 = false; if (Boolean(w[38])) {if (w[38]) upkey	  = true;}
+            let downkey  = false; if (Boolean(w[40])) {if (w[40]) downkey = true;}
+            let leftkey  = false; if (Boolean(w[37])) {if (w[37]) leftkey = true;}
+            let rightkey = false; if (Boolean(w[39])) {if (w[39]) rightkey= true;}
+
+            let spacekey = false; if (Boolean(w[32])) {if (w[32]) spacekey= true;}
+            let zkey = false; if (Boolean(w[90])) {if (w[90]) zkey= true;}
+
+            let homekey = false; if (Boolean(w[36])) {if (w[36]) homekey = true;}
+            let pkey = false; if (Boolean(w[80])) {if (w[80]) pkey = true;}
+
+            // Input GamePad ENTRY Check
+            let r = g.gamepad.check();
+
+            let lb = g.gamepad.btn_lb;
+            let rb = g.gamepad.btn_rb;
+            let abtn = g.gamepad.btn_a;
+            let xbtn = g.gamepad.btn_x;
+                    
+            let backbtn = g.gamepad.btn_back;
+            
+            let ar = g.gamepad.r;
+            let axes = g.gamepad.axes;
+
+            upkey	= (upkey	|| wkey)?true:false;
+            downkey = (downkey	|| skey)?true:false;
+            leftkey = (leftkey	|| akey)?true:false;
+            rightkey = (rightkey|| dkey)?true:false;
+
+            let fullscr = (homekey || backbtn)?true:false;
+            if (fullscr){
+                if (!document.fullscreenElement){ 
+                    g.systemCanvas.requestFullscreen();
+            }
+            }
+
+            // Input Mouse ENTRY Check
+            let mstate = g.mouse.check();
+            /*
+            if ((mstate.x != this._sm.old_x)||(mstate.x != this._sm.old_x)){
+                this._x = mstate.x;
+                this._y = mstate.y;
+                this._sm.old_x = mstate.x;
+                this._sm.old_y = mstate.y;
+            }
+            let whl = false; 
+            let whr = false;
+            /* 
+            if (mstate.wheel != 0) {
+                whl = (Math.sign(mstate.wheel)<0)?true:false;
+                whr = (Math.sign(mstate.wheel)>0)?true:false;
+            }
+            */
+            // Input VGpad ENTRY
+            let v = g.vgamepad.check();
+
+            let vLbtn = false; if (Boolean(v.button[0])) {if (v.button[0]) vLbtn = true;}
+            let vRbtn = false; if (Boolean(v.button[1])) {if (v.button[1]) vRbtn = true;}
+            let vUbtn = false; if (Boolean(v.button[2])) {if (v.button[2]) vUbtn = true;}
+            let vDbtn = false; if (Boolean(v.button[3])) {if (v.button[3]) vDbtn = true;}
+
+            //Input Mixing
+            if (r && (ar != -1)){
+
+                //let vx = Math.trunc(axes[0]*30);
+                //let vy = Math.trunc(axes[1]*30);
+
+                //vx = (Math.abs(vx) > 3)? vx:0; vy = (Math.abs(vy) > 3)?vy:0; //StickのDrift対応　閾値10％
+
+                this._x = axes[0];//this._x + vx;
+                this._y = axes[1];//this._y + vy;
+            }else if (v.distance != -1){
+                let r = (v.deg-90) * (Math.PI / 180.0);
+
+                this._x = Math.cos(r);//this._x + vx;
+                this._y = Math.sin(r);//this._y + vy;
+
+                console.log("" + r + "," + this._x + "," + this._y);
+
+            } else {
+                this._x = (leftkey)?-1:(rightkey)?1:0;//this._x + vx;
+                this._y = (upkey)?-1:(downkey)?1:0;//this._y + vy;
+            }
+
+            let leftbutton = (lb || zkey || qkey || vLbtn);// || whl);
+            let rightbutton = (rb || zkey|| ekey || vRbtn);// || whr);
+            let trigger = (abtn || xbtn || spacekey || vDbtn);// || (mstate.button == 0));
+
+            let input = {x: this._x, y:this._y, trigger: trigger, left: leftbutton, right: rightbutton, keycode: w, mouse: mstate };
+
+            this.scene["Gpad"].step(g, input, null);
+            this.scene["VGpad"].step(g, input, null);
+        }
+        //----------------------------------------------------------------------
+        draw(g){// this.visible が true時にループ毎に実行される。
+            g.kanji.print("起動OK",0,8);
+
+            let t = g.time();
+            g.kanji.print("t:" + Math.trunc(t),0,16);
+            g.kanji.print("d:" + g.deltaTime().toString().substring(0,5),0,24);
+
+            this.scene["Gpad"].draw(g);
+            this.scene["VGpad"].draw(g);
+        }
+    }
+    //----------------------------------------------------------------------
+    // GPadScene(I/Ostatus)
+    function SceneGPad(){
+
+        const X = 0;
+        const Y = 48;
+
+        let st;
+
+        this.step = function(g, i, p){
+
+            st = g.gamepad.infodraw()
+
+            let k = i.keycode;
+
+            let ws = "";
+            for (let i in k){
+                if (Boolean(k[i])){
+                    ws += "[" + i + "]";//+ (k[i]?"o":".");
+                }
+            } 
+            let ms = "";
+            let m = i.mouse;
+            ms = "x:" + m.x + ", y:" + m.y + ", w:" + m.wheel + ", btn:" + m.button;
+
+            st.push("");
+            st.push("[Keyboard]");
+            st.push(ws);
+
+            st.push("");
+            st.push("[Mouse]");
+            st.push(ms);
+        }
+        this.draw = function(g){
+
+            for (let i in st){
+                g.kanji.print(st[i],X, Y+i*8);
+            }
+        }
+    }
+    //----------------------------------------------------------------------
+    // VGPadScene(I/Ostatus)
+    function SceneVGPad(){
+
+        const X = 0;
+        const Y = 0;
+
+        let st;
+
+        this.step = function(g, i, p){
+
+            let s = g.vgamepad.check();
+
+            st = [];
+
+            st.push("state button:" + s.button);
+            st.push("state deg   :" + s.deg);
+            st.push("state distance:" + s.distance);
+        }
+        this.draw = function(g){
+
+            g.vgamepad.draw(g.screen[0]);
+
+            let cl = {};
+            cl.draw = function(device){
+                device.globalAlpha = 1.0;
+            }
+            g.screen[0].putFunc(cl);
+
+            for (let i in st){
+            //	g.font["8x8white"].putchr(st[i],X, Y+i*8);
+            }
+        }
+    }
+
+    </script>
+    <title>[wGcsTestConsole]</title>
+    <style>
+        * {
+            margin:0; padding:0;
+        } 
+        .resizeimage * { width: 100%; }
+    </style>
+</head>
+<body>
+    <canvas id="layer0" oncontextmenu="return false;">
+    layer-0
+    </canvas>
+    <br>
+    <input type="button" id="btn" value="start" onclick="main()">
+</body>
+</html>

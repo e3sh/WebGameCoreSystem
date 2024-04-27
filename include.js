@@ -20,6 +20,7 @@ const w = [
     ,"proc/dev/soundControl.js"
     ,"proc/dev/offScreen.js"
     ,"proc/dev/offScreenTypeC.js"
+    ,"proc/dev/beepcore.js"     //2024/04/27新規追加
     ,"proc/func/spriteControl2.js"  //2024/04/23更新
     ,"proc/func/spriteFontControl.js"
     ,"proc/func/fontPrintControl.js"

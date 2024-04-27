@@ -178,7 +178,7 @@ function fontPrintControl( g, asciiPtn, aw, ah, KanjiPtn, kw, kh ) {
     
             const binaryStringB = atob(b64str);
             const uint8ArrayB = encodeBinaryString(binaryStringB);
-            console.log(uint8ArrayB.toString());
+            //console.log(uint8ArrayB.toString());
     
             const arrayBuffer = new Uint16Array(uint8ArrayB.buffer);
     

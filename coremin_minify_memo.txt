@@ -1,0 +1,26 @@
+Minify memo　(coremin.js)
+
+Include.jsで選択しているファイルをまとめる。
+
+まとめるときにソースとデスティネーションは別のフォルダにしないと
+内容が重複してまとめられることがある
+まとめたファイルは一応内容を流し見て確認
+
+まとめかた
+ターミナルから開く。
+CMDでPowerShellからコマンドプロンプトに降りる。
+コマンドプロンプトでchcp 65001で文字コードページを変更する。
+デスティネーション用フォルダを適当な名前で作る。
+
+TYPE *.js > デスティネーションフォルダ/出力ファイル名.js
+
+VScodeで出力ファイルをMinify化
+
+menu -> Minify the selected document and preserve the original
+(EXTENSIONS MinifiAll)
+
+
+
+
+
+
