@@ -318,7 +318,7 @@ Imageやaudioオブジェクトを管理
 	game.gamepad.check();
 	game.joystick.check();
 
-**サウンド**
+**サウンド**  
 *オーディオ再生*
 
 	game.sound.play( id ); 
