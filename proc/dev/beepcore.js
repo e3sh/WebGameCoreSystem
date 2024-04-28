@@ -26,7 +26,8 @@ function Beepcore(){
     let noteList;
     let starttime;
 
-    this.living = false;
+    this.living = false; //生成されて初期化が終わったらtrue/stop後は再利用できないのでfalse
+    this.busy = false;  //playで譜面があるうちはbusy/譜面終了したらfalse;    
 
     const noteTable = Table();
     
@@ -89,6 +90,7 @@ function Beepcore(){
         }
       }
       starttime = now;
+      this.busy = true;
 
       function nameToFreq(name){
 
@@ -124,6 +126,7 @@ function Beepcore(){
       if (c==0){
         this.suspend();
         noteList = [];
+        this.busy = false;
         //演奏終了
       }
     }
@@ -230,7 +233,7 @@ function Beepcore(){
     let note = new noteClass();
     note.init(Freq, oscwavetype, lfo, masterVolume);
     noteList.push(note);
-    console.log(noteList.length);
+    //console.log(noteList.length);
     
     return note;  
   }
