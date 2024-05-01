@@ -19,11 +19,12 @@ const w = [
     ,"proc/func/DisplayControl.js"
     ,"proc/dev/soundControl.js"
     ,"proc/dev/offScreen.js"
-    ,"proc/dev/offScreenTypeC.js"
-    ,"proc/dev/beepcore.js"     //2024/04/27新規追加
+    ,"proc/dev/offScreenTypeC.js"   //2024/04/30更新
+    ,"proc/dev/beepcore.js"         //2024/04/27新規追加
     ,"proc/func/spriteControl2.js"  //2024/04/23更新
     ,"proc/func/spriteFontControl.js"
     ,"proc/func/fontPrintControl.js"
+    ,"proc/func/viewport.js"        //2024/04/30新規追加
     ,"proc/task/GameTaskClass.js"
 
     //"main_sample1.js" //ここに実行ファイルを記載する。 

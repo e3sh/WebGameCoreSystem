@@ -12,7 +12,7 @@
 
 function offScreenTypeC( w, h, ix, iy ){//typeOffscreenCanvas版
     //w : width, h:height
-    const element = new OffscreenCanvas( w, h );
+    let element = new OffscreenCanvas( w, h );
 
     const offset_x = ix;
     const offset_y = iy;
@@ -29,13 +29,16 @@ context.drawImage(offscreenCanvas, 0, 0);
 //2018頃にOFFSCREENcanvasが実装されたみたいなのでOFFSCREENCとして実装
 
     //var element = document.createElement("canvas");
-    element.width = w;
-    element.height = h;
+    //element.width = w;
+    //element.height = h;
 
-    const device = element.getContext("2d");
+    let device = element.getContext("2d");
 
-    var enable_draw_flag = true;
-    var enable_reset_flag = true;
+    let enable_draw_flag = true;
+    let enable_reset_flag = true;
+
+    let _2DEffectEnable = false;//事前にオンしないと効果が動作しない(DEBUG)
+    let view_angle = 0;
 
     this.view = function ( flg ){ //flg : bool
         if (typeof flg == "boolean") {
@@ -50,6 +53,28 @@ context.drawImage(offscreenCanvas, 0, 0);
         }
         return enable_draw_flag;
     }
+    //2024/04/29 new Function turn
+    this.turn = function( r ){
+        if  (_2DEffectEnable) 
+            view_angle = r;
+    }
+
+    this._2DEF = function(f){
+        _2DEffectEnable = f
+
+        if (f) {
+            //回転で枠外が乱れるのでBackbufferを縦横2倍にする
+            element = new OffscreenCanvas( w*2, h*2 );
+            //書き込み位置の原点(0,0)を中心近くに寄せる
+            device = element.getContext("2d");
+            device.translate(w/2,h/2);
+        } else {
+            element = new OffscreenCanvas( w, h );
+            device = element.getContext("2d");
+            device.translate(0, 0);
+        }
+    }
+
     //this.flip = function ( outdev ) {
 
     //    outdev.putImageData(device.getImageData(0, 0, element.width, element.height), 0, 0);
@@ -62,7 +87,7 @@ context.drawImage(offscreenCanvas, 0, 0);
     this.spPut = function (img, sx, sy, sw, sh, dx, dy, dw, dh, m11, m12, m21, m22, tx, ty, alpha, r) {
 
         device.save();
-
+        if (_2DEffectEnable){tx+=w/2; ty+=h/2};
         device.setTransform(m11, m12, m21, m22, tx, ty);
         if (r != 0) { device.rotate(Math.PI / 180 * r); }
 
@@ -72,10 +97,11 @@ context.drawImage(offscreenCanvas, 0, 0);
             //if (this.light_enable) device.globalCompositeOperation = "lighter"; //source-over
             device.globalAlpha = alpha * (1.0 / 255);
         }
-
+        //if (_2DEffectEnable){device.translate(w/2,h/2);};
         device.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
 
         device.restore();
+        //device.setTransform( 1,0,0,1,0,0 );
     }
 
     //-------------------------------------------------------------
@@ -201,14 +227,34 @@ context.drawImage(offscreenCanvas, 0, 0);
     //描画
     //----------------------------------------------------------
     this.draw = function ( outdev ) {
-
+        //2024/04/29 new Function turn
         if (enable_draw_flag){
-        //outdev.clearRect(x, y, w, h);
-            outdev.drawImage(element, offset_x, offset_y);
-        }
-        //this.flip(outdev);
-    }
+            if (!_2DEffectEnable){ 
+                //outdev.clearRect(0, 0, w, h);
+                outdev.drawImage(element, offset_x, offset_y);
+            }else{
+                let w = element.width;
+                let h = element.height;
 
+                outdev.fillStyle = "green";
+                outdev.fillRect(0,0,w/2,h/2);
+
+                //outdev.clearRect(0, 0, w/2, h/2);
+                
+                outdev.save();
+                outdev.translate(w/4,h/4);
+                outdev.rotate((Math.PI/180)*((view_angle)%360));
+                
+                outdev.drawImage(element, offset_x-w/2, offset_y-h/2);
+                //outdev.drawImage(element, offset_x, offset_y);
+
+                outdev.restore();
+                //console.log("e" + view_angle%360);
+                device.fillStyle = "red";
+                device.fillRect(-w/4,-h/4,w,h);
+            }
+        }
+    }
     //----------------------------------------------------------
     //
     //----------------------------------------------------------

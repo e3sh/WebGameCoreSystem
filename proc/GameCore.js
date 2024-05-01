@@ -3,15 +3,15 @@
 
 function GameCore( sysParam ) {
 
-    //var sysParam = [
+    //let sysParam = [
     //{ canvasId: "Layer0", resolution: { w: 640, h: 480 } }
     //]
 
     // requestAnimationFrame
-    var fps_ = 60; //fps
+    let fps_ = 60; //fps
 
-    var fnum_ = 0;
-    var oldtime_ = Date.now();
+    let fnum_ = 0;
+    let oldtime_ = Date.now();
 
     // 各ブラウザ対応
 
@@ -29,9 +29,9 @@ function GameCore( sysParam ) {
 		        oldtime_ = Date.now();
 		    }
 
-		    var targettime_ = oldtime_ + Math.round(fnum_ * (1000.0 / fps_));
-		    var newtime_ = Date.now();
-		    var waittime_ = targettime_ - newtime_;
+		    let targettime_ = oldtime_ + Math.round(fnum_ * (1000.0 / fps_));
+		    let newtime_ = Date.now();
+		    let waittime_ = targettime_ - newtime_;
 
 		    if (waittime_ <= 0) waittime_ = 1;
 
@@ -41,74 +41,79 @@ function GameCore( sysParam ) {
     //
 
 	//constructor
-	var runStatus_ = false;
+	let runStatus_ = false;
 
-	var task_ = new GameTaskControl( this );
+	let task_ = new GameTaskControl( this );
 
 	//device setup
-	var keyboard_ = new inputKeyboard();
-	var mouse_ = new inputMouse();
-	var joystick_ = new inputGamepad();
-	var touchpad_ = new inputTouchPad( sysParam.canvasId );//<=とりあえずにscreen[4-]のキャンバス指定
-	var vGpad_ = new inputVirtualPad(mouse_, touchpad_);
+	let keyboard_ = new inputKeyboard();
+	let mouse_ = new inputMouse();
+	let joystick_ = new inputGamepad();
+	let touchpad_ = new inputTouchPad( sysParam.canvasId );//<=とりあえずにscreen[4-]のキャンバス指定
+	let vGpad_ = new inputVirtualPad(mouse_, touchpad_);
 
 	let beep_ = new Beepcore();
 
-	var screen_ = [];
+	let screen_ = [];
 
-	var canvas = document.getElementById(sysParam.canvasId);
-    canvas.width = sysParam.screen[0].resolution.w;
-    canvas.height = sysParam.screen[0].resolution.h;
+	let w = sysParam.screen[0].resolution.w;
+	let h = sysParam.screen[0].resolution.h;
+
+	let canvas = document.getElementById(sysParam.canvasId);
+    canvas.width = w; canvas.height = h;
 
 	this.systemCanvas = canvas;
 
-	var ctx = canvas.getContext("2d");
+	let ctx = canvas.getContext("2d");
 
-	for (var i in sysParam.screen) {
-	    var wsysp = sysParam.screen[i];
+	for (let i in sysParam.screen) {
+	    let wsysp = sysParam.screen[i];
 	    screen_[i] = new DisplayControl(ctx, 
 			wsysp.resolution.w, wsysp.resolution.h,
 			wsysp.resolution.x, wsysp.resolution.y,
 			sysParam.offscreen
 			);
 	}
-	if (sysParam.length > 0) { var dsp_ = screen_[0]; }
+	//if (sysParam.length > 0) { let dsp_ = screen_[0]; }
+	let viewport_ = new viewport();
+    viewport_.size(w, h); viewport_.border(w/2,h/2); 
+	viewport_.setPos(0,0); viewport_.repeat(false);
 
     //
-	var sprite_ = new GameSpriteControl(this);
+	let sprite_ = new GameSpriteControl(this);
     
     //
-	var font_ = [];
+	let font_ = [];
 
 	this.setSpFont = function (fontParam) {
 
-	    var fprm = {
+	    let fprm = {
 	        Image : asset_.image[ fontParam.id ].img,
 	        pattern: fontParam.pattern
 	    }
-	    var wf = new GameSpriteFontControl(this, fprm);
+	    let wf = new GameSpriteFontControl(this, fprm);
 
 	    font_[fontParam.name] = wf;
 	}
 
 	//assetsetup
-	var asset_ = new GameAssetManager();
+	let asset_ = new GameAssetManager();
 
     // soundはassetを参照するので↑の後で宣言する。
-    var sound_ = new soundControl( asset_ );
+    let sound_ = new soundControl( asset_ );
 
 	//document.getElementById("console").innerHTML = "START GAME CORE";
 	// mainloop
 
-	var sysp_cnt = sysParam.screen.length;
+	let sysp_cnt = sysParam.screen.length;
 
-	//var blinkCounter = 0;
+	//let blinkCounter = 0;
 	//const BLINK_ITVL = 21500;
 	//const BLINK_TIME = 500;
 
-	var tc = new bench();
-	var sintcnt = []; //screenIntervalCounter
-	for (var i = 0; i < sysp_cnt; i++) sintcnt[ i ] = 0;
+	let tc = new bench();
+	let sintcnt = []; //screenIntervalCounter
+	for (let i = 0; i < sysp_cnt; i++) sintcnt[ i ] = 0;
 
 	function loop(t) {
 	    if (runStatus_) {
@@ -125,7 +130,7 @@ function GameCore( sysParam ) {
 			//document.getElementById("manual_1").innerHTML = "";
 			//ctx.clearRect(0,0,1024,800);
 
-			for (var i = 0; i < sysp_cnt; i++){
+			for (let i = 0; i < sysp_cnt; i++){
 				if (screen_[i].getInterval() - sintcnt[i] == 1){
 					screen_[i].reflash();
 					//debug:document.getElementById("manual_1").innerHTML +=( i + ":" + screen_[i].getBackgroundcolor());
@@ -139,7 +144,7 @@ function GameCore( sysParam ) {
 
 			sprite_.allDrawSprite();//スプライトをBufferに反映する。
 			//screen_[4].draw();
-			for (var i = 0; i < sysp_cnt; i++){
+			for (let i = 0; i < sysp_cnt; i++){
 				//if (screen_[i].getInterval() - sintcnt[i] == 1){
 				//if (screen_[i].view()) screen_[i].draw(); //<=これはoffscreen側で処理
 				screen_[i].draw();
@@ -149,7 +154,7 @@ function GameCore( sysParam ) {
 
 			tc.end();
 
-			for (var i = 0; i < sysp_cnt; i++) {
+			for (let i = 0; i < sysp_cnt; i++) {
 				sintcnt[ i ]++;
 				if (sintcnt[ i ] >= screen_[ i ].getInterval()) sintcnt[ i ] = 0;
 			}
@@ -175,8 +180,10 @@ function GameCore( sysParam ) {
 
 	this.vgamepad = vGpad_;
 
-	this.dsp = dsp_;
+	this.dsp = screen_[0];
 	this.screen = screen_;
+
+	this.viewport = viewport_;
 
 	this.sound = sound_;
 	this.beep = beep_;
@@ -215,25 +222,25 @@ function GameCore( sysParam ) {
 	//
 	function bench() {
 
-		var oldtime; var newtime;// = Date.now();
-		var cnt = 0; 
+		let oldtime; let newtime;// = Date.now();
+		let cnt = 0; 
 	
-		var fps_log = []; var load_log = [];
-		var log_cnt = 0;
-		var log_max = 0;
+		let fps_log = []; let load_log = [];
+		let log_cnt = 0;
+		let log_max = 0;
 	
-		var workload; var interval;
+		let workload; let interval;
 	
-		var fps = 0;
+		let fps = 0;
 
-		var dt = 0;
-		var ot = 0;
+		let dt = 0;
+		let ot = 0;
 
-		var blinkCounter = 0;
+		let blinkCounter = 0;
 		const BLINK_ITVL = 1500;
 		const BLINK_TIME = 500;
 	
-		//var ypos = 412;
+		//let ypos = 412;
 	
 		this.start = function () {
 	
@@ -253,8 +260,8 @@ function GameCore( sysParam ) {
 			log_cnt++;
 			if (log_cnt > 59) log_cnt = 0;
 	
-			var w = 0;
-			for (var i = 0; i <= log_max; i++) {
+			let w = 0;
+			for (let i = 0; i <= log_max; i++) {
 				w += fps_log[i];
 			}
 	
@@ -266,17 +273,17 @@ function GameCore( sysParam ) {
 	
 		this.result = function () {
 
-			var int_max = 0;
-			var int_min = 999;
-			var int_ave = 0;
+			let int_max = 0;
+			let int_min = 999;
+			let int_ave = 0;
 	
-			var load_max = 0;
-			var load_min = 999;
-			var load_ave = 0;
+			let load_max = 0;
+			let load_min = 999;
+			let load_ave = 0;
 	
-			var wlod = 0;
-			var wint = 0;
-			for (var i = 0; i <= log_max; i++) {
+			let wlod = 0;
+			let wint = 0;
+			for (let i = 0; i <= log_max; i++) {
 				//fstr += fps_log[i] + " ";
 				//lstr += load_log[i] + " ";
 	
@@ -296,17 +303,17 @@ function GameCore( sysParam ) {
 			int_ave = wint / (log_max + 1);
 			load_ave = wlod / (log_max + 1);
 
-			var r = {};
+			let r = {};
 	
 			r.fps = fps;
 
-			var wl = {};
+			let wl = {};
 			wl.log =  fps_log;
 			wl.max = load_max;
 			wl.min = load_min;
 			wl.ave = load_ave;
 
-			var iv = {};
+			let iv = {};
 			iv.log = fps_log;
 			iv.max = int_max;
 			iv.min = int_min;
