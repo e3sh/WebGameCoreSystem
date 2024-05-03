@@ -2,6 +2,9 @@ GameCore　/Javascript
 ===
 **Personal Web Game Library.**
 
+UPDATE 2024.05.03　使用リポリトジ追加　
+https://e3sh.github.io/OvalRun/OVALRUN.html 
+
 UPDATE 2024.04.21　使用リポリトジ(サンプル)
 
 https://e3sh.github.io/BBD/BLOCKDROPdnc.html
