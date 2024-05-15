@@ -49,6 +49,8 @@
 
         scene;
 
+
+
         constructor(id){
             super(id);
         }
@@ -69,6 +71,22 @@
             let score =["C5","C6"];
             let s = g.beep.makeScore(score, 100, 1);
             note.play(s, g.time()+500);
+
+
+            let pixelRatioBox = document.querySelector(".pixel-ratio");
+
+            const updatePixelRatio = () => {
+                let pr = window.devicePixelRatio;
+                let prString = (pr * 100).toFixed(0);
+                pixelRatioBox.innerText = `${prString}% (${pr.toFixed(2)})`;
+                matchMedia(`(resolution: ${pr}dppx)`).addEventListener(
+                    "change",
+                    updatePixelRatio,
+                    { once: true },
+                );
+            };
+
+            updatePixelRatio();
         }
         //----------------------------------------------------------------------
         step(g){// this.enable が true時にループ毎に実行される。
@@ -120,8 +138,9 @@
                 if (!document.fullscreenElement){ 
                     g.systemCanvas.requestFullscreen();
             }
+                //g.mouse.mode(g);
             }
-
+            g.mouse.mode(g); //FullScreen用の座標補正チェック
             // Input Mouse ENTRY Check
             let mstate = g.mouse.check();
             /*
@@ -187,6 +206,21 @@
             g.kanji.print("t:" + Math.trunc(t),0,16);
             g.kanji.print("d:" + g.deltaTime().toString().substring(0,5),0,24);
 
+            if (document.fullscreenElement){
+            g.kanji.print("FullScreen:" + document.fullscreenElement?.nodeName, 120, 8); 
+            }
+            
+            let cw = document.documentElement.clientWidth;
+            let ch = document.documentElement.clientHeight;
+            let pixr = window.devicePixelRatio;
+
+            g.kanji.print("c-width:"  + cw, 120, 16);
+            g.kanji.print("c-height:" + ch, 120, 24);
+            g.kanji.print("devPixelRatio:" + pixr, 120, 32);
+
+            g.kanji.print("canvas_w:" + g.systemCanvas.width, 240, 16);
+            g.kanji.print("canvas_h:" + g.systemCanvas.height,240, 24);
+
             this.scene["Gpad"].draw(g);
             this.scene["VGpad"].draw(g);
         }
@@ -235,10 +269,11 @@
     // VGPadScene(I/Ostatus)
     function SceneVGPad(){
 
-        const X = 0;
+        const X = 300;
         const Y = 0;
 
         let st;
+        //let m;
 
         this.step = function(g, i, p){
 
@@ -246,9 +281,14 @@
 
             st = [];
 
-            st.push("state button:" + s.button);
-            st.push("state deg   :" + s.deg);
-            st.push("state distance:" + s.distance);
+            //st.push("state button:" + s.button);
+            //st.push("state deg   :" + s.deg);
+            //st.push("state distance:" + s.distance);
+
+            //st.push("canvas_w:" + g.systemCanvas.width);
+            //st.push("canvas_h:" + g.systemCanvas.height);
+
+            //m = i.mouse;
         }
         this.draw = function(g){
 
@@ -260,8 +300,10 @@
             }
             g.screen[0].putFunc(cl);
 
+            g.mouse.draw(g.screen[0]);
+
             for (let i in st){
-            //	g.font["8x8white"].putchr(st[i],X, Y+i*8);
+            //	g.kanji.print(st[i],X, Y+i*8);
             }
         }
     }
@@ -281,5 +323,6 @@
     </canvas>
     <br>
     <input type="button" id="btn" value="start" onclick="main()">
+    <div class="pixel-ratio"></div>
 </body>
 </html>

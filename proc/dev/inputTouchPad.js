@@ -2,24 +2,26 @@
 //**************************************************************
 function inputTouchPad(canvas_id) {
 
-    var pos = [];
+    let pos = [];
 
-    var cvs1 = document.getElementById(canvas_id);
-    //var cvs = document;
+    let tr = {x:1, y:1};
 
-    this.o_Left = cvs1.offsetLeft;
-    this.o_Top = cvs1.offsetTop;
+    let el = document.getElementById(canvas_id);
+    //let cvs = document;
 
-    var viewf = false;
+    //this.o_Left = el.width ;//offsetLeft;
+    //this.o_Top = el.height;//offsetTop;
+
+    let viewf = false;
 
     //iPodTouch用(マルチポイントタッチ)
-    document.addEventListener('touchstart', ViewTrue
+    el.addEventListener('touchstart', ViewTrue
     , {passive: false });
-    document.addEventListener('touchmove', ViewTrue
+    el.addEventListener('touchmove', ViewTrue
     , {passive: false });
-    document.addEventListener('touchend', ViewFalse
+    el.addEventListener('touchend', ViewFalse
     , {passive: false });
-    document.addEventListener('touchcancel', ViewFalse
+    el.addEventListener('touchcancel', ViewFalse
     , {passive: false });
 
     /*
@@ -61,18 +63,36 @@ function inputTouchPad(canvas_id) {
         viewf = false;
     }
 
+    this.mode = function(g){
+
+        if (document.fullscreenElement){ 
+            let cw = document.documentElement.clientWidth;
+            let ch = document.documentElement.clientHeight;
+            let pixr = window.devicePixelRatio;
+
+            let scw = g.systemCanvas.width;
+            let sch = g.systemCanvas.height;
+
+            let rt = ch/sch;
+            
+            tr.x = rt; tr.y = rt; tr.offset_x = ((scw*rt) - cw)/rt/2;
+        } else {
+            tr.x = 1; tr.y = 1; tr.offset_x = 0;
+        }
+    }
+
     function touchposget(event) {
 
         pos = [];
 
         if (event.touches.length > 0) {
-            for (var i = 0; i < event.touches.length; i++) {
-                var t = event.touches[i];
+            for (let i = 0; i < event.touches.length; i++) {
+                let t = event.touches[i];
 
                 pos[i] = {};
 
-                pos[i].x = t.pageX;
-                pos[i].y = t.pageY;
+                pos[i].x = (t.pageX / tr.x) + tr.offset_x;
+                pos[i].y = (t.pageY / tr.y);
                 pos[i].id = t.identifier;
                 //pos[i].count = 0;//work
                 
@@ -81,14 +101,14 @@ function inputTouchPad(canvas_id) {
     }
 
     this.check = function () {
-        var state = {};
+        let state = {};
 
         state.pos = pos;
         return state;
     }
 
     this.check_last = function () {
-        var state = {};
+        let state = {};
 
         state.pos = pos;
         return state;
@@ -98,19 +118,19 @@ function inputTouchPad(canvas_id) {
 
         if (!viewf) return;
 
-        var st = this.check_last();
+        let st = this.check_last();
 
-        var s = "p " + pos.length + "/";
+        let s = "p " + pos.length + "/";
 
-        for (var j = 0; j <= pos.length -1 ; j++) {
+        for (let j = 0; j <= pos.length -1 ; j++) {
                 s = s + "b" + j + " ";
                 
-                var cl = {};
+                let cl = {};
                 cl.x = pos[j].x;
                 cl.y = pos[j].y;
                 cl.r = 16;
                 cl.draw = function(device){
-                    var context = device;
+                    let context = device;
 
                     context.beginPath();
                     context.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);

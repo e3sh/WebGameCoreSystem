@@ -1,17 +1,17 @@
-﻿
-//InputMouse
+﻿//InputMouse
 //
+function inputMouse(element_ID){
 
-function inputMouse(){
+    let state = { x: 0, y: 0, button: 0, wheel: 0 };
 
-    var state = { x: 0, y: 0, button: 0, wheel: 0 };
+    let x = 0;
+    let y = 0;
+    let button = -1;
+    let wheel = 0;
 
-    var x = 0;
-    var y = 0;
-    var button = -1;
-    var wheel = 0;
+    let tr = {x:1, y:1, offset_x:0};
 
-    var el = document;
+    let el = document.getElementById(element_ID);
 
     //mouseevent
     el.addEventListener("mousemove",
@@ -28,10 +28,28 @@ function inputMouse(){
     //firefox用ホイールコントロール
     el.addEventListener("DOMMouseScroll", function (event) { wheel = event.detail; }, false);
 
+    this.mode = function(g){
+
+        if (document.fullscreenElement){ 
+            let cw = document.documentElement.clientWidth;
+            let ch = document.documentElement.clientHeight;
+            let pixr = window.devicePixelRatio;
+
+            let scw = g.systemCanvas.width;
+            let sch = g.systemCanvas.height;
+
+            let rt = ch/sch;
+            
+            tr.x = rt; tr.y = rt; tr.offset_x = ((scw*rt) - cw)/rt/2;
+        } else {
+            tr.x = 1; tr.y = 1; tr.offset_x = 0;
+        }
+    }
+
     this.check = function () {
 
-        state.x = x;
-        state.y = y;
+        state.x = (x / tr.x) + tr.offset_x;
+        state.y = (y / tr.y);
         state.button = button;
         state.wheel = wheel;
 
@@ -43,23 +61,23 @@ function inputMouse(){
 
     this.check_last = function () {
 
-        state.x = x;
-        state.y = y;
-        state.button = button;
-        state.wheel = wheel;
+        //state.x = x * tr.x + tr.offset_x;
+        //state.y = y * tr.y;
+        //state.button = button;
+        //state.wheel = wheel;
 
         return state;
     }
 
     this.draw = function(ctx){
 
-        var st = this.check_last(); 
+        let st = this.check_last(); 
 
-        var cl = {};
+        let cl = {};
         cl.x = st.x;
         cl.y = st.y;
         cl.draw = function(device){ 
-            var context = device;
+            let context = device;
 
             context.beginPath();
             context.moveTo(this.x, this.y);

@@ -47,9 +47,9 @@ function GameCore( sysParam ) {
 
 	//device setup
 	let keyboard_ = new inputKeyboard();
-	let mouse_ = new inputMouse();
+	let mouse_ = new inputMouse( sysParam.canvasId );
 	let joystick_ = new inputGamepad();
-	let touchpad_ = new inputTouchPad( sysParam.canvasId );//<=とりあえずにscreen[4-]のキャンバス指定
+	let touchpad_ = new inputTouchPad( sysParam.canvasId );
 	let vGpad_ = new inputVirtualPad(mouse_, touchpad_);
 
 	let beep_ = new Beepcore();

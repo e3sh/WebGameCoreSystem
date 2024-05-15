@@ -2,6 +2,9 @@ GameCore　/Javascript
 ===
 **Personal Web Game Library.**
 
+動作確認用 
+https://e3sh.github.io/WebGameCoreSystem/testConsole.html
+
 UPDATE 2024.05.03　使用リポリトジ追加　
 https://e3sh.github.io/OvalRun/OVALRUN.html 
 
