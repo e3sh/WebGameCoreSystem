@@ -159,6 +159,8 @@
             }
             */
             // Input VGpad ENTRY
+            g.touchpad.mode(g);
+
             let v = g.vgamepad.check();
 
             let vLbtn = false; if (Boolean(v.button[0])) {if (v.button[0]) vLbtn = true;}
@@ -264,8 +266,8 @@
             st.push("[TouchPad]");
             st.push("Cnt:" + t.pos.length);
             if ( t.pos.length >0 ){
-                for (let i in t){
-                    st.push("[" + i +"]" + t.pos.x + "," + t.pos.y);
+                for (let i in t.pos){
+                    st.push("[" + i +"]" + Object.entries(t.pos[i]));//.x + "," + t.pos[i].y);
                 }
             }
         }
