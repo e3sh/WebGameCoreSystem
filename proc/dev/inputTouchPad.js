@@ -4,7 +4,7 @@ function inputTouchPad(canvas_id) {
 
     let pos = [];
 
-    let tr = {x:1, y:1};
+    let tr = {x:1, y:1, offset_x:0};
 
     let el = document.getElementById(canvas_id);
     //let cvs = document;
