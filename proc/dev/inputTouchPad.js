@@ -66,8 +66,8 @@ function inputTouchPad(canvas_id) {
     this.mode = function(g){
 
         if (document.fullscreenElement){ 
-            let cw = document.documentElement.clientWidth;
-            let ch = document.documentElement.clientHeight;
+            let cw = el.clientWidth;//document.documentElement.clientWidth;
+            let ch = el.clientHeight;//document.documentElement.clientHeight;
             let pixr = window.devicePixelRatio;
 
             let scw = g.systemCanvas.width;

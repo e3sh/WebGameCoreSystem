@@ -250,6 +250,8 @@
             let m = i.mouse;
             ms = "x:" + m.x + ", y:" + m.y + ", w:" + m.wheel + ", btn:" + m.button;
 
+            let t = g.touchpad.check_last();
+
             st.push("");
             st.push("[Keyboard]");
             st.push(ws);
@@ -257,6 +259,15 @@
             st.push("");
             st.push("[Mouse]");
             st.push(ms);
+
+            st.push("");
+            st.push("[TouchPad]");
+            st.push("Cnt:" + t.pos.length);
+            if ( t.pos.length >0 ){
+                for (let i in t){
+                    st.push("[" + i +"]" + t.pos.x + "," + t.pos.y);
+                }
+            }
         }
         this.draw = function(g){
 
@@ -300,7 +311,9 @@
             }
             g.screen[0].putFunc(cl);
 
+
             g.mouse.draw(g.screen[0]);
+            g.touchpad.draw(g.screen[0]);
 
             for (let i in st){
             //	g.kanji.print(st[i],X, Y+i*8);
