@@ -3,6 +3,7 @@
 // . inputGamepad   - inputGamepad()    0番-Standard以外での動作不具合対策（そのまま動くはず）        
 // . spriteControl  - GameSpriteControl() 使いにくかったので使用方法変更（sample書換要
 //                    2024/04/22-23 customMove/Draw機能追加、DeltaTime補正追加
+"use strict";
 
 const w = [
     //WebGameCoreSystem Files

@@ -159,7 +159,8 @@ function GameCore( sysParam ) {
 				if (sintcnt[ i ] >= screen_[ i ].getInterval()) sintcnt[ i ] = 0;
 			}
 			//run
-	        requestAnimationFrame(arguments.callee);
+			requestAnimationFrame(loop);//"use strict"対応
+	        //requestAnimationFrame(arguments.callee);
 			//setTimeout(arguments.callee, 0);//フレームレート変動テスト用
 		} else {
 	        //pause

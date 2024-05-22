@@ -133,6 +133,22 @@ function Beepcore(){
 
     function Table(){
 
+      const notename = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"];
+
+      let tb = [];
+      for (let i=0; i<9; i++){//Octarb
+        const startFreq = 27.5*Math.pow(2,i);
+        for (let j=0; j<12; j++){
+          const note ={
+            name:   notename[j]+((j<3)?i:i+1)
+            ,Freq:  startFreq*(Math.pow(2,j/12))
+          }
+          tb.push(note);
+        }
+      }
+      return tb;
+
+      /*
       const notetable=[
           {name:"A0",Freq:27.5}
           ,{name:"A#0",Freq:29.135}
@@ -225,6 +241,7 @@ function Beepcore(){
       ];
       
       return notetable;
+      */
     }
   }
 
