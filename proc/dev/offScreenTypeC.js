@@ -32,6 +32,9 @@ context.drawImage(offscreenCanvas, 0, 0);
     //element.width = w;
     //element.height = h;
 
+    let efcnt = 0; //CallFunctionCount(Debug)
+    let efmax = 0; //(Reserve)
+    
     let device = element.getContext("2d");
 
     let enable_draw_flag = true;
@@ -40,6 +43,7 @@ context.drawImage(offscreenCanvas, 0, 0);
     let _2DEffectEnable = false;//事前にオンしないと効果が動作しない(DEBUG)
     let view_angle = 0;
 
+    //[Mode Functions]
     this.view = function ( flg ){ //flg : bool
         if (typeof flg == "boolean") {
             enable_draw_flag = flg;
@@ -80,6 +84,7 @@ context.drawImage(offscreenCanvas, 0, 0);
     //    outdev.putImageData(device.getImageData(0, 0, element.width, element.height), 0, 0);
     //}
 
+    //[Draw Functions]
     //-------------------------------------------------------------
     //SP_PUT
     //use img, sx, sy, sw, sh, dx, dy, dw, dh, m11, m12, m21, m22, tx, ty, alpha, r
@@ -102,6 +107,8 @@ context.drawImage(offscreenCanvas, 0, 0);
 
         device.restore();
         //device.setTransform( 1,0,0,1,0,0 );
+
+        efcnt++; 
     }
 
     //-------------------------------------------------------------
@@ -111,6 +118,8 @@ context.drawImage(offscreenCanvas, 0, 0);
     this.drawImgXYWHXYWH = function (img, sx, sy, sw, sh, dx, dy, dw, dh) {
 
         device.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+
+        efcnt++; 
     }
 
     //-------------------------------------------------------------
@@ -123,6 +132,8 @@ context.drawImage(offscreenCanvas, 0, 0);
 
         device.fillStyle = c;
         device.fillText(str, x, y);
+
+        efcnt++; 
     }
    
     //------------------------------------------------------------
@@ -132,6 +143,8 @@ context.drawImage(offscreenCanvas, 0, 0);
     this.drawImgXY = function (img, sx, sy) {
         
         device.drawImage(img, sx, sy);
+
+        efcnt++; 
     }
 
     //------------------------------------------------------------
@@ -141,6 +154,8 @@ context.drawImage(offscreenCanvas, 0, 0);
     this.drawImgXYWH = function (img, sx, sy, sw, sh) {
 
         device.drawImage(img, sx, sy, sw, sh);
+
+        efcnt++; 
     }
 
     //------------------------------------------------------------
@@ -155,6 +170,8 @@ context.drawImage(offscreenCanvas, 0, 0);
         device.drawImage(img, 0, 0);
 
         device.restore();
+
+        efcnt++; 
     }
 
     //---------------------------------------------------------
@@ -163,6 +180,7 @@ context.drawImage(offscreenCanvas, 0, 0);
     //---------------------------------------------------------
     this.transform = function (m11, m12, m21, m22) {
         //dummy
+        efcnt++; 
     }
 
     //------------------------------------------------------------
@@ -173,6 +191,8 @@ context.drawImage(offscreenCanvas, 0, 0);
 
         cl.draw(device);
         //ここで登録するクラスには表示の為に"draw( device )" functionを必ず登録
+
+        efcnt++; 
     }
 
     //---------------------------------------------------------
@@ -187,6 +207,8 @@ context.drawImage(offscreenCanvas, 0, 0);
         device.clearRect(sx, sy, sw, sh);
 
         device.restore();
+
+        efcnt++; 
     }
 
     //-----------------------------------------------------
@@ -201,6 +223,8 @@ context.drawImage(offscreenCanvas, 0, 0);
         } else {
             device.clearRect(sx, sy, sw, sh);
         }
+
+        efcnt++; 
     }
 
     //----------------------------------------------------------
@@ -211,6 +235,8 @@ context.drawImage(offscreenCanvas, 0, 0);
         if (enable_reset_flag){
             this.allClear(0, 0, w, h);
         }
+
+        efcnt++; 
     }
 
     //----------------------------------------------------------
@@ -221,6 +247,7 @@ context.drawImage(offscreenCanvas, 0, 0);
         if (enable_reset_flag){
             this.reset();
         }
+        efcnt++;
     }
 
     //----------------------------------------------------------
@@ -254,13 +281,14 @@ context.drawImage(offscreenCanvas, 0, 0);
                 device.fillRect(-w/4,-h/4,w,h);
             }
         }
+        efcnt = 0; //Drawコール毎の呼び出し数の記録の為、メインキャンバスに反映毎に0にする
     }
     //----------------------------------------------------------
     //
     //----------------------------------------------------------
     this.count = function () {
-        //dummy
-        return "mode";
+        //return function call count par frame
+        return efcnt;
     }
 
     //----------------------------------------------------------
@@ -268,7 +296,7 @@ context.drawImage(offscreenCanvas, 0, 0);
     //----------------------------------------------------------
     this.max = function () {
         //dummy
-        return "C";
+        return efmax;
     }
 
 
