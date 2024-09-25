@@ -2,38 +2,34 @@ GameCore　/Javascript
 ===
 **Personal Web Game Library.**
 
-動作確認用 
+動作確認用
+
 https://e3sh.github.io/WebGameCoreSystem/testConsole.html
 
-UPDATE 2024.05.03　使用リポリトジ追加　
-https://e3sh.github.io/OvalRun/OVALRUN.html 
-
-UPDATE 2024.04.21　使用リポリトジ(サンプル)
+使用リポリトジ(サンプル)
 
 https://e3sh.github.io/BBD/BLOCKDROPdnc.html
 
 https://e3sh.github.io/ERA-T/ERATANKdnc.html
 
-UPDATE 2024.04.13. スプライト周りを変更したのsampleフォルダ内のサンプルは動作しません
-
-UPDATE 2023.08.19. フォルダ構成の変更など。
-
- FirstCommit [committed on Nov 23, 2012] ...← 注)現時点でも10年以上前からほとんど変わってません。
+https://e3sh.github.io/OvalRun/OVALRUN.html 
 
 ----------------------------------------
 特徴
 ---
-- ローカルで動作する(サーバが必要になるようなimport/exportを使ってない）
-- WebGL未使用(使用方法が難しくて理解できない為）
-- ライブラリ未使用(ローカルで動かなかったり、複数環境で試したときにライブラリ要因になると判らん為
-- (↑他のライブラリの理解が面倒で....）
+- ブラウザ単体で動作する(ローカルサーバが必要になるのでimport/exportを未使用）
 
-8bitPCでBASICでプログラムしてた頃のように、
+	**課題**
+	- WebGL未使用(使用方法が難しい。WebGPUが普及して理解できるようなら使用してみたいかも）
+	- ライブラリ未使用
 
-書き換え即実行で試しながらWebブラウザでゲームを作る為の
 
-自分用プログラムライブラリです。
-かなり色々足りてませんが、必要時はアプリケーション側で作成して取り込み予定
+
+　　　8bitPCでBASICでプログラムしてた頃のように、
+
+　　　書き換え即実行で試しながらWebブラウザでゲームを作る為の自分用プログラムライブラリです。
+
+　　　Javascript/HTML5理解の為の習作
 
 ----------------------------------------
 
@@ -41,7 +37,7 @@ UPDATE 2023.08.19. フォルダ構成の変更など。
 
 *システムの宣言*
 
-システム初期パラメータ（表示対象のキャンバスと解像度の指定）
+	システム初期パラメータ（表示対象のキャンバスと解像度の指定）
 	
 例：
 
@@ -88,10 +84,11 @@ offsetパラメータはscreen[0]を基準位置としての表示位置offset�
 
 	game.run();
 
-requestAnimationFrameの周期毎にタスクを実行する。
+	requestAnimationFrameの周期毎にタスクを実行する。
 
 	game.screen[n].setInterval(数字)	設定画面更新間隔(frame)　0の場合、画面の自動書き換えを行わない。
 	game.screen[0].backgroundColor(色名)	塗りつぶし背景色を指定（指定しなければ透過色でクリア）
+
 
 *ゲームタスク*
 
@@ -100,9 +97,9 @@ requestAnimationFrameの周期毎にタスクを実行する。
 	game.task.del(  id );
 	game.task.read( id );
 
-id：管理用に任意の重複しない文字列や数字を指定する。
+	id：管理用に任意の重複しない文字列や数字を指定する。
 
-*タスクの雛形*
+	*タスクの雛形*
 
 	class gametask( id ) extends Gametask {
 		constructor(id){
@@ -225,7 +222,7 @@ Imageやaudioオブジェクトを管理
     通常のスプライトを表示するかどうか	
         .normalDrawEnable = true;
 	
-    castomDrawがnormalDrawの前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
+    customDrawがnormalDrawの前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
         .beforeCustomDraw = false;
 	
     通常は空/内容あるものに変えると処理される
