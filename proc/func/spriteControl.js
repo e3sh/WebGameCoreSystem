@@ -1,36 +1,29 @@
-// GameSpriteControl
-// BLOCKDROP operation Version 
-// (editstart 2024/04/12) /r2: ERT-T op ver 2024/04/21
-
-/*
-//r2 new future
-.normalDrawEnable (true/false)
-.customDraw(g,screen){}
-.moveFunc
-example. ERT-T GameObj_GradeUpItem()
-
-//system Method
-.manualDraw = function (bool) (modeChange)
-.useScreen = function( num )
-.setPattern = function (id, Param) 
-
-//Speite Function Method
-.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) return item
-.itemList = function() return SpriteTable
-.itemFlash = function()
-.itemIndexRefresh = function()
-.CollisionCheck = function()
-
-.spriteItem
-    .view()/Hide() visible true/false
-    .pos = function(x, y, r=0, z=0)
-    .move = function(dir, speed, aliveTime)
-    .stop = function()
-    .dispose = function()
-    .put = function (x, y, r, z) 
-    //.reset = function()
-*/
-
+/**
+ * @summary スプライト制御 スプライトの表示
+ * @param {GameCore} g GameCoreInstance
+ * @example
+ *  //表示するスプライトの定義
+ *  game.sprite.set( spNumber, PatternID,   
+ *  [bool: colisionEnable],   
+ *  [int: colWidth], [int: colHeight] );  
+ *
+ *	//スプライトアイテム登録/生成
+ *  game.sprite.s.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) 
+ *	//return item	
+ *
+ * @description
+ * method
+ *  .spriteItem.view() .Hide() .pos .move .stop .dispose .put
+ *  .itemlist .itemFlash .itemIndexRefresh .CollisionCheck .useScreen
+ *  .setPattern
+ * 
+ * propaty
+ *  .x .y .r .vx .vy .priority .collsionEnable .collision .id 
+ *  .hit .alive .index .living
+ *  .normalDrawEnable .beforeCoustomDraw
+ * 
+ * etc 
+ */
 function GameSpriteControl(g) {
     //
     //let MAXSPRITE = 1000;
@@ -44,38 +37,102 @@ function GameSpriteControl(g) {
 
     let autoDrawMode = true;
 
+    /**
+     * classスプライトアイテム
+     * 
+     */ 
     function SpItem(){
 
         this.x  = 0;
         this.y  = 0;
+        /**
+         * 方向　Radian(0-359）
+         * @type {number} 
+         */ 
         this.r  = 0;
+        /**
+         * 拡大率(default1.0)//reserb
+         * @type {number} 
+         */ 
         this.z  = 0;
         this.vx = 0;
         this.vy = 0;
+        /**
+         * 表示優先順位(大きいほど手前に表示(後から書き込み))
+         * @type {number} 
+         */ 
         this.priority = 0;
+        /**
+         * 衝突処理の有効(実施対象にする)
+         * @type {boolean} 
+         */ 
         this.collisionEnable = true;
+        /**
+         * 衝突処理用のサイズ
+         * @type {object} 
+         */ 
         this.collision = {w:0,h:0};
         this.id = "";
         this.count = 0;
         this.pcnt = 0;
         this.visible = false;
+        /**
+         * CollisionCheckで衝突しているitemのオブジェクトが入る
+         * @type {SpItem[]} 衝突相手のSpItem(複数の場合は複数)　
+         */ 
         this.hit = [];
         this.alive = 0;
         this.index = 0; 
         this.living = true;
+        /**
+         * 通常のスプライトを表示する
+         * @type {boolean} 
+         */ 
         this.normalDrawEnable = true;
+        /**
+         * customDrawがnormalDraw実施前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
+         * @type {boolean} 
+         */ 
         this.beforeCustomDraw = false;
      
+        /**
+         * カスタム表示のエントリポイント/通常は空/内容あるものに変えると処理される
+         * @param {GameCore} g
+         * @param {screen} screen 
+         */ 
         this.customDraw = function(g, screen){};
+
+        /**
+         * 移動処理で呼ばれる関数のエントリポイント
+         * @param {number} delta
+         */ 
         this.moveFunc;
 
+        /**
+         * 表示する
+         */ 
         this.view = function (){ this.visible = true; }
+        /**
+         * 表示しない
+         */ 
         this.hide = function (){ this.visible = false;}
-
+        /**
+         * 表示位置指定
+         * @param {number} x x座標）
+         * @param {number} y y座標
+         * @param {number} r 方向(0-359)(省略可)
+         * @param {number} z 拡大率(省略可)
+         */ 
         this.pos = function(x, y, r=0, z=0){
             this.x = x; this.y = y; this.r = r; this.z = z;
         }
-
+        /**
+         * 移動指定
+         * frame毎に.moveFuncが呼ばれる(通常は直線移動)	
+         * @param {number} dir 方向(0-359）
+         * @param {number} speed 1f当たりの移動pixel（1/60基準)
+         * @param {number} aliveTime 動作させるフレーム数
+         */ 
         this.move = function(dir, speed, aliveTime){
             this.visible = true;
             let wr = ((dir - 90) * (Math.PI / 180.0));
@@ -86,6 +143,11 @@ function GameSpriteControl(g) {
         }
 
         this.moveFunc = normal_move;//normal_move;
+
+        /**
+         * 移動処理で呼ばれる関数(default)
+         * @param {number} delta
+         */ 
         function normal_move(delta){
             this.alive--;
 
@@ -98,17 +160,29 @@ function GameSpriteControl(g) {
                 this.visible = true;
             }
         }
-        
+        /**
+         * 移動停止
+         */ 
         this.stop = function(){
             this.alive = 0;
             this.vx=0; this.vy=0;
         }
+        /**
+         * 廃棄
+         */ 
         this.dispose = function(){
             this.alive = 0;
             this.visible = false;
             //上の2つで表示も処理もされなくなる
             this.living = false;
         }
+        /**
+         * 表示処理(内部処理用)
+         * @param {number} x x座標
+         * @param {number} y y座標
+         * @param {number} r 方向(0-359)(省略可)
+         * @param {number} z 拡大率(省略可)
+         */ 
         this.put = function (x, y, r=0, z=1) {
 
             let rf = true;                       
@@ -177,7 +251,15 @@ function GameSpriteControl(g) {
             return st;
         }
     }
-    //New add Methods ============================
+
+    /**
+     * スプライトアイテム登録/生成
+     * @param {number | string} Ptn_id UniqID 
+     * @param {*} col 衝突有効無効(省略時：無効)
+     * @param {*} w 衝突サイズ幅(省略時：0)
+     * @param {*} h 衝突サイズ高さ(省略時：0)
+     * @returns {SpItem} SpriteItemObject 
+     */
     this.itemCreate = function(Ptn_id, col=false, w=0, h=0 ){
         const item = new SpItem();
         let n = sprite_.length;
@@ -199,13 +281,25 @@ function GameSpriteControl(g) {
 
         return item;
     }
+
+    /**
+     * スプライトアイテムリスト取得
+     * @returns {SpItemList} スプライトアイテムオブジェクトの配列
+     */   
     this.itemList = function(){
         return sprite_; 
         //基本Index＝配列番号のはず      
     }
+    /**
+     * スプライトアイテムリストリセット
+     */   
     this.itemFlash = function(){
         sprite_ = [];
     }
+    /**
+     * リストから廃棄済みのスプライトを削除して再インデックス
+　   * @returns {SpItemList} スプライトアイテムオブジェクトの配列
+     */   
     this.itemIndexRefresh = function(){
         //disposeしたSpItemを削除してIndexを振り直す
         let ar = [];
@@ -216,6 +310,12 @@ function GameSpriteControl(g) {
         return sprite_
     }
     //----
+    /**
+     * 手動更新モードに変更する
+     * 
+     * @param {boolean} bool　true:手動 /false:自動更新に戻す
+     * @returns {void}    
+     */   
     this.manualDraw = function (bool=true) {
 
         if (bool) {
@@ -224,19 +324,47 @@ function GameSpriteControl(g) {
             autoDrawMode = true;
         }
     }
-
+    /**
+     * 表示先SCREENの選択
+     * 
+     * @param {number} screenNo（Layer番号の定数値）TYPE未定の為number
+     * @returns {void}    
+     */   
     this.useScreen = function( num ){
         //buffer_ = g.screen[num].buffer;
         activeScreen = g.screen[num];
         buffer_ = activeScreen.buffer;
     }
 
-    this.setPattern = function (id, Param) {
-        
-        pattern_[id] = { image: g.asset.image[ Param.image ].img, wait:Param.wait, pattern:Param.pattern }
-        
+    /**
+     * スプライトパターン定義パラメータ
+     *　@param {number | string} image ImageId
+     *　@param {number} wait アニメーション変更間隔（フレーム数）
+     *　@param {number} x イメージ範囲指定x
+     *　@param {number} y イメージ範囲指定y
+     *　@param {number} w イメージ範囲指定w
+     *　@param {number} h イメージ範囲指定h
+     *　@param {number} r 向き(0-359)上基準
+     *　@param {boolean} fv trueで上下反転
+     *　@param {boolean} fh trueで左右反転
+     */
+    const SpPatternParam = {
+        image: "dummy" ,
+        wait: 0,
+        pattern:[
+            {x:0, y:0, w:0, h:0, r:0 ,fv:false, fh:false},
+            {x:0, y:0, w:0, h:0, r:0 ,fv:false, fh:false}
+            ]
     }
-
+    /**
+     * スプライトパターン定義
+     *　@param {number | string} anim_id animationUniqID 
+     *　@param {SpPatternParam} Param パターン定義パラメータ
+     */
+    this.setPattern = function (id, Param) {
+        pattern_[id] = { image: g.asset.image[ Param.image ].img, wait:Param.wait, pattern:Param.pattern }
+    }
+    
     //FullCheck return spitem[].hit(array)<-obj
     this.CollisionCheck = function(){
         //総当たりなのでパフォーマンス不足の場合は書き換える必要有。
@@ -311,6 +439,9 @@ function GameSpriteControl(g) {
 
     //Game System inner Draw Call Function
     const pbuf = new priorityBuffer();
+
+    //game.sprite.allDrawSprite(); //登録中スプライトの表示　システムが自動的に呼びます。
+    //↑moveFuncも自動更新の場合に処理される。　manualDrawモードにする場合は自前で処理の事
 
     this.allDrawSprite = function () {
 

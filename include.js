@@ -1,10 +1,10 @@
-// include
-// update 2024/04/13
-// . inputGamepad   - inputGamepad()    0番-Standard以外での動作不具合対策（そのまま動くはず）        
-// . spriteControl  - GameSpriteControl() 使いにくかったので使用方法変更（sample書換要
-//                    2024/04/22-23 customMove/Draw機能追加、DeltaTime補正追加
+/**
+ * includeファイル
+ * @todo ESModule化するとシンプルになる予定
+ */
 "use strict";
 
+// 使用するjsファイルはこの配列にファイルパスを追加すること
 const w = [
     //WebGameCoreSystem Files
     //SystemControl
@@ -14,18 +14,18 @@ const w = [
     ,"proc/GameCore.js"
     ,"proc/dev/inputKeyboard.js"
     ,"proc/dev/inputMouse.js"
-    ,"proc/dev/inputGamepad2.js"    //2024/04/13更新
+    ,"proc/dev/inputGamepad2.js"
     ,"proc/dev/inputTouchPad.js"
     ,"proc/dev/inputVPad.js"
     ,"proc/func/DisplayControl.js"
     ,"proc/dev/soundControl.js"
     ,"proc/dev/offScreen.js"
-    ,"proc/dev/offScreenTypeC.js"   //2024/04/30更新
+    ,"proc/dev/offScreenTypeC.js"
     ,"proc/dev/beepcore.js"         //2024/04/27新規追加
-    ,"proc/func/spriteControl2.js"  //2024/04/23更新
+    ,"proc/func/spriteControl.js"
     ,"proc/func/spriteFontControl.js"
     ,"proc/func/fontPrintControl.js"
-    ,"proc/func/viewport.js"        //2024/04/30新規追加
+    ,"proc/func/viewport.js"
     ,"proc/task/GameTaskClass.js"
 
     //"main_sample1.js" //ここに実行ファイルを記載する。 

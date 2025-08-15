@@ -1,11 +1,50 @@
-// GameCore
-//
+/**
+ * システム初期パラメータ（表示対象のキャンバスと解像度の指定）
+ * @param {string} canvasId canvasDOM Id
+ * @param {number} resolution.w -screen width pixelsize 
+ * @param {number} resolution.h -screen height pixelsize
+ * @param {number} resolution.x -screen offset x
+ * @param {number} resolution.y -screen offset y
+ * @example
+ * 	const sysParam = {
+	 	canvasId: "Canvas",//キャンバス名指定
+	     	screen: [
+			{ resolution: { w: 1024, h: 768 , x:0, y:0 }}
+		]
+	}
+ * @summary 複数Screenで指定可能、対象指定時、順番にscreen[0～]となる。
+ * 定数値にして処理を管理するのが吉
+ */
+//参考用パラメータ(実際は宣言時に作って呼ぶ事/)
+const GameCoreSysParam = {
+	CanvasId:"",
+	screen: [
+		{resolution: {w:1024, h:768, x:0, y:0}},
+		{resolution: {w:1024, h:768, x:0, y:0}}
+	]
+}
 
+/**
+ * @summary ゲームエンジン本体/インスタンス化して実行
+ * 実行時のエントリーポイント
+ * @param {GameCoreSysParam} sysParam
+ * @example 宣言：const game = new GameCore( sysParam );
+ * ゲームループの開始：game.run();
+ * @description
+ * ゲームタスク: .task
+ * アセット管理: .asset
+ * 描画/表示レイヤー: .screen[n]
+ * 描画/スプライト: .sprite .font
+ * 入力/キーボード: .keyboard
+ * 入力/マウス: .mouse
+ * 入力/タッチパネル: .touchpad
+ * 入力/ゲームパッド: .gamepad (alias).joystick
+ * サウンド/オーディオ再生: .sound .effect
+ * サウンド/シンセシス: .beep
+ * システム状態管理/.fpsload .time .delta 
+ * @todo QuickFixでES2015Class化出来るようだが段階的に行う
+ */ 
 function GameCore( sysParam ) {
-
-    //let sysParam = [
-    //{ canvasId: "Layer0", resolution: { w: 640, h: 480 } }
-    //]
 
     // requestAnimationFrame
     let fps_ = 60; //fps
@@ -14,7 +53,6 @@ function GameCore( sysParam ) {
     let oldtime_ = Date.now();
 
     // 各ブラウザ対応
-
     window.requestAnimationFrame = (function () {
         return window.requestAnimationFrame ||
 		window.webkitRequestAnimationFrame ||
@@ -194,33 +232,50 @@ function GameCore( sysParam ) {
 
 	this.state = {};
 
+
+	/**
+	 * FPS/workload count Utility
+	 */ 
 	this.fpsload = tc;
 
+	/**
+	 * @return {number} 1フレームの時間を返す(ms)
+	 */ 
 	this.deltaTime = tc.readTime;//
+
+	/**
+	 * @return {number} エンジンが起動してからの経過時間を返す(ms)
+	 */ 
 	this.time = tc.nowTime;//
 	
+	/**
+	 *　@return {boolean} 一定間隔(1.5s/0.5s)でtrue/falseを返す 
+	 */ 
 	this.blink = tc.blink; //function return bool
 
     // init
 	sprite_.useScreen(0);
-    //
-	//
+ 
+	/**
+	 * ゲームループの開始
+	 * requestAnimationFrameの周期毎にタスクを実行する。
+	 */ 
 	this.run = function () {
 	    runStatus_ = true;
 
 	    requestAnimationFrame(loop);
  	}
 
-	//
-	//
-	//
+	/**
+	 * ゲームループの停止
+	 */
 	this.pause = function(){
 		runStatus_ = false;
 	}
 
-	//
-	//
-	//
+	/**
+	 *　FPSや負荷の計測用
+	 */ 
 	function bench() {
 
 		let oldtime; let newtime;// = Date.now();
@@ -272,6 +327,9 @@ function GameCore( sysParam ) {
 			fps = 1000 / (w / (log_max + 1));
 		}
 	
+		/**
+		 * @return {object}　計測結果(.interval　.workload)
+		 */ 
 		this.result = function () {
 
 			let int_max = 0;

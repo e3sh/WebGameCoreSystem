@@ -278,21 +278,21 @@ Imageやaudioオブジェクトを管理
 	game.keyboard.check();  
 	
 	戻り値: 配列[キーコード]がtureで押下/falseまたは値が無い場合は押していない状態
-
 	Boolean(戻り値配列[キーコード])　が偽の場合も押していない状態。
-
-	注意点として入力チェックするときは 値の有無チェック後実行しないとエラーになる。
-
 例：
+	[SPACE]が押されている場合
+	let keystate = game.keyboard.check();
+	結果:keystate = {32:true};
 
-	var keystate = game.keyboard.check();
-	if (Boolean(keystate[32])) {
-		if (keystate[32]) {
-			//push space bar↓
-		}
-	}
+	キーコード直接指定で状態確認する場合は以下のようにしてください
+例：
+	[SPACE]が押されている場合
+	let keydown = game.keyboard.inquiryKey(32);
+	結果:keydown = true;
 
-主要キーはBoolで返すプロパティあり。
+	注意：keyCodeの使用がMDNで非推奨となっているので、今後処理を変更した場合に指定値を変更するかもしれません。
+
+主要キーはBoolで返すプロパティがあるのでそれらを使用すること。.check()毎に状態の更新チェックがされます
 
 	game.keyboard
 		.upkey; .downkey; .leftkey; .rightkey;

@@ -1,14 +1,10 @@
-﻿
-// offScreenクラス
+﻿// offScreenクラス
 // (offscreen buffer)
 //
 // offScreenCanvasに随時描画
 //(Chrome69＿Sep.2018でサポートとの事なので対応
 //
-//一度作成したらあまり書き換えないといった使い方をする場合に良い
-//UIを作成したあとにフレーム毎ではなく必要時書き換えで使うとか
-//全画面表示したいので表示はキャンバスを重ねないようにする
-//(mainのCanvasに全部表示させる）
+//全画面表示する為にOffscreenのLayerをmainのCanvasに重ねてまとめて表示させる
 
 function offScreenTypeC( w, h, ix, iy ){//typeOffscreenCanvas版
     //w : width, h:height
@@ -16,22 +12,8 @@ function offScreenTypeC( w, h, ix, iy ){//typeOffscreenCanvas版
 
     const offset_x = ix;
     const offset_y = iy;
-/*
-const offscreenCanvas = new OffscreenCanvas(200, 200);
-const offscreenContext = offscreenCanvas.getContext('2d');
-offscreenContext.fillStyle = 'red';
-offscreenContext.fillRect(0, 0, 200, 200);
 
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
-context.drawImage(offscreenCanvas, 0, 0);
-*/
-//2018頃にOFFSCREENcanvasが実装されたみたいなのでOFFSCREENCとして実装
-
-    //var element = document.createElement("canvas");
-    //element.width = w;
-    //element.height = h;
-
+    //2018頃にOFFSCREENcanvasが実装されたみたいなのでOFFSCREENCとして実装
     let efcnt = 0; //CallFunctionCount(Debug)
     let efmax = 0; //(Reserve)
     
@@ -40,17 +22,29 @@ context.drawImage(offscreenCanvas, 0, 0);
     let enable_draw_flag = true;
     let enable_reset_flag = true;
 
-    let _2DEffectEnable = false;//事前にオンしないと効果が動作しない(DEBUG)
+    let _2DEffectEnable = false;//default off
     let view_angle = 0;
 
     //[Mode Functions]
+
+    /**
+     * MODE CHANGE ENNABLE_DRAW_FLAG 
+     * @param {boolean} flg set enable_draw_flag
+     * @returns {boolean} get enable_draw_flag
+     * @todo 現在は効果なし/使用箇所確認後、削除予定
+     */
     this.view = function ( flg ){ //flg : bool
         if (typeof flg == "boolean") {
             enable_draw_flag = flg;
         }
         return enable_draw_flag;
     }
-
+    /**
+     * MODE CHANGE ENNABLE_FLIP_FLAG 
+     * @param {boolean} flg set enable_flip_flag
+     * @returns {boolean} get enable_flip_flag
+     * @todo 現在は効果なし/使用箇所確認後、削除予定
+     */
     this.flip = function( flg ){
         if (typeof flg == "boolean") {
             enable_reset_flag = flg;
@@ -58,11 +52,20 @@ context.drawImage(offscreenCanvas, 0, 0);
         return enable_draw_flag;
     }
     //2024/04/29 new Function turn
+    /**
+     * FULLSCREEN ROTATE FUNCTION 
+     * @param {numver} r rotate angle
+     * @desc this function effect eneble :_2DEffectEnable:true 
+     */
     this.turn = function( r ){
         if  (_2DEffectEnable) 
             view_angle = r;
     }
-
+    /**
+     * 2D FULLSCREEN EFFECT FUNCTION ENABLE  
+     * @param {boolean} f ENABLE FLAG
+     *  
+     */
     this._2DEF = function(f){
         _2DEffectEnable = f
 
@@ -78,12 +81,6 @@ context.drawImage(offscreenCanvas, 0, 0);
             device.translate(0, 0);
         }
     }
-
-    //this.flip = function ( outdev ) {
-
-    //    outdev.putImageData(device.getImageData(0, 0, element.width, element.height), 0, 0);
-    //}
-
     //[Draw Functions]
     //-------------------------------------------------------------
     //SP_PUT
@@ -298,10 +295,6 @@ context.drawImage(offscreenCanvas, 0, 0);
         //dummy
         return efmax;
     }
-
-
-
-    //
 }
 
 

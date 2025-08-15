@@ -1,5 +1,4 @@
-﻿
-//InputKeyboard
+﻿//InputKeyboard
 //
 
 function inputKeyboard(){
@@ -14,7 +13,7 @@ function inputKeyboard(){
     // a:65, s:83, d:68
     // z:90, x:88, c:67
 
-    var keymap = [];
+    let keymap = [];
 
     this.upkey = false;
     this.downkey = false;
@@ -64,6 +63,8 @@ function inputKeyboard(){
     //windowsフォーカスが外れるとキー入力リセットさせとく(押しっぱなし状態となる為）
     window.addEventListener("blur", function (event) { keymap = []; }, false);
 
+    //KeyCode を使用するのはいつのまにか非推奨となっているので時間があるか使用不可になる前に書換要
+    //@see　https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent
     window.addEventListener("keydown", function (event) { keymap[event.keyCode] = true; }, false);
     window.addEventListener("keyup", function (event) { keymap[event.keyCode] = false; }, false);
 
@@ -72,7 +73,7 @@ function inputKeyboard(){
 
         keyStateReset();
 
-        for (var i in keymap) {
+        for (let i in keymap) {
 
             switch (i) {
                 // shift:16, ctrl :17, alt  :18, space:32
@@ -112,6 +113,16 @@ function inputKeyboard(){
         return keymap;
     }
 
+    this.inquiryKey = function( keycode ){
+
+        let result = false;
+    	if (Boolean(keystate[keycode])) {
+            if (keystate[keycode]) {
+               result = keystate[keycode];
+            }
+        }
+        return result;
+    }
     // check;example
     //	if (Boolean(keystate[32])) {
     //    if (keystate[32]) {
