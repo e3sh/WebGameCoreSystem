@@ -19,7 +19,7 @@ const w = [
     ,"proc/dev/inputVPad.js"
     ,"proc/func/DisplayControl.js"
     ,"proc/dev/soundControl.js"
-    ,"proc/dev/offScreen.js"
+//    ,"proc/dev/offScreen.js"
     ,"proc/dev/offScreenTypeC.js"
     ,"proc/dev/beepcore.js"         //2024/04/27新規追加
     ,"proc/func/spriteControl.js"
