@@ -5,14 +5,13 @@
  * @description
  * 入力値の確認にkeyCodeを利用しているが
  * keyCodeを利用しているがMDNで非推奨となっていたのでcodeでの処理も追加
- * @see https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent
- *///
+ * @see https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent/keyCode
+ */
 class inputKeyboard {
     /**
      * @param {boolean} codesupportmode select keyCode/code(null=keyCode mode)
      * @todo　将来的にはデフォルトでtrue
      */
-
     constructor(codesupportmode) {
         // keycode
         //
@@ -34,7 +33,7 @@ class inputKeyboard {
         // a:'KeyA', s:'KeyS', d:'KeyD'
         // z:'KeyZ', x:'KeyX', c:'KeyC'
 
-        const keymap = [];
+        let keymap = [];
 
         const keyStateReset = ()=> {
 

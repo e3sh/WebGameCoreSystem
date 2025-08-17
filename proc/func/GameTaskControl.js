@@ -28,134 +28,148 @@
 	this.enable = true; // true : run step  false: pause step
 	this.visible = true; // true: run draw  false: pause draw
 
-gにはGameCoreオブジェクトが入るので、
-経由でデバイスやアセットにアクセスする。  
+	gにはGameCoreオブジェクトが入るので、
+	経由でデバイスやアセットにアクセスする。  
  * @description
  * .read .add .del .init .step .draw .count .namelist
  * @todo priorityControl 実行は登録順で行われる。priorityプロパティによる実行順序制御は未実装
  * @todo 時間指定実行、一時実行タスクや割り込み制御など
  */
-function GameTaskControl( game ) {
-
-	let task_ = [];
-
-	let taskCount_ = 0;
-	let taskNamelist_ = "";
-
-	function taskCheck() {
-	    taskCount_ = 0;
-	    taskNamelist_ = "";
-
-	    for (let n in task_) {
-	        taskNamelist_ += n + " ";
-	        taskCount_++;
-	    }
-	}
-
+class GameTaskControl {
 	/**
-	 * 指定したIDのGameTask objectを返す
-	 * @param {number | string} id  Unique Identifier
-	 * @returns {GameTaskClass} GameTask instance object
-	 * @todo 結果可否報告とエラーチェック
-	 */ 
-	this.read = function (taskid) {
+	 * 
+	 * @param {GameCore} game GameCoreインスタンス 
+	 */
+	constructor(game) {
 
-	    return task_[taskid];
-	}
+		let task_ = [];
 
-	/**
-	 * GameTaskを実行リストに追加
-	 * @param {GameTaskClass} GameTask instance object
-	 * @return {void} 
-	 */ 
-	this.add = function( task ){
-		//task init process
-	    task_[task.id] = task;
+		let taskCount_ = 0;
+		let taskNamelist_ = "";
 
-	    task.init(game);
+		function taskCheck() {
+			taskCount_ = 0;
+			taskNamelist_ = "";
 
-	    taskCheck();
-	}
-
-	/**
-	 * 指定したIDのGameTask objectを実行リストから削除
-	 * @param {number | string} id  Unique Identifier
-	 * @returns {void} 
-	 * @todo 結果可否報告とエラーチェック(無いtaskを削除した場合)
-	 */ 
-	this.del = function( taskid  ){
-		//task post process
-		task_[taskid].post(); //deconstract
-		//task delete
-		delete task_[taskid];
-
-		taskCheck();
-	}
-
-	/**
-	 * 指定したIDのGameTaskObject.init()を実行
-	 * @param {number | string} id  Unique Identifier
-	 * @returns {void} 
-	 * @todo 結果可否報告とエラーチェック
-	 */ 
-	this.init = function( taskid){
-
-		task_[ taskid ].init( game );
-	}
-
-	/**
-	 * 実行リストにあるGameTaskのstepを呼ぶ(処理Op)
-	 * （初回実行の場合はpre+step）
-	 * @return {void} 
-	 */ 
-	this.step = function () {
-
-		for (let i in task_){
-			let w_ = task_[i];
-
-			if (!w_.preFlag){
-			    w_.pre( game ) ;
-			    w_.preFlag = true;
-			}
-
-			if (w_.enable){
-				w_.step( game );
+			for (let n in task_) {
+				taskNamelist_ += n + " ";
+				taskCount_++;
 			}
 		}
-	}
 
-	/**
-	 * 実行リストにあるGameTaskのdrawを呼ぶ(描画Op)
-	 * @return {void} 
-	 */ 
-	this.draw = function () {
+		/**
+		 * 指定したIDのGameTask objectを返す
+		 * @method
+		 * @param {number | string} id  Unique Identifier
+		 * @returns {GameTaskClass} GameTask instance object
+		 * @todo 結果可否報告とエラーチェック
+		 */
+		this.read = function (taskid) {
 
-	    // reset and Clear Operation.
-        //
+			return task_[taskid];
+		};
 
-		for (let i in task_){
-			let w_ = task_[i];
-			
-			if (w_.visible){
-				w_.draw( game );
+		/**
+		 * GameTaskを実行リストに追加
+		 * @method
+		 * @param {GameTaskClass} GameTask instance object
+		 * @return {void}
+		 */
+		this.add = function (task) {
+			//task init process
+			task_[task.id] = task;
+
+			task.init(game);
+
+			taskCheck();
+		};
+
+		/**
+		 * 指定したIDのGameTask objectを実行リストから削除
+		 * @method
+		 * @param {number | string} id  Unique Identifier
+		 * @returns {void}
+		 * @todo 結果可否報告とエラーチェック(無いtaskを削除した場合)
+		 */
+		this.del = function (taskid) {
+			//task post process
+			task_[taskid].post(); //deconstract
+
+			//task delete
+			delete task_[taskid];
+
+			taskCheck();
+		};
+
+		/**
+		 * 指定したIDのGameTaskObject.init()を実行
+		 * @method
+		 * @param {number | string} id  Unique Identifier
+		 * @returns {void}
+		 * @todo 結果可否報告とエラーチェック
+		 */
+		this.init = function (taskid) {
+
+			task_[taskid].init(game);
+		};
+
+		/**
+		 * 実行リストにあるGameTaskのstepを呼ぶ(処理Op)
+		 * （初回実行の場合はpre+step）
+		 * @method
+		 * @return {void}
+		 */
+		this.step = function () {
+
+			for (let i in task_) {
+				let w_ = task_[i];
+
+				if (!w_.preFlag) {
+					w_.pre(game);
+					w_.preFlag = true;
+				}
+
+				if (w_.enable) {
+					w_.step(game);
+				}
 			}
-		}
-	    // draw Operation.
-	}
+		};
 
-	/**
-	 * 実行リストにあるGameTaskの数を返す
-	 * @return {number} タスク数 
-	 */ 
-	this.count = function () {
-	    return taskCount_;
-	}
-	/**
-	 * 実行リストにあるGameTaskのId一覧を返す
-	 * @return {string} Id一覧の文字列
-	 */ 
-	this.namelist = function () {
-	    return taskNamelist_;
-	}
+		/**
+		 * 実行リストにあるGameTaskのdrawを呼ぶ(描画Op)
+		 * @method
+		 * @return {void}
+		 */
+		this.draw = function () {
+			// reset and Clear Operation.
+			//
 
+			for (let i in task_) {
+				let w_ = task_[i];
+
+				if (w_.visible) {
+					w_.draw(game);
+				}
+			}
+			// draw Operation.
+		};
+
+		/**
+		 * 実行リストにあるGameTaskの数を返す
+		 * @method
+		 * @return {number} タスク数
+		 */
+		this.count = function () {
+			return taskCount_;
+		};
+		/**
+		 * 実行リストにあるGameTaskのId一覧を返す
+		 * @method
+		 * @return {string} Id一覧の文字列
+		 */
+		this.namelist = function () {
+			return taskNamelist_;
+		};
+
+	}
 }

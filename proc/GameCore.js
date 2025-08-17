@@ -48,51 +48,51 @@ const GameCoreSysParam = {
 class GameCore {
 
 	/**
-	 * @type {GameTaskControl} task
+	 * @type {GameTaskControl}
 	 */
 	task;
 	/**
-	 * @type {GameAssetManager} asset
+	 * @type {GameAssetManager}
 	 */
 	asset;
 	/**
-	 * @type {DisplayControl[]} screen
+	 * @type {DisplayControl[]}
 	 */
 	screen;
 	/**
-	 * @type {GameSpriteControl} sprite
+	 * @type {GameSpriteControl}
 	 */
 	sprite;
 	/**
-	 * @type {GameSpriteFontControl} font
+	 * @type {GameSpriteFontControl}
 	 */
 	font;
 	/**
-	 * @type {inputKeyboard} keyboard
+	 * @type {inputKeyboard}
 	 */
 	keyboard;
 	/**
-	 * @type {inputMouse} mouse
+	 * @type {inputMouse}
 	 */
 	mouse;
 	/**
-	 * @type {inputTouchPad} touchpad
+	 * @type {inputTouchPad}
 	 */
 	touchpad;
 	/**
-	 * @type {inputGamepad} gamepad
+	 * @type {inputGamepad}
 	 */
 	gamepad;
 	/**
-	 * @type {soundControl} sound
+	 * @type {soundControl}
 	 */
 	sound;
 	/**
-	 * @type {soundControl} effect
+	 * @type {soundControl}
 	 */
 	effect;
 	/**
-	 * @type {Beepcore} beep
+	 * @type {Beepcore}
 	 */
 	beep;
 	/**
@@ -110,11 +110,11 @@ class GameCore {
 	 * @returns {number} gameCore running time(ms)
 	 */
 	time;
-	/**
+	/**@method
 	 * @returns {number} deltatime(ms)
 	 */
 	delta;
-	/**
+	/**@method
 	 * @return {boolean} 1.5s true 0.5s false cycles pulse
 	 */
 	blink;

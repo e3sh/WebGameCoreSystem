@@ -8,7 +8,7 @@
  * @param {number} c_h pixel height
  * @param {number} ix display offset x
  * @param {number} iy display offset y
- * 
+ * @description
  * 実際の画面表示サイズはCSSのSTYLEで
  * 指定してあるのでここでは、操作する解像度を指定する。
  * 
@@ -16,21 +16,26 @@
 class DisplayControl {
 
     /**
-     * @type {@offScreenTypeC} OffscreenbufferController 
+     * OffscreenbufferController 
+     * @member
+     * @type {offScreenTypeC} 
      */
     buffer;
     /**
      * canvas.width
+     * @member
      * @type {number}
      */
     cw;
     /**
      * canvas.height
+     * @member
      * @type {number}
      */
     ch;
     /**
      * 加算合成を使用する
+     * @member
      * @type {boolean}
      * @todo 現在は効果なし/削除予定
      * @deprecaed
@@ -38,7 +43,9 @@ class DisplayControl {
     lighter_enable;
 
     /**
-     * @type {string} fillcolor
+     * 背景色(fillcolor)
+     * @member
+     * @type {string}
      */
     backgroundcolor;
 
@@ -217,6 +224,7 @@ class DisplayControl {
     /**
      * 画面消去(クリア）
      * @param {string} c_str クリア背景色
+     * @description
      * nullの場合はクリアのみで塗りつぶしは無し
     */
     clear(c_str) {

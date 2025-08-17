@@ -12,15 +12,15 @@ class GameTask{
 	 */ 
 	id;
 	/**
-	 * task step status/ 
+	 * task step status/
+	 * true: step execute 
 	 * @type {boolean}
-	 * true: step execute　 
 	 */
 	enable;
 	/**
 	 * task draw status/
-	 * @type {boolean}
 	 * true: draw execute　 
+	 * @type {boolean}
 	 */
 	visible;
 	/**
@@ -79,7 +79,8 @@ class GameTask{
 		this.running = true;
 	}
 	/**
-	 * @param {number} num sortorder / @todo priority control function Not implemented(2025/08/15) 
+	 * @param {number} num sortorder 
+	 * @todo priority control function Not implemented(2025/08/15) 
 	 */
 	setPriority(num){ this.proirity = num;}
 

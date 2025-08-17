@@ -92,6 +92,7 @@ class offScreenTypeC {
         //SP_PUT
         /**
          * 変形ありの画像出力(SpritePut)(背景回転)FullParameter
+         * @method
          * @param {ImageData} img 画像データ
          * @param {number} sx source x　元画像での位置x
          * @param {number} sy source y　元画像での位置y
@@ -135,6 +136,7 @@ class offScreenTypeC {
         //DRAWIMG_XYWH_XYWH
         /**
          * 画像出力(サイズ変更有)
+         * @method
          * @param {ImageData} img 画像データ
          * @param {number} sx source x　元画像での位置x
          * @param {number} sy source y　元画像での位置y
@@ -156,6 +158,7 @@ class offScreenTypeC {
         //FILLTEXT
         /**
          * 文字表示
+         * @method
          * @param {string} str 表示文字列 
          * @param {number} x 表示座標x
          * @param {number} y 表示座標y
@@ -174,6 +177,7 @@ class offScreenTypeC {
         //DRAWIMG_XY
         /**
          * 画像出力(元画像そのまま)
+         * @method
          * @param {ImageData} img 画像データ
          * @param {number} sx 表示位置x
          * @param {number} sy 表示位置y
@@ -189,6 +193,7 @@ class offScreenTypeC {
         //DRAWIMG_XYWH
         /**
          * 画像出力(元画像全体をサイズ変更)
+         * @method 
          * @param {ImageData} img 画像データ
          * @param {number} sx source x　表示位置x
          * @param {number} sy source y　表示位置y
@@ -206,6 +211,7 @@ class offScreenTypeC {
         //PUTIMAGETRANSFORM
         /**
          * 画像出力(元画像全体を変形して表示)
+         * @method 
          * @param {ImageData} img 画像データ
          * @param {number} x 表示位置x
          * @param {number} y 表示位置y
@@ -232,6 +238,7 @@ class offScreenTypeC {
         //TRANSFORM
         /**
          * 変形(emptyFunction)
+         * @method 
          * @param {number} m11 transform param
          * @param {number} m12 transform param
          * @param {number} m21 transform param
@@ -248,6 +255,7 @@ class offScreenTypeC {
         // PUTFUNC
         /**
          * カスタム描画表示(CanvasMethodを実行)
+         * @method 
          * @param {object} cl draw(device)を含むオブジェクト
          * @summary CanvasMethodを登録して表示させる。
          * device: canvas2D Context
@@ -274,6 +282,7 @@ class offScreenTypeC {
         //ALLCLEAR
         /**
          * 指定範囲の消去（クリア)
+         * @method 
          * @param {number} sx 指定位置x
          * @param {number} sy 指定位置y
          * @param {number} sw 幅
@@ -296,6 +305,7 @@ class offScreenTypeC {
         //FILLRECT
         /**
          * 指定範囲の消去（クリア)
+         * @method 
          * @param {number} sx 指定位置x
          * @param {number} sy 指定位置y
          * @param {number} sw 幅
@@ -320,6 +330,7 @@ class offScreenTypeC {
         // 
         /**
          * offScreenバッファのクリア
+         * @method 
          * @returns {void}
          */
         this.reset = function () {
@@ -335,6 +346,7 @@ class offScreenTypeC {
         //REFLASH
         /**
          * (flameloopで実行用）offScreenバッファのクリア
+         * @method 
          * @returns {void}
          */
         this.reflash = function () {
@@ -350,6 +362,7 @@ class offScreenTypeC {
         /**
          * 描画処理
          * OffscreenCanvasをCanvasへ反映
+         * @method 
          * @param {CanvasContext} outdev 出力先のCanvas2DContext(MainCanvas)
          * @returns {void}
          */
