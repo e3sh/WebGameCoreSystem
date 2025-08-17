@@ -3,7 +3,7 @@
 /**
  * 画面表示コントロール(CanvasLayerControl)クラス
  *  
- * @param {DeviceContext} ctx 
+ * @param {DeviceContext} ctx canvas2Dcontext
  * @param {number} c_w pixel width
  * @param {number} c_h pixel height
  * @param {number} ix display offset x
@@ -13,80 +13,100 @@
  * 指定してあるのでここでは、操作する解像度を指定する。
  * 
  */
-function DisplayControl(ctx, c_w, c_h, ix, iy) {
-
-    let buffer_;
-    buffer_ = new offScreenTypeC(c_w, c_h, ix, iy); //offScreenCanvas版(2023/03-)
+class DisplayControl {
 
     /**
-     * offscreenTypeC function (debug)
-     * @type {screenbuffer} 
+     * @type {@offScreenTypeC} OffscreenbufferController 
      */
-    this.buffer = buffer_;
-
-    let device = ctx ;//canvas.getContext("2d");
-
+    buffer;
     /**
      * canvas.width
-     * @type {number} 
+     * @type {number}
      */
-    this.cw = c_w//canvas.width;
+    cw;
     /**
      * canvas.height
-     * @type {number} 
+     * @type {number}
      */
-    this.ch = c_h//canvas.height;
-
-    device.font = "16px 'Arial'";
-
+    ch;
     /**
      * 加算合成を使用する
-     * @type {boolean} 
+     * @type {boolean}
      * @todo 現在は効果なし/削除予定
-     * @deprecaed 
+     * @deprecaed
      */
-    this.lighter_enable = true;//現在無効
+    lighter_enable;
 
-    this.view = buffer_.view;
-    this.flip = buffer_.flip;
+    /**
+     * @type {string} fillcolor
+     */
+    backgroundcolor;
 
-    let intv = 1;
-    let bgcolor = "";
- 
-    //以下のプロパティは内部では使用せず、外部参照し外から制御する為のパラメータ
-    //this.interval = int; // 自動更新での更新間隔(0:自動更新なし　1:毎回　2～:間隔)
-    //this.backgroundcolor = bgcolor; //defaultBackgroundcolor;
+    device; //privete
+    intervalTime; //private access->get/set
+
+    /**
+     * @param {canvas2DContext} ctx canvas2Dcontext
+     * @param {number} c_w width
+     * @param {number} c_h height
+     * @param {number} ix offset x
+     * @param {number} iy offset y
+     */
+    constructor(ctx, c_w, c_h, ix, iy) {
+
+        const buffer_ = new offScreenTypeC(c_w, c_h, ix, iy); //offScreenCanvas版(2023/03-)
+
+        this.buffer = buffer_;
+
+        const dev = ctx; //canvas.getContext("2d");
+        this.device = dev;
+
+        this.cw = c_w; //canvas.width;
+        this.ch = c_h; //canvas.height;
+
+        dev.font = "16px 'Arial'";
+
+        this.lighter_enable = true; //現在無効
+
+        this.view = buffer_.view;
+        this.flip = buffer_.flip;
+
+        let intv = 1;
+        this.intervalTime = intv;
+        let bgcolor = "";
+        this.backgroundcolor = bgcolor;
+    }
 
     /**
      * 表示間隔設定(フレーム)
      * @param {number} num 更新間隔
      * 0指定で自動更新(clear)抑止
      */
-    this.setInterval = function( num ){
+    setInterval(num) {
         if (num == 0) {
-            buffer_.flip(false);
-        }else{
-            buffer_.flip(true);
+            this.buffer.flip(false);
+        } else {
+            this.buffer.flip(true);
         }
-        intv = num;
-     }
+        this.intervalTime = num;
+    };
     /**
      * 背景色設定
      * @param {string} str 表示色
      * null,""指定で透過色でクリア
      */
-    this.setBackgroundcolor = function( str ){ bgcolor = str; this.backgroundcolor = bgcolor;}
+    setBackgroundcolor(str) { this.backgroundcolor = str; };
     /**
      * 現在の表示間隔(フレーム)設定値取得
      * @returns {number} 更新間隔(フレーム)
      */
-    this.getInterval = function(){ return intv; }
+    getInterval() { return this.intervalTime; };
     /**
      * 現在の背景色設定値取得
      * @returns {string} 表示色
      */
-    this.getBackgroundcolor = function(){ return bgcolor;}
-    
+    getBackgroundcolor() { return this.backgroundcolor; };
+
     //-------------------------------------------------------------
     /**
      * マップチップ用パターン描画
@@ -98,14 +118,14 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {number} h 表示高さ
      * 引数（省略不可
      */
-    this.putPattern = function (gr, ptn, x, y, w, h) {
-        
-        buffer_.drawImgXYWHXYWH(
+    putPattern(gr, ptn, x, y, w, h) {
+
+        this.buffer.drawImgXYWHXYWH(
             gr,
-            ptn.x,ptn.y,ptn.w,ptn.h,
+            ptn.x, ptn.y, ptn.w, ptn.h,
             x, y, w, h
         );
-    }
+    };
     //-------------------------------------------------------------
     /**
      * マップチップ用パターン切り取り配列の登録
@@ -113,25 +133,25 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {object} bgpth パターン配列（x,y,w,hの入ったオブジェクト）
      * @todo　用途不明
      */
-    this.setBgPattern = function (bgptn) {
+    setBgPattern(bgptn) {
 
         bgPtn = bgptn;
-    }
+    };
     //-------------------------------------------------------------
     /**
-     * 文字列の表示(fillText) 
+     * 文字列の表示(fillText)
      * @param {string} str MessageText
      * @param {number} x position
      * @param {number} y position
      * @param {string} c color
      * @todo Fontの指定
      */
-    this.print = function (str, x, y, c) {
+    print(str, x, y, c) {
 
         if (!Boolean(c)) { c = "limegreen"; }
 
-        buffer_.fillText(str,x,y,c);
-    }
+        this.buffer.fillText(str, x, y, c);
+    };
     //------------------------------------------------------------
     /**
      * 画像イメージを直接取得して表示させる。
@@ -139,10 +159,10 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {number} x 表示位置座標
      * @param {number} y 表示位置座標
      */
-    this.putImage = function (gr, x, y) {
+    putImage(gr, x, y) {
 
-        buffer_.drawImgXY(gr, x, y);
-    }
+        this.buffer.drawImgXY(gr, x, y);
+    };
     //------------------------------------------------------------
     /**
      * 画像イメージを直接取得して表示させる。（ほぼテスト用）
@@ -152,10 +172,10 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {number} w 表示幅
      * @param {number} h 表示高さ
     */
-    this.putImage2 = function (gr, x, y, w, h) {
+    putImage2(gr, x, y, w, h) {
 
-        buffer_.drawImgXYWH(gr, x, y, w, h);
-    }
+        this.buffer.drawImgXYWH(gr, x, y, w, h);
+    };
     //------------------------------------------------------------
     /**
      * 画像イメージを直接取得して表示させる。（Transform付き）
@@ -167,10 +187,10 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {number} m21 変換座標
      * @param {number} m22 変換座標
     */
-    this.putImageTransform = function (gr, x, y, m11, m12, m21, m22) {
+    putImageTransform(gr, x, y, m11, m12, m21, m22) {
 
-        buffer_.putImageTransform(gr, x, y, m11, m12, m21, m22);
-    }
+        this.buffer.putImageTransform(gr, x, y, m11, m12, m21, m22);
+    };
     //---------------------------------------------------------
     /**
      * Transform(OffscreenBuffer全体の変形)
@@ -179,38 +199,38 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {number} m21 変換座標
      * @param {number} m22 変換座標
     */
-    this.transform = function (m11, m12, m21, m22) {
+    transform(m11, m12, m21, m22) {
 
-        buffer_.Transform(m11, m12, m21, m22, 0, 0);
-    }
+        this.buffer.Transform(m11, m12, m21, m22, 0, 0);
+    };
     //------------------------------------------------------------
     /**
      * 表示機能有り(draw)objectで表示コマンドを登録して表示
      * @param {object} cl 表示機能有り(draw)object
     */
-    this.putFunc = function (cl) {
+    putFunc(cl) {
 
         //ここで登録するクラスには表示の為に"draw( device )" functionを必ず登録
-        buffer_.putFunc(cl);
-    }
+        this.buffer.putFunc(cl);
+    };
     //---------------------------------------------------------
     /**
      * 画面消去(クリア）
      * @param {string} c_str クリア背景色
      * nullの場合はクリアのみで塗りつぶしは無し
     */
-    this.clear = function (c_str) {
+    clear(c_str) {
 
-        if (this.flip()){
+        if (this.flip()) {
 
-            buffer_.allClear(0, 0, c_w, c_h);
+            this.buffer.allClear(0, 0, this.cw, this.ch);
 
-            if (c_str === void 0){ c_str = bgcolor; }
+            if (c_str === void 0) { c_str = this.backgroundcolor; }
             if (Boolean(c_str)) {
-                buffer_.fillRect(0, 0, c_w, c_h, c_str);
+                this.buffer.fillRect(0, 0, this.cw, this.ch, c_str);
             }
-        }   
-    }
+        }
+    };
     //-----------------------------------------------------
     /**
      * 部分クリア(色指定で部分塗りつぶし）
@@ -218,53 +238,52 @@ function DisplayControl(ctx, c_w, c_h, ix, iy) {
      * @param {number} y 表示位置座標
      * @param {number} w 表示幅
      * @param {number} h 表示高さ
-     * @param {string} c_str 塗り潰し色　
+     * @param {string} c_str 塗り潰し色
      * (rgbaで指定すると半透明色指定可能)
     */
-    this.fill = function (x, y, w, h, c_str) {
+    fill(x, y, w, h, c_str) {
 
-        buffer_.fillRect(x, y, w, h, c_str);
-    }
+        this.buffer.fillRect(x, y, w, h, c_str);
+    };
     //----------------------------------------------------------
     /**
      * offScreenのクリア
     */
-    this.reset = function () {
+    reset() {
 
-        buffer_.reset();
-    }
+        this.buffer.reset();
+    };
     //----------------------------------------------------------
     /**
      * (flameloopで実行用）offScreenのクリア
     */
-    this.reflash = function () {buffer_.reflash();}
+    reflash() { this.buffer.reflash(); };
     //----------------------------------------------------------
     /**
      * 描画
     */
-    this.draw = function () {
+    draw() {
 
-        buffer_.draw(device);
-    }
+        this.buffer.draw(this.device);
+    };
     //----------------------------------------------------------
     /**
      * 書き込み処理回数の取得
      * @returns {number} draw実行毎の回数
     */
-    this.count = function () {
+    count() {
 
-        return buffer_.count();
-    }
+        return this.buffer.count();
+    };
     //----------------------------------------------------------
     /**
      * 書き込み処理回数最大値の取得
      * @returns {number} 最大値
     */
-    this.max = function () {
+    max = function () {
 
-        return buffer_.max();
-    }
-
+        return this.buffer.max();
+    };
 }
 
 
