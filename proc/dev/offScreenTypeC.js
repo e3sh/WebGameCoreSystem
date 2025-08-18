@@ -3,10 +3,9 @@
  * (offscreen buffer)
  * 
  * @description
- * DisplayControlのoffscreen buffer
- * offScreenCanvasに随時描画
- * 全画面表示する為にOffscreenCanvasをLayerとして
- * mainのCanvasにまとめて重ね表示させる
+ * - DisplayControlのoffscreen buffer
+ * - 表示LayerとしてoffScreenCanvasに随時描画
+ * - 全画面表示する為、mainのCanvasにまとめて重ね表示
  */
 class offScreenTypeC {
     /**
@@ -93,7 +92,7 @@ class offScreenTypeC {
         /**
          * 変形ありの画像出力(SpritePut)(背景回転)FullParameter
          * @method
-         * @param {ImageData} img 画像データ
+         * @param {Img} img 画像データ
          * @param {number} sx source x　元画像での位置x
          * @param {number} sy source y　元画像での位置y
          * @param {number} sw source w　元画像の幅
@@ -137,7 +136,7 @@ class offScreenTypeC {
         /**
          * 画像出力(サイズ変更有)
          * @method
-         * @param {ImageData} img 画像データ
+         * @param {Img} img 画像データ
          * @param {number} sx source x　元画像での位置x
          * @param {number} sy source y　元画像での位置y
          * @param {number} sw source w　元画像の幅
@@ -162,7 +161,7 @@ class offScreenTypeC {
          * @param {string} str 表示文字列 
          * @param {number} x 表示座標x
          * @param {number} y 表示座標y
-         * @param {string} c 表示色 (省略の場合"limegreen")
+         * @param {Color} c 表示色 (省略の場合"limegreen")
          */
         this.fillText = function (str, x, y, c) {
 
@@ -178,7 +177,7 @@ class offScreenTypeC {
         /**
          * 画像出力(元画像そのまま)
          * @method
-         * @param {ImageData} img 画像データ
+         * @param {Img} img 画像データ
          * @param {number} sx 表示位置x
          * @param {number} sy 表示位置y
          * @returns {void}
@@ -194,7 +193,7 @@ class offScreenTypeC {
         /**
          * 画像出力(元画像全体をサイズ変更)
          * @method 
-         * @param {ImageData} img 画像データ
+         * @param {Img} img 画像データ
          * @param {number} sx source x　表示位置x
          * @param {number} sy source y　表示位置y
          * @param {number} sw source w　幅
@@ -212,7 +211,7 @@ class offScreenTypeC {
         /**
          * 画像出力(元画像全体を変形して表示)
          * @method 
-         * @param {ImageData} img 画像データ
+         * @param {Img} img 画像データ
          * @param {number} x 表示位置x
          * @param {number} y 表示位置y
          * @param {number} m11 transform param
@@ -254,11 +253,12 @@ class offScreenTypeC {
         //------------------------------------------------------------
         // PUTFUNC
         /**
-         * カスタム描画表示(CanvasMethodを実行)
-         * @method 
-         * @param {object} cl draw(device)を含むオブジェクト
+         * CustomDrawObject
+         * @typedef {object} PutFuncCustomDraw draw(device)を含むオブジェクト
+         * @property {function} draw 必須 {DeviceContext}を引数に呼び出される
+         * @property {*} any 任意のプロパティ 
          * @summary CanvasMethodを登録して表示させる。
-         * device: canvas2D Context
+         * device: {DeviceContext} 
          * @example
          * cl = { x: 100, y:100, r:30, c:"red",
          *      draw:(d)=>{
@@ -269,6 +269,12 @@ class offScreenTypeC {
          *          d.stroke();
          *          }
          *      }
+         */
+
+        /**
+         * カスタム描画表示(CanvasMethodを実行)
+         * @method 
+         * @param {PutFuncCustomDraw} cl draw(device)を含むオブジェクト
          * @returns {void}
          */
         this.putFunc = function (cl) {

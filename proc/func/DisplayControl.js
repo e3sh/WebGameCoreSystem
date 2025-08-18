@@ -1,9 +1,28 @@
 ﻿// DisplayControlクラス
+/**
+ * 色指定文字列
+ * @typedef {string} Color 色指定文字列
+ * @example
+ * "blue","red","green" etc
+ * @see https://developer.mozilla.org/ja/docs/Web/CSS/color_value
+ */
+
+/**
+ * CanvasRenderingContext2D
+ * @typedef {CanvasRenderingContext2D} DeviceContext
+ * @see https://developer.mozilla.org/ja/docs/Web/API/CanvasRenderingContext2D
+*/
+
+/**
+ * ImageData
+ * @typedef {HTMLImageElement} Img Texture画像情報
+ * @see https://developer.mozilla.org/ja/docs/Web/API/HTMLImageElement
+ */
 
 /**
  * 画面表示コントロール(CanvasLayerControl)クラス
  *  
- * @param {DeviceContext} ctx canvas2Dcontext
+ * @param {DeviceContext} ctx mainCanvasCtx
  * @param {number} c_w pixel width
  * @param {number} c_h pixel height
  * @param {number} ix display offset x
@@ -45,7 +64,7 @@ class DisplayControl {
     /**
      * 背景色(fillcolor)
      * @member
-     * @type {string}
+     * @type {Color}
      */
     backgroundcolor;
 
@@ -53,7 +72,7 @@ class DisplayControl {
     intervalTime; //private access->get/set
 
     /**
-     * @param {canvas2DContext} ctx canvas2Dcontext
+     * @param {DeviceContext} ctx canvas2Dcontext
      * @param {number} c_w width
      * @param {number} c_h height
      * @param {number} ix offset x
@@ -99,7 +118,7 @@ class DisplayControl {
     };
     /**
      * 背景色設定
-     * @param {string} str 表示色
+     * @param {Color} str 表示色
      * null,""指定で透過色でクリア
      */
     setBackgroundcolor(str) { this.backgroundcolor = str; };
@@ -110,7 +129,7 @@ class DisplayControl {
     getInterval() { return this.intervalTime; };
     /**
      * 現在の背景色設定値取得
-     * @returns {string} 表示色
+     * @returns {Color} 表示色
      */
     getBackgroundcolor() { return this.backgroundcolor; };
 
@@ -150,7 +169,7 @@ class DisplayControl {
      * @param {string} str MessageText
      * @param {number} x position
      * @param {number} y position
-     * @param {string} c color
+     * @param {Color} c color
      * @todo Fontの指定
      */
     print(str, x, y, c) {
@@ -213,7 +232,7 @@ class DisplayControl {
     //------------------------------------------------------------
     /**
      * 表示機能有り(draw)objectで表示コマンドを登録して表示
-     * @param {object} cl 表示機能有り(draw)object
+     * @param {PutFuncCustomDraw} cl 表示機能有り(draw)object
     */
     putFunc(cl) {
 
@@ -223,7 +242,7 @@ class DisplayControl {
     //---------------------------------------------------------
     /**
      * 画面消去(クリア）
-     * @param {string} c_str クリア背景色
+     * @param {Color} c_str クリア背景色
      * @description
      * nullの場合はクリアのみで塗りつぶしは無し
     */
@@ -246,7 +265,7 @@ class DisplayControl {
      * @param {number} y 表示位置座標
      * @param {number} w 表示幅
      * @param {number} h 表示高さ
-     * @param {string} c_str 塗り潰し色
+     * @param {Color} c_str 塗り潰し色
      * (rgbaで指定すると半透明色指定可能)
     */
     fill(x, y, w, h, c_str) {
@@ -288,7 +307,7 @@ class DisplayControl {
      * 書き込み処理回数最大値の取得
      * @returns {number} 最大値
     */
-    max = function () {
+    max() {
 
         return this.buffer.max();
     };

@@ -175,6 +175,7 @@ class GameAssetManager {
                  * 2 HAVE_CURRENT_DATA	現在の再生位置のデータはあるが、続きを再生する分のデータは不十分な状態。
                  * 3 HAVE_FUTURE_DATA	現在の再生位置から続きを再生できるだけのデータがある状態。
                  * 4 HAVE_ENOUGH_DATA	メディアファイルの終わりまで中断せずに再生できる状態。
+                 * @see https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/readyState
                  */
                 this.loadcheck = function () {
                     this.ready = (this.sound.readyState != 0) ? true : false;

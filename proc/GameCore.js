@@ -1,49 +1,48 @@
 /**
  * システム初期パラメータ（表示対象のキャンバスと解像度の指定）
- * @param {string} canvasId canvasDOM Id
- * @param {number} resolution.w -screen width pixelsize 
- * @param {number} resolution.h -screen height pixelsize
- * @param {number} resolution.x -screen offset x
- * @param {number} resolution.y -screen offset y
+ * @typedef {object} GameCoreSysParam システム初期設定用パラメータ
+ * @property {string} canvasId canvasDOM Id
+ * @property {number} screen[].resolution.w screen width pixelsize
+ * @property {number} screen[].resolution.h screen height pixelsize
+ * @property {number} screen[].resolution.x screen offset x
+ * @property {number} screen[].resolution.y screen offset y
  * @example
- * 	const sysParam = {
-	 	canvasId: "Canvas",//キャンバス名指定
-	     	screen: [
-			{ resolution: { w: 1024, h: 768 , x:0, y:0 }}
-		]
-	}
- * @summary 複数Screenで指定可能、対象指定時、順番にscreen[0～]となる。
- * 定数値にして処理を管理するのが吉
- */
-//参考用パラメータ(実際は宣言時に作って呼ぶ事/)
 const GameCoreSysParam = {
-	CanvasId:"",
+	CanvasId:"canvas",
 	screen: [
 		{resolution: {w:1024, h:768, x:0, y:0}},
 		{resolution: {w:1024, h:768, x:0, y:0}}
 	]
 }
+ * @description
+ * -複数のScreenを設定可能、
+ * -対象指定時、順番にgame.screen[0], game.screen[1] ...　となる
+ * -定数値にして名前を付けた方が管理が判りやすくなります
+ * 
+ */
 
 /**
  * ゲームエンジン本体
  * @summary ゲームエンジン本体/インスタンス化して実行
  * 実行時のエントリーポイント
  * @param {GameCoreSysParam} sysParam
- * @example 宣言：const game = new GameCore( sysParam );
- * ゲームループの開始：game.run();
+ * @example 
+ * //宣言：
+ * const game = new GameCore( sysParam );
+ * //ゲームループの開始：
+ * game.run();
  * @description
- * ゲームタスク: .task
- * アセット管理: .asset
- * 描画/表示レイヤー: .screen[n]
- * 描画/スプライト: .sprite .font
- * 入力/キーボード: .keyboard
- * 入力/マウス: .mouse
- * 入力/タッチパネル: .touchpad
- * 入力/ゲームパッド: .gamepad (alias).joystick
- * サウンド/オーディオ再生: .sound .effect
- * サウンド/シンセシス: .beep
- * システム状態管理/.fpsload .time .delta 
- * @todo QuickFixでES2015Class化出来るようだが段階的に行う
+ * - ゲームタスク: .task
+ * - アセット管理: .asset
+ * - 描画/表示レイヤー: .screen[n]
+ * - 描画/スプライト: .sprite .font
+ * - 入力/キーボード: .keyboard
+ * - 入力/マウス: .mouse
+ * - 入力/タッチパネル: .touchpad
+ * - 入力/ゲームパッド: .gamepad (alias).joystick
+ * - サウンド/オーディオ再生: .sound .effect
+ * - サウンド/シンセシス: .beep
+ * - システム状態管理/.fpsload .time .delta 
  */ 
 class GameCore {
 
@@ -263,20 +262,24 @@ class GameCore {
 
 		/**
 		 * FPS/workload count Utility
+		 * @method
 		 */
 		this.fpsload = tc;
 
 		/**
+		 * @method
 		 * @return {number} 1フレームの時間を返す(ms)
 		 */
 		this.deltaTime = tc.readTime; //
 
 		/**
+		 * @method
 		 * @return {number} エンジンが起動してからの経過時間を返す(ms)
 		 */
 		this.time = tc.nowTime; //
 
 		/**
+		 * @method
 		 *　@return {boolean} 一定間隔(1.5s/0.5s)でtrue/falseを返す
 		 */
 		this.blink = tc.blink; //function return bool
@@ -288,6 +291,7 @@ class GameCore {
 		/**
 		 * ゲームループの開始
 		 * requestAnimationFrameの周期毎にタスクを実行する。
+		 * @method
 		 */
 		this.run = function () {
 			runStatus_ = true;
@@ -296,7 +300,9 @@ class GameCore {
 		};
 
 		/**
+		 * 
 		 * ゲームループの停止
+		 * @method
 		 */
 		this.pause = function () {
 			runStatus_ = false;
