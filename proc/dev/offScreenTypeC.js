@@ -24,7 +24,7 @@ class offScreenTypeC {
         let efcnt = 0; //CallFunctionCount
         let efmax = 0; //CallFunctionCount(Max)
 
-        const device = element.getContext("2d");
+        let device = element.getContext("2d");//2DEFで更新有
 
         let enable_draw_flag = true;
         let enable_reset_flag = true;
