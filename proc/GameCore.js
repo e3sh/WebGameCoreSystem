@@ -29,8 +29,14 @@ const GameCoreSysParam = {
  * @example 
  * //宣言：
  * const game = new GameCore( sysParam );
+ * //game.screen[0]のパラメータが実際の使用Canvasの解像度となる。 
+ * //offsetパラメータはscreen[0]を基準位置としての表示位置offset。(screen[1以降]で有効)　
+ * //ScreenはoffscreenBufferとして処理され、指定した解像度で作成される。 
+ * 
  * //ゲームループの開始：
  * game.run();
+ * //requestAnimationFrameの周期毎にタスクを実行する。
+ * 
  * @description
  * - ゲームタスク: .task
  * - アセット管理: .asset
