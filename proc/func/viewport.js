@@ -8,9 +8,13 @@
 //（スプライト座標！＝画面表示座標とする処理
 //戻り値｛x:,y:表示座標,in:(true:表示範囲内(false:表示範囲外)}
 /**
- * スプライト座標！＝画面表示座標とする処理
- * ワールド座標系として管理して表示する場合
+ * スプライト座標！＝画面表示座標とする処理\
+ * ワールド座標系として管理して表示する場合\
  * これを通してビューポート内にあるスプライトのみ表示する
+ * @description
+ * ワールド座標系と実際の画面表示座標系の変換を管理するクラスです。\
+ * ゲーム内のスプライトがどの位置にあり、画面のどこに表示されるべきか、\
+ * また、表示範囲内にあるかどうかの判定を行います。
  */
 class viewport {
 
@@ -72,8 +76,9 @@ class viewport {
          * @param {boolean} mode setRepeatMode
          * @default true
          * @description
-         * - viewport外の場合折り返し処理するかどうか
-         * - 折り返し表示の有無　overflow してる場合反対側に表示するか
+         * ビューポートの繰り返しモードを有効/無効にします。\
+         * このモードが`true`の場合、画面外に出たオブジェクトが反対側から現れるように\
+         * 座標が折り返して計算されます。
          */
         this.repeat = function (mode = true) {
             repeat_ = mode;
@@ -84,8 +89,9 @@ class viewport {
          * @param {number} w 幅 
          * @param {number} h 高さ
          * @description
-         * - viewportのサイズを設定する
-         * - 通常は実画面解像度
+         * ビューポートの表示領域の幅と高さを設定します。\
+         * 通常、これはゲームの実際の画面解像度に合わせて設定され、\
+         * 表示可能な範囲を定義します。
          */
         this.size = function (w, h) {
             w_ = w; h_ = h;
@@ -97,8 +103,9 @@ class viewport {
          * @param {number} x homeposion 
          * @param {number} y homeposion
          * @description
-         * - world座標におけるviewportの現在基準位置を設定
-         * - 左上が基準となります
+         * ワールド座標系におけるビューポートの基準位置（左上）を設定します。\
+         * この位置を移動させることで、ゲームの世界をスクロールさせたり\
+         * カメラの視点を変更したりできます。
          */
         this.setPos = function (x, y) {
             x_ = x; y_ = y;
@@ -111,8 +118,9 @@ class viewport {
          * @param {number} w margin width
          * @param {number} h margin height
          * @description
-         * - 表示外判定の為の縦横余白を設定します
-         * - 余白外に出るまでviewport内と判定されます
+         * 表示範囲の判定に使用する、ビューポート周囲の余白を設定します。\
+         * オブジェクトがこの余白範囲から外に出るまで\
+         * ビューポート内に存在すると判定されます。
          */
         this.border = function (w, h) {
             ix_ = w; iy_ = h;
@@ -134,7 +142,9 @@ class viewport {
          * @param {number} sy world座標y
          * @returns {viewportResult}
          * @description 
-         * - 指定するワールド座標はスプライトの座標を想定
+         * ワールド座標を実際の画面表示座標に変換し、ビューポート内にあるかを判定します。\
+         * スプライトなどのワールド座標をこのメソッドに通すことで、\
+         * 正しい画面上の位置と表示可否の情報を取得できます。
         */
         this.viewtoReal = function (sx, sy) {
             let rx = sx + x_;

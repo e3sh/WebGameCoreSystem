@@ -1,8 +1,13 @@
-/** GameTaskTemplate
-* @example
-class GameTask_Foo extends GameTask {
-	constractor(){ super(id) }
-}
+/**
+ * GameTaskTemplate
+ * @example
+ * class GameTask_Foo extends GameTask {
+ * 	constractor(){ super(id) }
+ * }
+ * @description
+ * ゲームのロジックや描画処理をカプセル化するための基底タスククラスです。\
+ * `GameTaskControl`によって管理され、`init`、`pre`、`step`、`draw`、`post`などの \
+ * ライフサイクルメソッドを提供します。
 */
 class GameTask{
 
@@ -46,7 +51,10 @@ class GameTask{
 	preFlag;
 
 	/**
-	 * @param {number | string} id  Unique Identifier 
+	 * @param {number | string} id  Unique Identifier
+	 * GameTaskインスタンスを初期化します。\
+	 * タスクの一意な識別子（ID）を設定し、実行（enable）、描画（visible） \
+	 * 実行中（running）、生存（living）などの初期状態を定義します。
 	 */ 
 	constructor(id){
 		this.id = id
@@ -61,6 +69,11 @@ class GameTask{
 
 	/**
 	 * task step and draw stop execute 
+	 * @method
+	 * @description
+	 * タスクのステップ処理と描画処理の両方を停止します。\
+	 * タスクの状態を`enable: false`、`visible: false`、`running: false`に設定し \
+	 * 一時的にタスクの活動を中断させます。
 	 */
 	pause(){
 		this.enable = false; // true : run step  false: pasue step
@@ -71,6 +84,11 @@ class GameTask{
 
 	/**
 	 * task step and draw resume execute  
+	 * @method
+	 * @description
+	 * 一時停止中のタスクのステップ処理と描画処理を再開します。\
+	 * タスクの状態を`enable: true`、`visible: true`、`running: true`に設定し、\
+	 * タスクの活動を復帰させます。
 	 */
 	resume(){
 		this.enable = true; // true : run step  false: pasue step
@@ -79,24 +97,44 @@ class GameTask{
 		this.running = true;
 	}
 	/**
+	 * @method
 	 * @param {number} num sortorder 
 	 * @todo priority control function Not implemented(2025/08/15) 
+	 * @description
+	 * タスクの実行優先順位を設定します。\
+	 * ただし、この機能は現在未実装であり、\
+	 * 将来の拡張のために予約されています。
 	 */
 	setPriority(num){ this.proirity = num;}
 
 	/**
 	 * user implementation
+	 * @method
+	 * @description
+	 * ユーザーがタスク固有のパラメータや状態をリセットするためのプレースホルダーメソッドです。\
+	 * このメソッドは継承クラスでオーバーライドすることで、\
+	 * タスクの初期状態への復帰処理を実装できます。
 	 */
 	reset(){}
 
 	/**
 	 * task dispose
+	 * @method
+	 * @description
+	 * タスクを「生存していない」（living: false）状態に設定し、破棄のマークを付けます。\
+	 * これにより、`GameTaskControl`がタスクリストからこのタスクを\
+	 * 安全に削除できるようになります。
 	 */
 	kill(){ this.living = false;}
 
 	/**
 	 * TaskControllerからtask.add時に実行される。
-	 * @param {GameCore} g
+	 * @method
+	 * @param {GameCore} g GameCoreインスタンス
+	 * @description
+	 * タスクが`GameTaskControl`に追加された際に一度だけ実行されます\
+	 * 主に、タスク内で使用するアセットのロードや、\
+	 * 初期設定（コンストラクタで設定できないもの）を行うのに適しています。
 	 */ 
 	init(g){
 		//asset(contents) load
@@ -105,7 +143,12 @@ class GameTask{
 
 	/**
 	 * TaskControllerから初回の呼び出し時に実行される。
-	 * @param {GameCore} g
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * タスクが`GameTaskControl`によって最初に実行される直前に一度だけ呼び出されます。\
+	 * パラメータのリセットや、タスクが本格的に動き出す前の\
+	 * 最終的な準備を行うのに適しています。
 	 */ 
 	pre(g){
     	//paramater reset etc
@@ -114,7 +157,12 @@ class GameTask{
 
 	/**
 	 * TaskControlでループ毎に実行される。(enable :true)
-	 * @param {GameCore} g
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * `GameTaskControl`によってゲームループ毎に呼び出される、タスクの主要な更新ロジックです。\
+	 * `this.enable`が`true`の場合に実行され、\
+	 * ゲームの進行に関わる計算や状態更新を行います。
 	 */ 
 	step(g){// this.enable が true時にループ毎に実行される。
 
@@ -122,7 +170,12 @@ class GameTask{
 
 	/**
 	 * TaskControlでループ毎に実行される。(visible :true)
-	 * @param {GameCore} g
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * `GameTaskControl`によってゲームループ毎に呼び出される、タスクの描画ロジックです。\
+	 * `this.visible`が`true`の場合に実行され、 \
+	 * 画面へのグラフィック要素の描画を行います。
 	 */ 
 	draw(g){// this.visible が true時にループ毎に実行される。
 
@@ -130,7 +183,12 @@ class GameTask{
 
 	/**
 	 * destructor(TaskControllerからtask終了時に呼ばれる)
-	 * @param {GameCore} g
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * タスクが`GameTaskControl`から削除される際に一度だけ呼び出されるデストラクタです。\
+	 * リソースの解放や、タスク終了時に必要なクリーンアップ処理を \
+	 * 実装するのに適しています。
 	 */
 	post(g){// task.delで終了時に実行される。
 

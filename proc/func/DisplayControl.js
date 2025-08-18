@@ -28,9 +28,12 @@
  * @param {number} ix display offset x
  * @param {number} iy display offset y
  * @description
- * 実際の画面表示サイズはCSSのSTYLEで
- * 指定してあるのでここでは、操作する解像度を指定する。
- * 
+ * 実際の画面表示サイズはCSSのSTYLEで \
+ * 指定してあるのでここでは、操作する解像度を指定する。 \
+ * \
+ * HTML Canvas要素への画面表示を制御するクラスです。 \
+ * オフスクリーンバッファを使用し、指定された解像度で描画を行い、\
+ * 実際のCanvas要素に最終的な描画結果を反映させます。
  */
 class DisplayControl {
 
@@ -77,6 +80,10 @@ class DisplayControl {
      * @param {number} c_h height
      * @param {number} ix offset x
      * @param {number} iy offset y
+     * @description
+     * DisplayControlクラスのインスタンスを初期化します。 \
+     * 描画コンテキスト、幅、高さ、オフセットなどのパラメータを設定し　\
+     * オフスクリーンバッファと表示デバイスを準備します
      */
     constructor(ctx, c_w, c_h, ix, iy) {
 
@@ -107,6 +114,10 @@ class DisplayControl {
      * 表示間隔設定(フレーム)
      * @param {number} num 更新間隔
      * 0指定で自動更新(clear)抑止
+     * @description
+     * 画面の更新間隔（フレーム数）を設定します。 \
+     * 0を指定すると自動更新（画面クリア）が抑止され、 \
+     * 手動での更新制御が可能になります。
      */
     setInterval(num) {
         if (num == 0) {
@@ -120,16 +131,25 @@ class DisplayControl {
      * 背景色設定
      * @param {Color} str 表示色
      * null,""指定で透過色でクリア
+     * @description
+     * 画面の背景色を設定します。\
+     * `null`または空文字列を指定すると、背景は透過色でクリアされ、\
+     * 重ねて表示する際に前の描画が残ります。
      */
     setBackgroundcolor(str) { this.backgroundcolor = str; };
     /**
-     * 現在の表示間隔(フレーム)設定値取得
+     * 表示間隔設定値取得
      * @returns {number} 更新間隔(フレーム)
+     * @description
+     * 現在設定されている画面の更新間隔（フレーム数）を取得します。
      */
     getInterval() { return this.intervalTime; };
     /**
-     * 現在の背景色設定値取得
+     * 背景色設定値取得
      * @returns {Color} 表示色
+     * @description
+     * 現在設定されている画面の背景色を取得します。\
+     * 設定された色指定文字列を返します。
      */
     getBackgroundcolor() { return this.backgroundcolor; };
 
@@ -142,7 +162,10 @@ class DisplayControl {
      * @param {number} y 表示位置
      * @param {number} w 表示幅
      * @param {number} h 表示高さ
-     * 引数（省略不可
+     * @description
+     * マップチップなどのパターン画像を画面に描画します。\
+     * 元画像からの切り出し位置、サイズ、表示位置、表示幅、高さを指定し、\
+     * オフスクリーンバッファに描画します。
      */
     putPattern(gr, ptn, x, y, w, h) {
 
@@ -171,6 +194,10 @@ class DisplayControl {
      * @param {number} y position
      * @param {Color} c color
      * @todo Fontの指定
+     * @description
+     * 指定された文字列を画面に表示します。\
+     * 文字列、X座標、Y座標、表示色（省略時は"limegreen"）を指定し、\
+     * オフスクリーンバッファにテキストを描画します。
      */
     print(str, x, y, c) {
 
@@ -184,6 +211,8 @@ class DisplayControl {
      * @param {Img} gr 画像(イメージデータ)
      * @param {number} x 表示位置座標
      * @param {number} y 表示位置座標
+     * @description 
+     * 元画像のサイズそのままに、オフスクリーンバッファへ描画します。
      */
     putImage(gr, x, y) {
 
@@ -197,6 +226,9 @@ class DisplayControl {
      * @param {number} y 表示位置座標
      * @param {number} w 表示幅
      * @param {number} h 表示高さ
+     * @description
+     * 画像イメージを指定されたサイズで\
+     * オフスクリーンバッファへ描画します。
     */
     putImage2(gr, x, y, w, h) {
 
@@ -212,6 +244,10 @@ class DisplayControl {
      * @param {number} m12 変換座標
      * @param {number} m21 変換座標
      * @param {number} m22 変換座標
+     * @description
+     * 画像イメージを変形行列（Transform）を適用して表示します。\
+     * 画像データと変換座標（m11, m12, m21, m22）を指定し、\
+     * 画像を自由に拡大・縮小・回転・せん断して描画できます。
     */
     putImageTransform(gr, x, y, m11, m12, m21, m22) {
 
@@ -233,6 +269,8 @@ class DisplayControl {
     /**
      * 表示機能有り(draw)objectで表示コマンドを登録して表示
      * @param {PutFuncCustomDraw} cl 表示機能有り(draw)object
+     * @description
+     * `draw(device)`関数を持つカスタム描画オブジェクトを登録し、実行します。
     */
     putFunc(cl) {
 
@@ -244,7 +282,9 @@ class DisplayControl {
      * 画面消去(クリア）
      * @param {Color} c_str クリア背景色
      * @description
-     * nullの場合はクリアのみで塗りつぶしは無し
+     * 画面全体を消去（クリア）します。\
+     * オプションで背景色を指定して塗りつぶすことも可能で、\
+     * `setInterval(0)`設定時以外は、毎フレーム自動的に呼び出されます。
     */
     clear(c_str) {
 
@@ -266,7 +306,10 @@ class DisplayControl {
      * @param {number} w 表示幅
      * @param {number} h 表示高さ
      * @param {Color} c_str 塗り潰し色
-     * (rgbaで指定すると半透明色指定可能)
+     * @description
+     * 画面の指定された範囲を色で塗りつぶします。\
+     * X座標、Y座標、幅、高さ、塗りつぶし色を指定し、\
+     * RGBA形式で半透明色も指定可能です。
     */
     fill(x, y, w, h, c_str) {
 
@@ -275,6 +318,10 @@ class DisplayControl {
     //----------------------------------------------------------
     /**
      * offScreenのクリア
+     * @description
+     * オフスクリーンバッファをクリアします。\
+     * `enable_reset_flag`が`true`の場合に実行され、\
+     * バッファの内容を消去して初期状態に戻します。
     */
     reset() {
 
@@ -283,11 +330,19 @@ class DisplayControl {
     //----------------------------------------------------------
     /**
      * (flameloopで実行用）offScreenのクリア
+     * @description
+     * フレームループ内で実行されることを想定したオフスクリーンバッファのクリア関数です。\
+     * `enable_reset_flag`が`true`の場合、`reset`メソッドを呼び出して\
+     * バッファをクリアします。
     */
     reflash() { this.buffer.reflash(); };
     //----------------------------------------------------------
     /**
      * 描画
+     * @description
+     * オフスクリーンバッファの内容をメインのCanvasに反映させます。\
+     * この処理により、オフスクリーンで描画された全ての要素が\
+     * ユーザーに見える形で画面に表示されます。
     */
     draw() {
 
@@ -297,6 +352,9 @@ class DisplayControl {
     /**
      * 書き込み処理回数の取得
      * @returns {number} draw実行毎の回数
+     * @description
+     * 前回の`draw`メソッド呼び出し以降に実行された描画関数の回数を返します。\
+     * これにより、1フレームあたりの描画負荷の目安を把握できます。
     */
     count() {
 
@@ -306,6 +364,10 @@ class DisplayControl {
     /**
      * 書き込み処理回数最大値の取得
      * @returns {number} 最大値
+     * @description
+     * 記録された描画関数呼び出し回数の最大値を返します。\
+     * これは、各フレームにおける描画負荷のピーク値を示し、\
+     * パフォーマンス最適化の参考にできます。
     */
     max() {
 

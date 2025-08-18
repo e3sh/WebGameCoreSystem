@@ -3,9 +3,11 @@
  * (offscreen buffer)
  * 
  * @description
- * - DisplayControlのoffscreen buffer
- * - 表示LayerとしてoffScreenCanvasに随時描画
- * - 全画面表示する為、mainのCanvasにまとめて重ね表示
+ * DisplayControlクラスの内部で利用されるオフスクリーンバッファを管理します\
+ * 実際の描画はここで行われ、その後メインCanvasにまとめて転送されることで、\
+ * 描画パフォーマンスと複雑なグラフィック効果を実現します。\
+ * \
+ * //全画面表示する為、mainのCanvasにまとめて重ね表示
  */
 class offScreenTypeC {
     /**
@@ -13,6 +15,9 @@ class offScreenTypeC {
      * @param {number} h canvas height pixel
      * @param {number} ix screen offset x 
      * @param {number} iy screen offset y  
+     * @description
+     * offScreenTypeCインスタンスを初期化し、指定された幅と高さでオフスクリーンCanvasを作成します。\
+     * 2D描画コンテキストを取得し、オフセットや描画フラグなどの内部状態を設定します。
      */
     constructor(w, h, ix, iy) {
         //w : width, h:height
@@ -35,9 +40,14 @@ class offScreenTypeC {
         //[Mode Functions]
         /**
          * MODE CHANGE ENNABLE_DRAW_FLAG
+         * @method
          * @param {boolean} flg set enable_draw_flag
          * @returns {boolean} get enable_draw_flag
          * @todo 現在は効果なし/使用箇所確認後、削除予定
+         * @description
+         * オフスクリーンバッファをメインCanvasに描画するかどうかを制御します。\
+         * `true`を設定すると描画が有効になり、`false`で無効になりますが、\
+         * 現在の実装では効果が限定的である可能性があります。
          */
         this.view = function (flg) {
             if (typeof flg == "boolean") {
@@ -47,9 +57,14 @@ class offScreenTypeC {
         };
         /**
          * MODE CHANGE ENNABLE_FLIP_FLAG
+         * @method
          * @param {boolean} flg set enable_flip_flag
          * @returns {boolean} get enable_flip_flag
          * @todo 現在は効果なし/使用箇所確認後、削除予定
+         * @description
+         * オフスクリーンバッファが自動的にクリアされるかどうかを制御します。\
+         * `true`を設定するとクリアが有効になり、`false`で無効になりますが、\
+         * 現在の実装では効果が限定的である可能性があります。
          */
         this.flip = function (flg) {
             if (typeof flg == "boolean") {
@@ -59,8 +74,14 @@ class offScreenTypeC {
         };
         /**
          * FULLSCREEN ROTATE FUNCTION
+         * @method
          * @param {numver} r rotate angle
-         * @desc this function effect eneble :_2DEffectEnable:true
+         * @desc 
+         * this function effect eneble :_2DEffectEnable:true\
+         * \
+         * フルスクリーン2Dエフェクトが有効な場合、オフスクリーンバッファ全体を回転させます。\
+         * 指定された角度でバッファの内容が変換され、\
+         * 画面全体に回転効果を適用します。
          */
         this.turn = function (r) {
             if (_2DEffectEnable)
@@ -68,8 +89,14 @@ class offScreenTypeC {
         };
         /**
          * 2D FULLSCREEN EFFECT FUNCTION ENABLE
+         * @method
          * @param {boolean} f ENABLE FLAG
-         *
+         * @description
+         * フルスクリーン2Dエフェクトの有効/無効を切り替えます。\
+         * 有効にした場合、回転時の枠外乱れを防ぐためバッファサイズを2倍に拡張し、\
+         * 描画原点を中心に移動させます
+         * @todo 縦横2倍ではなく縦横を長辺の2倍にしないと足りない\
+         * 回転機能をあらためて使う案件が出てきたら補正する
          */
         this._2DEF = function (f) {
             _2DEffectEnable = f;
@@ -110,6 +137,10 @@ class offScreenTypeC {
          * @param {number} alpha alpha 透明度指定(0-255)/不透明255
          * @param {number} r radian　方向上を基準0にした回転方向(0-359)
          * @returns {void}
+         * @description
+         * 画像を変形（回転、反転、拡大・縮小）させながら描画します。\
+         * 元画像の切り出し範囲、表示位置、変形パラメータ、アルファ値、回転角を細かく指定し、\
+         * 複雑なスプライト描画を可能にします。
          */
         this.spPut = function (img, sx, sy, sw, sh, dx, dy, dw, dh, m11, m12, m21, m22, tx, ty, alpha, r) {
 
@@ -146,6 +177,10 @@ class offScreenTypeC {
          * @param {number} dw destination w  出力画像の幅
          * @param {number} dh destination h　出力画像の高さ
          * @returns {void}
+         * @description
+         * 画像の一部を切り出して、指定された位置とサイズで描画します\
+         * 元画像（source）のX, Y, 幅, 高さ、\
+         * そして描画先（destination）のX, Y, 幅, 高さを指定します。
          */
         this.drawImgXYWHXYWH = function (img, sx, sy, sw, sh, dx, dy, dw, dh) {
 
@@ -162,6 +197,10 @@ class offScreenTypeC {
          * @param {number} x 表示座標x
          * @param {number} y 表示座標y
          * @param {Color} c 表示色 (省略の場合"limegreen")
+         * @description
+         * 指定された文字列をオフスクリーンバッファに描画します。\
+         * 文字列、X座標、Y座標、そして表示色をパラメータとして受け取り、\
+         * バッファの描画コンテキストでテキストを描画します。
          */
         this.fillText = function (str, x, y, c) {
 
@@ -181,6 +220,10 @@ class offScreenTypeC {
          * @param {number} sx 表示位置x
          * @param {number} sy 表示位置y
          * @returns {void}
+         * @description
+         * 画像全体を元のサイズそのままに、指定された位置に描画します。\
+         * 画像データと表示位置のX, Y座標を指定する、\
+         * 最もシンプルな画像描画メソッドです。
          */
         this.drawImgXY = function (img, sx, sy) {
 
@@ -199,6 +242,10 @@ class offScreenTypeC {
          * @param {number} sw source w　幅
          * @param {number} sh source h　高さ
          * @returns {void}
+         * @description
+         * 画像全体を、指定された幅と高さに拡大・縮小して描画します。\
+         * 画像データ、表示位置のX, Y座標、そして描画したい幅と高さを指定し\
+         * 画像サイズを調整して表示します。
          */ 
         this.drawImgXYWH = function (img, sx, sy, sw, sh) {
 
@@ -219,6 +266,10 @@ class offScreenTypeC {
          * @param {number} m21 transform param
          * @param {number} m22 transform param
          * @returns {void}
+         * @description
+         * 画像全体に変形行列を適用して描画します。\
+         * 画像データ、表示位置X, Y、そして変換行列のパラメータを指定し\
+         * 画像の回転、拡大・縮小、せん断などをまとめて適用できます。
          */
         //use img, m11, m12, m21, m22, tx, ty
         //------------------------------------------------------------
@@ -245,6 +296,9 @@ class offScreenTypeC {
          * @returns {void}
          * @todo　削除予定
          * @deprecaed
+         * @description
+         * オフスクリーンバッファの描画コンテキストに変形行列を適用します。\
+         * 現在は機能しないダミー関数です。
          */
         this.transform = function (m11, m12, m21, m22) {
             //dummy
@@ -276,6 +330,10 @@ class offScreenTypeC {
          * @method 
          * @param {PutFuncCustomDraw} cl draw(device)を含むオブジェクト
          * @returns {void}
+         * @description
+         * `draw(device)`メソッドを持つカスタム描画オブジェクトを登録し、実行します。\
+         * この機能により、開発者はCanvasの低レベルな描画APIを直接利用して\
+         * グラフィック処理をオフスクリーンバッファ上で行うことができます。
          */
         this.putFunc = function (cl) {
 
@@ -294,6 +352,10 @@ class offScreenTypeC {
          * @param {number} sw 幅
          * @param {number} sh 高さ
          * @returns {void}
+         * @description
+         * オフスクリーンバッファの指定された矩形範囲を完全に消去します。\
+         * X, Y座標、幅, 高さを指定し、\
+         * 既存の描画内容をクリアします。
          */
         this.allClear = function (sx, sy, sw, sh) {
 
@@ -318,6 +380,10 @@ class offScreenTypeC {
          * @param {number} sh 高さ
          * @param {string} color 塗り潰し色(省略で透明色) 
          * @returns {void}
+         * @description
+         * オフスクリーンバッファの指定された矩形範囲を色で塗りつぶします。\
+         * X, Y座標、幅, 高さ、そして塗りつぶし色を指定し、\
+         * 色を指定しない場合はその範囲をクリアします。
         */
         this.fillRect = function (sx, sy, sw, sh, color) {
 
@@ -338,6 +404,10 @@ class offScreenTypeC {
          * offScreenバッファのクリア
          * @method 
          * @returns {void}
+         * @description
+         * オフスクリーンバッファ全体をクリアします。\
+         * `enable_reset_flag`が`true`の場合にのみ実行され、\
+         * バッファの内容を初期状態に戻します。
          */
         this.reset = function () {
 
@@ -354,6 +424,10 @@ class offScreenTypeC {
          * (flameloopで実行用）offScreenバッファのクリア
          * @method 
          * @returns {void}
+         * @description
+         * ゲームのフレームループ内で呼び出されることを想定した\
+         * オフスクリーンバッファのクリア機能です。\
+         * `enable_reset_flag`が`true`であれば、`reset`メソッドを呼び出します。
          */
         this.reflash = function () {
 
@@ -371,6 +445,10 @@ class offScreenTypeC {
          * @method 
          * @param {CanvasContext} outdev 出力先のCanvas2DContext(MainCanvas)
          * @returns {void}
+         * @description
+         * オフスクリーンバッファに描画された内容を、出力先のメインCanvasに転送します。\
+         * 2Dエフェクトが有効な場合は、回転などの効果を適用しながら\
+         * メインCanvasに反映させます。
          */
         this.draw = function (outdev) {
             //2024/04/29 new Function turn
@@ -406,6 +484,10 @@ class offScreenTypeC {
         /**
          * 前回のDrawコールから現在までのFunction呼び出し回数を返す
          * @returns {number} function call count par frame
+         * @description
+         * 前回の`draw`メソッドが呼び出されてから現在までに、\
+         * オフスクリーンバッファに対して行われた描画関数の呼び出し回数を返します。\
+         * これにより、1フレームあたりの描画操作の数を把握できます。
          */
         this.count = function () {
             //return function call count par frame
@@ -416,6 +498,10 @@ class offScreenTypeC {
         /**
          * Function呼び出し回数の最大値を返す
          * @returns {number} function call count par frame
+         * @description
+         * オフスクリーンバッファへの描画関数呼び出し回数の最大値を返します。\
+         * これは、フレーム間で最も多くの描画操作が行われた際の記録であり\
+         * 描画負荷のピークを把握するのに役立ちます。
          */
         this.max = function () {
             //return function call count par frame maxim

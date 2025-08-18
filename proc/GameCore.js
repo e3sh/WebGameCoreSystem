@@ -38,17 +38,9 @@ const GameCoreSysParam = {
  * //requestAnimationFrameの周期毎にタスクを実行する。
  * 
  * @description
- * - ゲームタスク: .task
- * - アセット管理: .asset
- * - 描画/表示レイヤー: .screen[n]
- * - 描画/スプライト: .sprite .font
- * - 入力/キーボード: .keyboard
- * - 入力/マウス: .mouse
- * - 入力/タッチパネル: .touchpad
- * - 入力/ゲームパッド: .gamepad (alias).joystick
- * - サウンド/オーディオ再生: .sound .effect
- * - サウンド/シンセシス: .beep
- * - システム状態管理/.fpsload .time .delta 
+ * ゲームエンジンの主要なインスタンスであり、実行時のエントリーポイントです。.\
+ * ゲームタスク、アセット管理、描画レイヤー、入力デバイス、\
+ * サウンドシステムなど、全てのコア機能を統合し制御します。
  */ 
 class GameCore {
 
@@ -126,6 +118,10 @@ class GameCore {
 
 	/**
 	 * @param {GameCoreSysParam} sysParam システム初期設定パラメータ
+	 * @description
+	 * GameCoreインスタンスを初期化し、ゲームの基盤となるコンポーネントを設定します。\
+	 * 入力デバイス、サウンド、描画システム、アセットマネージャーなどを生成し、\
+	 * メインループが動作するための準備を整えます。
 	 */
 	constructor(sysParam) {
 
@@ -199,6 +195,10 @@ class GameCore {
 		/**
 		 * game main roop (requestAnimationFrame callback function)
 		 * @param {number} t calltime/performance.now()
+		 * @description
+		 * ゲームのメインループとして機能する`requestAnimationFrame`のコールバック関数です。\
+		 * 毎フレーム、タスクの更新、ビープ音の再生、描画バッファのクリア、\
+		 * スプライトの描画、最終的な画面反映といった一連の処理を実行します。
 		 */
 		function loop(t) {
 			if (runStatus_) {
@@ -298,6 +298,10 @@ class GameCore {
 		 * ゲームループの開始
 		 * requestAnimationFrameの周期毎にタスクを実行する。
 		 * @method
+		 * @description
+		 * ゲームループの実行を開始します。\
+		 * `requestAnimationFrame`を介して`loop`関数が周期的に呼び出され\
+		 * ゲームの全ての処理が動き始めます。
 		 */
 		this.run = function () {
 			runStatus_ = true;
@@ -306,16 +310,23 @@ class GameCore {
 		};
 
 		/**
-		 * 
 		 * ゲームループの停止
 		 * @method
+		 * @description
+		 * ゲームループの実行を一時停止します。\
+		 * これにより`requestAnimationFrame`の呼び出しが止まり、\
+		 * ゲームの更新や描画が中断されます。
 		 */
 		this.pause = function () {
 			runStatus_ = false;
 		};
 
 		/**
-		 *　FPSや負荷の計測用
+		 * FPSや負荷の計測用(内部関数)
+		 * @description
+		 * ゲームのFPS（フレームレート）とワークロード（処理負荷）を計測するユーティリティです。\
+		 * フレームごとの時間間隔と処理時間を記録し\
+		 * 平均、最大、最小値として結果を提供します。
 		 */
 		function bench() {
 
@@ -340,6 +351,10 @@ class GameCore {
 			//let ypos = 412;
 			/**
 			 * 負荷計測区間開始指示
+			 * @description
+			 * 処理負荷計測区間の開始を指示します。\
+			 * このメソッドが呼ばれた時点のパフォーマンスタイムスタンプを記録し、\
+			 * 次の`end`メソッドまでの時間を測定します。
 			 */
 			this.start = function () {
 
@@ -349,6 +364,10 @@ class GameCore {
 
 			/**
 			 * 負荷計測区間終了指示
+			 * @description
+			 * 処理負荷計測区間の終了を指示し、計測データを記録します。\
+			 * `start`からの処理時間（ワークロード）とフレーム間隔を計算し、\
+			 * パフォーマンスログに追加します。
 			 */  
 			this.end = function () {
 
@@ -374,7 +393,23 @@ class GameCore {
 			};
 
 			/**
-			 * @return {object}　計測結果(.interval　.workload)
+			 * @typedef {object} resultLog 計測結果
+			 * @property {number} FPS FPS
+			 * @property {number[]} interval.log フレーム時間ログ
+			 * @property {number} interval.max　最大値
+			 * @property {number} interval.min　最小値
+			 * @property {number} interval.ave　平均値
+			 * @property {number[]} workload.log 負荷ログ
+			 * @property {number} workload.max　最大値
+			 * @property {number} workload.min　最小値
+			 * @property {number} workload.ave　平均値
+			 */
+			/**
+			 * @return {resultLog}　計測結果(.interval　.workload)
+			 * @description
+			 * FPSとワークロードの計測結果をオブジェクトで返します。\
+			 * 各ログの平均、最大、最小値を含む詳細なパフォーマンスデータを提供し、\
+			 * ゲームの最適化に役立ちます。
 			 */
 			this.result = function () {
 
@@ -431,6 +466,10 @@ class GameCore {
 			/**
 			 * blink用の基準時間を呼び出し元からもらう
 			 * @param {number} t now time(ms)
+			 * @description
+			 * 点滅（blink）機能の基準となる現在のシステム時刻を受け取ります。\
+			 * この時刻情報を使って、点滅カウンターを更新し\
+			 * 点滅状態の判定に利用します。
 			 */ 
 			this.setTime = function (t) {
 				ot = dt;
@@ -442,6 +481,10 @@ class GameCore {
 
 			/**
 			 * @return {number} 1フレームの時間を返す(ms)
+			 * @description
+			 * 直前のフレームに要した時間（デルタタイム）をミリ秒単位で返します。\
+			 * この値は、フレームレートが変動する環境での\
+			 * ゲームロジックの調整に利用できます。
 			 */
 			this.readTime = function () {
 				return dt - ot; //deltaTimeを返す(ms) 実績　Chrome PC:float/iOS,iPadOS:Integer
@@ -449,14 +492,22 @@ class GameCore {
 
 			/**
 			 * @return {number} エンジンが起動してからの経過時間を返す(ms)
+			 * @description
+			 * ゲームエンジンが起動してからの経過時間（ライフタイム）をミリ秒単位で返します。\
+			 * これは、ゲーム全体を通じた時間の管理や \
+			 * 特定のイベントのタイミング制御に利用できます。
 			 */
 			this.nowTime = function () {
 				return dt; //lifeTimeを返す(ms)
 			};
 
 			/**
-			 *　@return {boolean} 一定間隔(1.5s/0.5s)でtrue/falseを返す
-			*/
+			 * @return {boolean} 一定間隔(1.5s/0.5s)でtrue/falseを返す
+			 * @description
+			 * 一定の間隔（1.5秒`true`、0.5秒`false`）で`true`/`false`を繰り返すブール値を返します。\
+			 * UI要素の点滅表示や、周期的なイベントのトリガーなど \
+			 * 視覚的な合図や時間制御に利用できます。
+			 */
 			this.blink = function () {
 				//return blinkCounter + ":" + BLINK_ITVL + ":" + dt;//(parseInt(blinkCounter) < BLINK_TIME)?true:false;
 				return (blinkCounter < BLINK_TIME) ? true : false;

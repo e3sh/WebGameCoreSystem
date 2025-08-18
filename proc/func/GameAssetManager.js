@@ -16,6 +16,10 @@
  * @Todo JSON/TEXT data 
  * @Todo (Sprite Animation pattern/ tilemap data)
  * @Todo DelayLoad
+ * @description
+ * ゲームで使用する画像や音声などのアセットを管理するクラスです。\
+ * アセットのロード、ロード状態の確認、そしてIDによるアクセスを\
+ * 一元的に提供します。
  */
 class GameAssetManager {
 
@@ -43,6 +47,10 @@ class GameAssetManager {
          * @param {string | number} id UniqId(割り当てたい任意の数字/文字列)
          * @param {URI} uri ディレクトリパス
          * @returns {Image} Imageオブジェクト
+         * @description
+         * 指定されたURIから画像アセットを非同期でロードします。
+         * 一意のIDを割り当て、ロード完了ステータスを追跡しながら
+         * ロードされたImageオブジェクトを返します。
          */
         this.imageLoad = function (id, uri) {
 
@@ -56,9 +64,12 @@ class GameAssetManager {
         this.image = img_;
 
         /**
-         * イメージアセットコンテナClass
+         * イメージアセットコンテナClass (内部クラス)
          * @param {URI} uri ディレクトリパス
-         * @description ImageアセットコンテナClass
+         * @description 
+         * 画像アセットの情報を保持するコンテナクラスです。\
+         * 画像のURI、ロード状態（ready）、および実際のImageオブジェクトを管理し、\
+         * ロードが完了したかどうかを確認する機能を提供します。
          */
         class imageAsset {
             /**
@@ -87,6 +98,10 @@ class GameAssetManager {
                 /**
                  * @method
                  * @returns {boolean} ロード成否
+                 * @description
+                 * 画像アセットのロードが完了したかどうかをチェックします。\
+                 * `Image.complete`プロパティを利用してロード成否を判断し、\
+                 * `ready`ステータスを更新します。
                  */
                 this.loadcheck = function () {
                     this.ready = this.img.complete; //alert("load "+uri);
@@ -102,6 +117,10 @@ class GameAssetManager {
          * @param {string | number} id UniqId(割り当てたい任意の数字/文字列)
          * @param {URI} uri ディレクトリパス/拡張子無しで指定
          * @returns {Audio} Audioオブジェクト
+         * @description
+         * 指定されたURIから音声アセットをロードします。\
+         * ブラウザが再生可能な形式（MP3またはOGG）を自動判別し\
+         * 一意のIDで音声オブジェクトを管理します。
          */
         this.soundLoad = function (id, uri) {
 
@@ -116,9 +135,12 @@ class GameAssetManager {
         this.sound = snd_;
 
         /**
-         * AudioアセットコンテナClass
+         * AudioアセットコンテナClass(内部クラス)
          * @param {URI} uri ディレクトリパス
-         * @description AudioアセットコンテナClass
+         * @description 
+         * 音声アセットの情報を保持するコンテナクラスです。\
+         * 音声のURI、ロード状態（ready）、再生位置（pos）\
+         * および実際のAudioオブジェクトを管理します。
          */
         class audioAsset {
             /**
@@ -176,6 +198,10 @@ class GameAssetManager {
                  * 3 HAVE_FUTURE_DATA	現在の再生位置から続きを再生できるだけのデータがある状態。
                  * 4 HAVE_ENOUGH_DATA	メディアファイルの終わりまで中断せずに再生できる状態。
                  * @see https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/readyState
+                 * @description
+                 * 音声アセットの再生準備状態をチェックします。\
+                 * `HTMLMediaElement.readyState`プロパティを利用して、\
+                 * 音声データがどの程度ロードされているかを確認します。
                  */
                 this.loadcheck = function () {
                     this.ready = (this.sound.readyState != 0) ? true : false;
@@ -190,6 +216,10 @@ class GameAssetManager {
          * アセットのロード状態一覧チェック
          * @method
          * @returns {string[]} image/soundの状態一覧をテキストリストで返す
+         * @description
+         * 現在ロードされている全てのアセットのロード状態一覧をテキストで返します。\
+         * 画像と音声それぞれについて、URIとロードの成否、\
+         * または音声のreadyStateを表示します。
          */
         this.check = function () {
 
@@ -214,7 +244,12 @@ class GameAssetManager {
         };
 
         /**
+         * @method
          * @returns {string} Idリスト(テキスト)
+         * @description
+         * ロードされている全てのアセットの一意のIDリストをテキストで返します。\
+         * 画像と音声アセットのIDが結合された文字列として提供され\
+         * 管理されているアセットを一目で確認できます。
          */
         this.namelist = function () {
 

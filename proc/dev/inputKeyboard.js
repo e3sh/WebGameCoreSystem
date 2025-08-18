@@ -3,13 +3,22 @@
  * InputKeyboard
  * キーボード入力管理
  * @description
- * 入力値の確認にkeyCodeを利用しているが
+ * キーボードからの入力を管理するクラスです。\
+ * `keydown`と`keyup`イベントを監視し、\
+ * 特定のキー（方向キー、シフト、コントロール、スペース、A-Zなど）の\
+ * 押下状態をプロパティとして提供します。\
+ * memo:\
+ * 入力値の確認にkeyCodeを利用しているが\
  * keyCodeを利用しているがMDNで非推奨となっていたのでcodeでの処理も追加
  * @see https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent/keyCode
  */
 class inputKeyboard {
     /**
      * @param {boolean} codesupportmode select keyCode/code(null=keyCode mode)
+     * @description
+     * inputKeyboardインスタンスを初期化し、キーボードイベントリスナーを設定します。\
+     * キーの状態を保持するマップを準備し、\
+     * キーダウンとキーアップのイベントに応じてマップを更新します。
      * @todo　将来的にはデフォルトでtrue
      */
     constructor(codesupportmode) {
@@ -76,9 +85,14 @@ class inputKeyboard {
         }
         /**
          * 入力状態確認(状態確認用キープロパティの更新)
-         * @returns {Array} key status array
+         * @method
+         * @returns {object} key status array
          * @example
          * {keycode:true, keycode:false, ..}
+         * @description
+         * 現在のキーボード入力状態を更新し、その結果を返します。\
+         * 主要なキー（方向キー、修飾キー、特定のアルファベット）の\
+         * 押下状態が対応するプロパティに反映されます。
          */
         this.check = function(){
 
@@ -138,9 +152,13 @@ class inputKeyboard {
         };
         /**
          * 入力状態確認（状態確認用キープロパティは変化しない）
+         * @method
          * @returns {Array} key status array
          * @example
          * {keycode:true, keycode:false, ..}
+         * @description
+         * 現在のキーボードの入力状態（`keymap`配列）を、プロパティを更新せずに返します。\
+         * これにより、キーの個別の状態を直接参照できます。
          */
         this.state = function () {
 
@@ -149,8 +167,13 @@ class inputKeyboard {
 
         /**
          * keyCode指定して対象キーの状態を確認する
+         * @method
          * @param {number} keycode キーコード
          * @returns {boolean} キーの状態(true:on/false:off)
+         * @description
+         * 特定の`keyCode`を持つキーの現在の状態を問い合わせます。\
+         * 指定されたキーが押されているか（`true`）または\
+         * 押されていないか（`false`）を返します。
          */
         this.inquiryKey = function (keycode) {
 
