@@ -16,7 +16,7 @@ class offScreenTypeC {
      */
     constructor(w, h, ix, iy) {
         //w : width, h:height
-        const element = new OffscreenCanvas(w, h);
+        let element = new OffscreenCanvas(w, h);//2DEFで更新する場合があるのでconstはNG
 
         const offset_x = ix;
         const offset_y = iy;
