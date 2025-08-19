@@ -15,21 +15,12 @@ https://e3sh.github.io/ERA-T/ERATANKdnc.html
 https://e3sh.github.io/OvalRun/OVALRUN.html 
 
 ----------------------------------------
-特徴
----
-- ブラウザ単体で動作する(ローカルサーバが必要になるのでimport/exportを未使用）
-
-	**課題**
-	- WebGL未使用(使用方法が難しい。WebGPUが普及して理解できるようなら使用してみたいかも）
-	- ライブラリ未使用
-
-
-
-　　　8bitPCでBASICでプログラムしてた頃のように、
-
-　　　書き換え即実行で試しながらWebブラウザでゲームを作る為の自分用プログラムライブラリです。
+`webGameCoreSystem`は、Webブラウザ向けに開発された**JavaScriptベースのゲームエンジン**です。Web標準のAPI（Web Audio API、HTML Canvas API、Web Gamepad APIなど）を活用し、グラフィック描画、サウンド生成、入力処理、スプライト管理、タスク管理といった機能を提供します。
 
 　　　Javascript/HTML5理解の為の習作
+
+    Document:
+	https://e3sh.github.io/WebGameCoreSystem/documents/ 
 
 ----------------------------------------
 
@@ -89,6 +80,7 @@ offsetパラメータはscreen[0]を基準位置としての表示位置offset�
 	game.screen[n].setInterval(数字)	設定画面更新間隔(frame)　0の場合、画面の自動書き換えを行わない。
 	game.screen[0].backgroundColor(色名)	塗りつぶし背景色を指定（指定しなければ透過色でクリア）
 
+https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html
 
 *ゲームタスク*
 
@@ -120,6 +112,8 @@ gにはGameCoreオブジェクトが入るので、
 これ経由でデバイスやアセットにアクセスする。  
 （他タスクのコントロールをして階層制御なども考えられる）
 
+https://e3sh.github.io/WebGameCoreSystem/documents/GameTaskControl.html
+
 **アセット管理**
 
 ----------------------------------------
@@ -135,6 +129,8 @@ Imageやaudioオブジェクトを管理
 
 各種データも管理(未実装)
 遅延ロード(未実装)
+
+https://e3sh.github.io/WebGameCoreSystem/documents/GameAssetManager.html
 
 **デバイス管理**
 
@@ -247,6 +243,9 @@ Imageやaudioオブジェクトを管理
 	fv:trueで上下反転　fh:trueで左右反転
 
 
+https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteControl.html
+
+
 *スプライトフォント*  
 
 	game.font[ fontID ].putchr( text, x, y, [zoom] );
@@ -271,6 +270,9 @@ Imageやaudioオブジェクトを管理
 	
 	game.setSpFont( fontParam );
 
+https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteFontControl.html
+
+https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html
 
 **入力**  
 *キーボード*
@@ -301,6 +303,8 @@ Imageやaudioオブジェクトを管理
 		.akey; .skey; .dkey;
 		.zkey; .xkey; .ckey;
 
+https://e3sh.github.io/WebGameCoreSystem/documents/inputKeyboard.html
+
 *マウス*
 
 	game.mouse.check();  
@@ -312,14 +316,20 @@ Imageやaudioオブジェクトを管理
    	.button
 	.wheel
 
+https://e3sh.github.io/WebGameCoreSystem/documents/inputMouse.html
+
 *タッチパネル*
 
 	game.touchpad.check();
+
+https://e3sh.github.io/WebGameCoreSystem/documents/inputTouchPad.html
 
 *ゲームパッド*
 
 	game.gamepad.check();
 	game.joystick.check();
+
+https://e3sh.github.io/WebGameCoreSystem/documents/inputGamepad.html
 
 **サウンド**  
 *オーディオ再生*
@@ -330,6 +340,8 @@ Imageやaudioオブジェクトを管理
 	game.sound.effect( id );  
 	// 最初から再生
 
+https://e3sh.github.io/WebGameCoreSystem/documents/soundControl.html
+
 *BEEP/SoundGenerator*
 	https://e3sh.github.io/BeepFunction
 
@@ -337,6 +349,9 @@ Imageやaudioオブジェクトを管理
 	//score [{[name.],Freq:,Vol;,time:,use:false},..]
 
 	note.play(score, starttime(game.time();));
+
+https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html
+
 
 **ストレージ**
 
@@ -364,5 +379,22 @@ Imageやaudioオブジェクトを管理
 
 ----------------------------------------
 追加するjsファイルはincludeで追加しないとロードエラーになります。
+
+## 技術スタック
+
+*   **JavaScript**: エンジン全体のプログラミング言語。
+*   **Web Audio API**: サウンド合成（シンセサイザー）機能に利用。
+*   **HTML Canvas API**: グラフィック描画の中核技術。
+*   **Web Gamepad API**: ゲームパッド入力の取得に利用。
+*   **DOM API**: HTML要素の操作、イベントリスニングに使用。
+
+## 動作環境
+
+*   **最新のWebブラウザ**: Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edgeなど、Web Audio API、HTML Canvas API、Web Gamepad APIをサポートする環境で動作します。
+    *   特に、`OffscreenCanvas`などの機能は比較的新しいAPIであるため、最新のブラウザでの動作を推奨します。
+
+## ライセンス
+[MIT License]
+
 
 
