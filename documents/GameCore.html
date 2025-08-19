@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: GameCore</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: GameCore</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>GameCore<span class="signature">(sysParam)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">ゲームエンジン本体</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="GameCore"><span class="type-signature"></span>new GameCore<span class="signature">(sysParam)</span><span class="type-signature"></span></h4>
+    
+
+    
+    <p class="summary">ゲームエンジン本体/インスタンス化して実行実行時のエントリーポイント</p>
+    
+
+
+
+<div class="description">
+    ゲームエンジンの主要なインスタンスであり、実行時のエントリーポイントです。.<br>\ゲームタスク、アセット管理、描画レイヤー、入力デバイス、<br>\サウンドシステムなど、全てのコア機能を統合し制御します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sysParam</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#GameCoreSysParam">GameCoreSysParam</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">システム初期設定パラメータ</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>//宣言：const game = new GameCore( sysParam );//game.screen[0]のパラメータが実際の使用Canvasの解像度となる。 //offsetパラメータはscreen[0]を基準位置としての表示位置offset。(screen[1以降]で有効)　//ScreenはoffscreenBufferとして処理され、指定した解像度で作成される。 //ゲームループの開始：game.run();//requestAnimationFrameの周期毎にタスクを実行する。</code></pre>
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="GameCore.bench.html">bench</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="asset"><span class="type-signature"></span>asset<span class="type-signature"> :<a href="GameAssetManager.html">GameAssetManager</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="GameAssetManager.html">GameAssetManager</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line382">line 382</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="beep"><span class="type-signature"></span>beep<span class="type-signature"> :<a href="Beepcore.html">Beepcore</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Beepcore.html">Beepcore</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line429">line 429</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="dsp"><span class="type-signature"></span>dsp<span class="type-signature"> :Array.&lt;<a href="DisplayControl.html">DisplayControl</a>></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="DisplayControl.html">DisplayControl</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line412">line 412</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="font"><span class="type-signature"></span>font<span class="type-signature"> :<a href="GameSpriteFontControl.html">GameSpriteFontControl</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line438">line 438</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="fpsload"><span class="type-signature"></span>fpsload<span class="type-signature"> :<a href="bench.html">bench</a></span></h4>
+
+
+
+
+<div class="description">
+    FPS/workload count Utility
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="bench.html">bench</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line446">line 446</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="gamepad"><span class="type-signature"></span>gamepad<span class="type-signature"> :<a href="inputGamepad.html">inputGamepad</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="inputGamepad.html">inputGamepad</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line395">line 395</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="joystick"><span class="type-signature"></span>joystick<span class="type-signature"> :<a href="inputGamepad.html">inputGamepad</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="inputGamepad.html">inputGamepad</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line399">line 399</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="keyboard"><span class="type-signature"></span>keyboard<span class="type-signature"> :<a href="inputKeyboard.html">inputKeyboard</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="inputKeyboard.html">inputKeyboard</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line387">line 387</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="mouse"><span class="type-signature"></span>mouse<span class="type-signature"> :<a href="inputMouse.html">inputMouse</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="inputMouse.html">inputMouse</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line391">line 391</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="screen"><span class="type-signature"></span>screen<span class="type-signature"> :Array.&lt;<a href="DisplayControl.html">DisplayControl</a>></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="DisplayControl.html">DisplayControl</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line416">line 416</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sound"><span class="type-signature"></span>sound<span class="type-signature"> :<a href="soundControl.html">soundControl</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="soundControl.html">soundControl</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line425">line 425</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sprite"><span class="type-signature"></span>sprite<span class="type-signature"> :<a href="GameSpriteControl.html">GameSpriteControl</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="GameSpriteControl.html">GameSpriteControl</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line434">line 434</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="task"><span class="type-signature"></span>task<span class="type-signature"> :<a href="GameTaskControl.html">GameTaskControl</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="GameTaskControl.html">GameTaskControl</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line378">line 378</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="touchpad"><span class="type-signature"></span>touchpad<span class="type-signature"> :<a href="inputTouchPad.html">inputTouchPad</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="inputTouchPad.html">inputTouchPad</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line403">line 403</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="vgamepad"><span class="type-signature"></span>vgamepad<span class="type-signature"> :<a href="inputVirtualPad.html">inputVirtualPad</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="inputVirtualPad.html">inputVirtualPad</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line407">line 407</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="viewport"><span class="type-signature"></span>viewport<span class="type-signature"> :<a href="viewport.html">viewport</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="viewport.html">viewport</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line420">line 420</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="blink"><span class="type-signature"></span>blink<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    一定の間隔（1.5秒`true`、0.5秒`false`）で`true`/`false`を繰り返すブール値を返します。<br>\UI要素の点滅表示や、周期的なイベントのトリガーなど <br>\視覚的な合図や時間制御に利用できます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line476">line 476</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    一定間隔(1.5s/0.5s)でtrue/falseを返す
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="deltaTime"><span class="type-signature"></span>deltaTime<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    直前のフレームに要した時間（デルタタイム）をミリ秒単位で返します。<br>\この値は、フレームレートが変動する環境での<br>\ゲームロジックの調整に利用できます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line456">line 456</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    1フレームの時間を返す(ms)
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="pause"><span class="type-signature"></span>pause<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ゲームループの実行を一時停止します。<br>\これにより`requestAnimationFrame`の呼び出しが止まり、<br>\ゲームの更新や描画が中断されます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line504">line 504</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="run"><span class="type-signature"></span>run<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ゲームループの実行を開始します。<br>\`requestAnimationFrame`を介して`loop`関数が周期的に呼び出され<br>\ゲームの全ての処理が動き始めます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line490">line 490</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="time"><span class="type-signature"></span>time<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ゲームエンジンが起動してからの経過時間（ライフタイム）をミリ秒単位で返します。<br>\これは、ゲーム全体を通じた時間の管理や <br>\特定のイベントのタイミング制御に利用できます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GameCore.js.html">GameCore.js</a>, <a href="GameCore.js.html#line466">line 466</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    エンジンが起動してからの経過時間を返す(ms)
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 15:22:23 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

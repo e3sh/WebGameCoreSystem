@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: GameAssetManager</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: GameAssetManager</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>GameAssetManager<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    
+    <h4 class="name" id="GameAssetManager"><span class="type-signature"></span>new GameAssetManager<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+    <p class="summary">ゲームアセット管理 Imageやaudioオブジェクトを管理 Image/Audio Object</p>
+    
+
+
+
+<div class="description">
+    ゲームで使用する画像や音声などのアセットを管理するクラスです。<br>\アセットのロード、ロード状態の確認、そしてIDによるアクセスを<br>\一元的に提供します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>JSON/TEXT data</li>
+        
+            <li>(Sprite Animation pattern/ tilemap data)</li>
+        
+            <li>DelayLoad</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>game.asset.imageLoad( id , url ); //戻り値 Imageオブジェクト	game.asset.soundLoad( id , url ); //戻り値 audioオブジェクト(拡張子なしで）	game.asset.image[ id ];	game.asset.sound[ id ];	game.asset.*.ready //true:ロード完了　false:ロード未完了または失敗</code></pre>
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="GameAssetManager.audioAsset.html">audioAsset</a></dt>
+            <dd></dd>
+        
+            <dt><a href="GameAssetManager.imageAsset.html">imageAsset</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="image"><span class="type-signature"></span>image<span class="type-signature"> :Array.&lt;<a href="imageAsset.html">imageAsset</a>></span></h4>
+
+
+
+
+<div class="description">
+    Imageオブジェクトリスト
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="imageAsset.html">imageAsset</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="image"><span class="type-signature"></span>image<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    {array} Imageオブジェクト
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sound"><span class="type-signature"></span>sound<span class="type-signature"> :Array.&lt;<a href="audioAsset.html">audioAsset</a>></span></h4>
+
+
+
+
+<div class="description">
+    audioオブジェクトリスト
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="audioAsset.html">audioAsset</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sound"><span class="type-signature"></span>sound<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    {array} Audioオブジェクト
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line154">line 154</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="check"><span class="type-signature"></span>check<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    現在ロードされている全てのアセットのロード状態一覧をテキストで返します。<br>\画像と音声それぞれについて、URIとロードの成否、<br>\または音声のreadyStateを表示します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line244">line 244</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    image/soundの状態一覧をテキストリストで返す
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="imageLoad"><span class="type-signature"></span>imageLoad<span class="signature">(id, uri)</span><span class="type-signature"> &rarr; {Image}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    指定されたURIから画像アセットを非同期でロードします。一意のIDを割り当て、ロード完了ステータスを追跡しながらロードされたImageオブジェクトを返します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ImageAssetId">ImageAssetId</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">UniqId(割り当てたい任意の数字/文字列)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>uri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">URI</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">ディレクトリパス</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Imageオブジェクト
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Image</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="namelist"><span class="type-signature"></span>namelist<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ロードされている全てのアセットの一意のIDリストをテキストで返します。<br>\画像と音声アセットのIDが結合された文字列として提供され<br>\管理されているアセットを一目で確認できます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line274">line 274</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Idリスト(テキスト)
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="soundLoad"><span class="type-signature"></span>soundLoad<span class="signature">(id, uri)</span><span class="type-signature"> &rarr; {Audio}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    指定されたURIから音声アセットをロードします。<br>\ブラウザが再生可能な形式（MP3またはOGG）を自動判別し<br>\一意のIDで音声オブジェクトを管理します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AudioAssetId">AudioAssetId</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">UniqId(割り当てたい任意の数字/文字列)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>uri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">URI</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">ディレクトリパス/拡張子無しで指定</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_GameAssetManager.js.html">func/GameAssetManager.js</a>, <a href="func_GameAssetManager.js.html#line144">line 144</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Audioオブジェクト
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Audio</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 15:22:23 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

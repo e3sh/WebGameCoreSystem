@@ -1,0 +1,3703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: DisplayControl</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: DisplayControl</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>DisplayControl<span class="signature">(ctx, c_w, c_h, ix, iy)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">画面表示コントロール(CanvasLayerControl)クラス</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="DisplayControl"><span class="type-signature"></span>new DisplayControl<span class="signature">(ctx, c_w, c_h, ix, iy)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    実際の画面表示サイズはCSSのSTYLEで <br>\指定してあるのでここでは、操作する解像度を指定する。 <br>\<br>\HTML Canvas要素への画面表示を制御するクラスです。 <br>\オフスクリーンバッファを使用し、指定された解像度で描画を行い、<br>\実際のCanvas要素に最終的な描画結果を反映させます。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ctx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#DeviceContext">DeviceContext</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">mainCanvasCtx</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>c_w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">pixel width</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>c_h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">pixel height</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">display offset x</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>iy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">display offset y</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="backgroundcolor"><span class="type-signature"></span>backgroundcolor<span class="type-signature"> :<a href="global.html#Color">Color</a></span></h4>
+
+
+
+
+<div class="description">
+    背景色(fillcolor)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="global.html#Color">Color</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="buffer"><span class="type-signature"></span>buffer<span class="type-signature"> :<a href="offScreenTypeC.html">offScreenTypeC</a></span></h4>
+
+
+
+
+<div class="description">
+    OffscreenbufferController
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="offScreenTypeC.html">offScreenTypeC</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="ch"><span class="type-signature"></span>ch<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    canvas.height
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="cw"><span class="type-signature"></span>cw<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    canvas.width
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="lighter_enable"><span class="type-signature"></span>lighter_enable<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+<div class="description">
+    加算合成を使用する
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>現在は効果なし/削除予定</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="clear"><span class="type-signature"></span>clear<span class="signature">(c_str)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    画面全体を消去（クリア）します。<br>\オプションで背景色を指定して塗りつぶすことも可能で、<br>\`setInterval(0)`設定時以外は、毎フレーム自動的に呼び出されます。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>c_str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Color">Color</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">クリア背景色</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line289">line 289</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="count"><span class="type-signature"></span>count<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    前回の`draw`メソッド呼び出し以降に実行された描画関数の回数を返します。<br>\これにより、1フレームあたりの描画負荷の目安を把握できます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line359">line 359</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    draw実行毎の回数
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    オフスクリーンバッファの内容をメインのCanvasに反映させます。<br>\この処理により、オフスクリーンで描画された全ての要素が<br>\ユーザーに見える形で画面に表示されます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line347">line 347</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="fill"><span class="type-signature"></span>fill<span class="signature">(x, y, w, h, c_str)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    画面の指定された範囲を色で塗りつぶします。<br>\X座標、Y座標、幅、高さ、塗りつぶし色を指定し、<br>\RGBA形式で半透明色も指定可能です。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示幅</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示高さ</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>c_str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Color">Color</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">塗り潰し色</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line314">line 314</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getBackgroundcolor"><span class="type-signature"></span>getBackgroundcolor<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="global.html#Color">Color</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    現在設定されている画面の背景色を取得します。<br>\設定された色指定文字列を返します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line154">line 154</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    表示色
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#Color">Color</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getInterval"><span class="type-signature"></span>getInterval<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    現在設定されている画面の更新間隔（フレーム数）を取得します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line146">line 146</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    更新間隔(フレーム)
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="max"><span class="type-signature"></span>max<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    記録された描画関数呼び出し回数の最大値を返します。<br>\これは、各フレームにおける描画負荷のピーク値を示し、<br>\パフォーマンス最適化の参考にできます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line372">line 372</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    最大値
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="print"><span class="type-signature"></span>print<span class="signature">(str, x, y, c)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    指定された文字列を画面に表示します。<br>\文字列、X座標、Y座標、表示色（省略時は"limegreen"）を指定し、<br>\オフスクリーンバッファにテキストを描画します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">MessageText</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">position</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">position</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>c</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Color">Color</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">color</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line202">line 202</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Fontの指定</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="putFunc"><span class="type-signature"></span>putFunc<span class="signature">(cl)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    `draw(device)`関数を持つカスタム描画オブジェクトを登録し、実行します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PutFuncCustomDraw">PutFuncCustomDraw</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示機能有り(draw)object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line275">line 275</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="putImage"><span class="type-signature"></span>putImage<span class="signature">(gr, x, y)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    元画像のサイズそのままに、オフスクリーンバッファへ描画します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Img">Img</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">画像(イメージデータ)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line217">line 217</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="putImage2"><span class="type-signature"></span>putImage2<span class="signature">(gr, x, y, w, h)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    画像イメージを指定されたサイズで<br>\オフスクリーンバッファへ描画します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Img">Img</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">画像(イメージデータ)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示幅</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示高さ</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="putImageTransform"><span class="type-signature"></span>putImageTransform<span class="signature">(gr, x, y, m11, m12, m21, m22)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    画像イメージを変形行列（Transform）を適用して表示します。<br>\画像データと変換座標（m11, m12, m21, m22）を指定し、<br>\画像を自由に拡大・縮小・回転・せん断して描画できます。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Img">Img</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">画像(イメージデータ)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m11</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m12</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m21</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m22</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line252">line 252</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="putPattern"><span class="type-signature"></span>putPattern<span class="signature">(gr, ptn, x, y, w, h)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    マップチップなどのパターン画像を画面に描画します。<br>\元画像からの切り出し位置、サイズ、表示位置、表示幅、高さを指定し、<br>\オフスクリーンバッファに描画します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Img">Img</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Image</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ptn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">パターン番号（またはx,y,w,hの入ったオブジェクト）</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示位置</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示幅</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示高さ</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line170">line 170</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="reflash"><span class="type-signature"></span>reflash<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    フレームループ内で実行されることを想定したオフスクリーンバッファのクリア関数です。<br>\`enable_reset_flag`が`true`の場合、`reset`メソッドを呼び出して<br>\バッファをクリアします。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line338">line 338</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    オフスクリーンバッファをクリアします。<br>\`enable_reset_flag`が`true`の場合に実行され、<br>\バッファの内容を消去して初期状態に戻します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line326">line 326</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setBackgroundcolor"><span class="type-signature"></span>setBackgroundcolor<span class="signature">(str)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    画面の背景色を設定します。<br>\`null`または空文字列を指定すると、背景は透過色でクリアされ、<br>\重ねて表示する際に前の描画が残ります。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Color">Color</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示色null,""指定で透過色でクリア</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line139">line 139</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setBgPattern"><span class="type-signature"></span>setBgPattern<span class="signature">(gr, bgpth)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    マップチップ用パターン切り取り配列の登録
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Img">Img</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Image</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bgpth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">パターン配列（x,y,w,hの入ったオブジェクト）</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line185">line 185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>用途不明</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setInterval"><span class="type-signature"></span>setInterval<span class="signature">(num)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    画面の更新間隔（フレーム数）を設定します。 <br>\0を指定すると自動更新（画面クリア）が抑止され、 <br>\手動での更新制御が可能になります。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>num</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">更新間隔0指定で自動更新(clear)抑止</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="transform"><span class="type-signature"></span>transform<span class="signature">(m11, m12, m21, m22)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Transform(OffscreenBuffer全体の変形)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>m11</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m12</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m21</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>m22</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">変換座標</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_DisplayControl.js.html">func/DisplayControl.js</a>, <a href="func_DisplayControl.js.html#line264">line 264</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 15:22:23 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

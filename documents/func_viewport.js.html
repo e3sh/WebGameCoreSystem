@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: func/viewport.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: func/viewport.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//viewport
+//x, y, w, h
+//repeat  //折り返し表示の有無　overflow してる場合反対側に表示するか
+//size(w,h);//
+//repeat(mode);
+//setPos(px,py);実座標をスプライト座標としてviewportの左上をどこに置くか指定
+//viewtoReal(x,y)ビューポート変換後の画面表示座標
+//（スプライト座標！＝画面表示座標とする処理
+//戻り値｛x:,y:表示座標,in:(true:表示範囲内(false:表示範囲外)}
+//スプライト座標！＝画面表示座標とする処理\
+//ワールド座標系として管理して表示する場合\
+//これを通してビューポート内にあるスプライトのみ表示する
+/**
+ * @class
+ * @classdesc
+ * ワールド座標系と実際の画面表示座標系の変換を管理するクラスです。&lt;br>\
+ * ゲーム内のスプライトがどの位置にあり、画面のどこに表示されるべきか、&lt;br>\
+ * また、表示範囲内にあるかどうかの判定を行います。
+*/
+class viewport {
+
+    /**
+     * homeposition x (leftup)
+     * @type {number}
+     * @description
+     * ワールド座標系におけるビューポート（左上）の水平基準位置
+     */
+    x;
+    /**
+     * homeposition y (leftup)
+     * @type {number}
+     * @description
+     * ワールド座標系におけるビューポート（左上）の垂直基準位置
+     */
+    y;
+    /**
+     * viewport size width
+     * @type {number}
+     * @description
+     * ビューポートの表示領域幅
+     */
+    w;
+    /**
+     * viewport size height
+     * @type {number}
+     * @description
+     * ビューポートの表示領域高さ
+     */
+    h;
+    /**
+     * border size x 
+     * @type {number}
+     * @description
+     * ビューポート周囲の余白幅
+     */
+    bmw;
+    /**
+     * border size y
+     * @type {number}
+     * @description
+     * ビューポート周囲の余白高さ
+     */
+    bmh;
+
+    /**
+     * @constructor
+    */
+    constructor() {
+
+        let x_, y_, w_, h_, bmw_, bmh_, repeat_ = true;
+        x_ = 0; y_ = 0, bmw_ = 0, bmh_ = 0;
+
+        this.x = 0;
+        this.y = 0;
+        this.w = w_;
+        this.h = h_;
+        this.bmw = bmw_;
+        this.bmh = bmh_;
+
+        const update = () => {
+            this.x = x_;
+            this.y = y_;
+            this.w = w_;
+            this.h = h_;
+            this.bmw = bmw_;
+            this.bmh = bmh_;
+        }
+
+        /**
+         * Repeat Mode Enable
+         * @method 
+         * @param {boolean} [mode=true] 有効/無効
+         * @description
+         * ビューポートの繰り返しモードを有効/無効にします。&lt;br>\
+         * このモードが`true`の場合、画面外に出たオブジェクトが反対側から現れるように&lt;br>\
+         * 座標が折り返して計算されます。
+         */
+        this.repeat = function (mode = true) {
+            repeat_ = mode;
+        };
+        /**
+         * Set viewport size 
+         * @method 
+         * @param {number} w 表示領域幅 
+         * @param {number} h 表示領域高さ
+         * @description
+         * ビューポートの表示領域の幅と高さを設定します。&lt;br>\
+         * 通常、これはゲームの実際の画面解像度に合わせて設定され、&lt;br>\
+         * 表示可能な範囲を定義します。
+         */
+        this.size = function (w, h) {
+            w_ = w; h_ = h;
+            update();
+        };
+        /**
+         * SetHomePotition
+         * @method 
+         * @param {number} x 基準位置X
+         * @param {number} y 基準位置Y
+         * @description
+         * ワールド座標系におけるビューポートの基準位置（左上）を設定します。&lt;br>\
+         * この位置を移動させることで、ゲームの世界をスクロールさせたり&lt;br>\
+         * カメラの視点を変更したりできます。
+         */
+        this.setPos = function (x, y) {
+            x_ = x; y_ = y;
+            update();
+        };
+
+        /**
+         * set border margin
+         * @method
+         * @param {number} w 余白幅
+         * @param {number} h 余白高さ
+         * @description
+         * 表示範囲の判定に使用する、ビューポート周囲の余白を設定します。&lt;br>\
+         * オブジェクトがこの余白範囲から外に出るまで&lt;br>\
+         * ビューポート内に存在すると判定されます。
+         */
+        this.border = function (w, h) {
+            bmw_ = w; bmh_ = h;
+            update();
+        };
+
+        /**
+         * viewport.viewtoReal Result
+         * @typedef {object} viewportResult チェック結果
+         * @property {number} x 表示領域内での座標X
+         * @property {number} y 表示領域内での座標Y
+         * @property {boolean} in 表示領域内+余白の中かどうか
+         * @description ワールド座標から実画面座標に変換
+         */
+        /**
+         * in viewport check and positionConvert
+         * @method
+         * @param {number} sx ワールド座標X
+         * @param {number} sy ワールド座標Y
+         * @returns {viewportResult}
+         * @description 
+         * ワールド座標を実際の画面表示座標に変換し、ビューポート内にあるかを判定します。&lt;br>\
+         * スプライトなどのワールド座標をこのメソッドに通すことで、&lt;br>\
+         * 正しい画面上の位置と表示可否の情報を取得できます。
+        */
+        this.viewtoReal = function (sx, sy) {
+            let rx = sx + x_;
+            let ry = sy + y_;
+            let f = false;
+
+            if (repeat_) { // repeat true;
+                if (rx &lt; 0) rx = w_ + rx;
+                if (rx > w_) rx = rx % w_;
+                if (ry &lt; 0) ry = h_ + ry;
+                if (ry > h_) ry = ry % h_;
+            }
+
+            f = (rx + bmw_ &lt; 0 || rx > w_ + bmw_ || ry + bmh_ &lt; 0 || ry > h_ + bmh_) ? false : true;
+
+            //console.log("x" + x_ + ",y" + y_ + ",w" + w_);
+            return { x: rx, y: ry, in: f };
+        };
+
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 15:22:23 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

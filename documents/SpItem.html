@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: SpItem</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: SpItem</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>SpItem<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    
+    <h4 class="name" id="SpItem"><span class="type-signature"></span>new SpItem<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    `SpItem`インスタンスを初期化します。<br>\スプライトの位置、速度、回転、優先順位、衝突判定有効/無効、<br>\そして生存状態などの初期プロパティを設定します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="beforeCustomDraw"><span class="type-signature"></span>beforeCustomDraw<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+<div class="description">
+    customDrawがnormalDraw実施前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="collision"><span class="type-signature"></span>collision<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    衝突処理用のサイズ
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="collisionEnable"><span class="type-signature"></span>collisionEnable<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+<div class="description">
+    衝突処理の有効(実施対象にする)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="hit"><span class="type-signature"></span>hit<span class="type-signature"> :Array.&lt;<a href="SpItem.html">SpItem</a>></span></h4>
+
+
+
+
+<div class="description">
+    衝突相手のSpItem(複数の場合は複数)CollisionCheckで衝突しているitemのオブジェクトが入る衝突相手のSpItem(複数の場合は複数)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="SpItem.html">SpItem</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="normalDrawEnable"><span class="type-signature"></span>normalDrawEnable<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+<div class="description">
+    通常のスプライトを表示する
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line108">line 108</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="priority"><span class="type-signature"></span>priority<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    表示優先順位(大きいほど手前に表示(後から書き込み))
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="r"><span class="type-signature"></span>r<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    方向　Radian(0-359）
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="z"><span class="type-signature"></span>z<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    拡大率(default1.0)//reserb
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="customDraw"><span class="type-signature"></span>customDraw<span class="signature">(g, screen)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライト固有のカスタム描画ロジックを実装するためのエントリポイントです。<br>\通常のスプライト描画の前後どちらかで呼び出されるように設定でき、<br>\複雑な視覚効果をスプライトに適用できます。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>g</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GameCore.html">GameCore</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GameCoreインスタンス</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>screen</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="DisplayControl.html">DisplayControl</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">表示スクリーン</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line125">line 125</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="debug"><span class="type-signature"></span>debug<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    `SpItem`インスタンスのプロパティとその値をデバッグ用に文字列配列として返します。<br>\スプライトの現在の状態を詳細に確認することができ、<br>\開発中のデバッグ作業に役立ちます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line313">line 313</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    propertyListText
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="dispose"><span class="type-signature"></span>dispose<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトを破棄状態に設定します。<br>\`alive`カウンタをゼロ、`visible`を`false`、`living`を`false`に設定することで、<br>\スプライトは表示も処理もされなくなり、最終的にリストから削除されます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line234">line 234</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="hide"><span class="type-signature"></span>hide<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトを非表示状態に設定します。<br>\これにより、スプライトはゲームループの描画フェーズではスキップされ、<br>\画面には表示されなくなります。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line155">line 155</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="move"><span class="type-signature"></span>move<span class="signature">(dir, speed, aliveTime)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトに移動の指示を与えます。<br>\移動方向（0-359度）、1フレームあたりの速度、動作させるフレーム数を指定し<br>\スプライトが自動的に移動し、設定された時間後に停止します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">方向(0-359）</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>speed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">1f当たりの移動pixel（1/60基準)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>aliveTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">動作させるフレーム数</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line183">line 183</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="moveFunc"><span class="type-signature"></span>moveFunc<span class="signature">(delta)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトの移動処理を担う関数を設定するためのエントリポイントです。<br>\デフォルトでは直線移動関数が設定されていますが、<br>\カスタムの移動ロジックを割り当てて多様な動きを実現できます。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>delta</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="pos"><span class="type-signature"></span>pos<span class="signature">(x, y, r, z)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトの表示位置、回転角度、拡大率を直接設定します。<br>\X座標、Y座標、回転角度（0-359度）、拡大率をパラメータとして受け取り、<br>\スプライトを即座に指定された状態に配置します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">x座標）</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">y座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>r</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">方向(0-359)(省略可)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>z</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">拡大率(省略可)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line168">line 168</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="put"><span class="type-signature"></span>put<span class="signature">(x, y, r, z)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトをオフスクリーンバッファに描画するための内部処理関数です。<br>\スプライトの位置、パターン、回転、拡大率に基づいて<br>\最終的な描画を実行します。
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">x座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">y座標</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>r</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">方向(0-359)(省略可)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>z</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">拡大率(省略可)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line252">line 252</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    `SpItem`インスタンスの全てのプロパティを初期状態にリセットします。<br>\これにより、一度使用されたスプライトオブジェクトを再利用する際に<br>\クリーンな状態から始めることができます。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line280">line 280</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="stop"><span class="type-signature"></span>stop<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトの現在の移動を停止させます。<br>\`alive`カウンタをゼロに、`vx`と`vy`をゼロに設定することで、<br>\スプライトは現在の位置で静止します。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line222">line 222</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    スプライトを表示状態に設定します。<br>\これにより、スプライトがゲームループの描画フェーズで処理され、<br>\画面に表示されるようになります。
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="func_spriteControl.js.html">func/spriteControl.js</a>, <a href="func_spriteControl.js.html#line146">line 146</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 15:22:23 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

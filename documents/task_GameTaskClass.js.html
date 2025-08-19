@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: task/GameTaskClass.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: task/GameTaskClass.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * GameTaskTemplate
+ * @class
+ * @example
+ * class GameTask_Foo extends GameTask {
+ * 	constractor(){ super(id) }
+ * }
+ * @classdesc
+ * ゲームのロジックや描画処理をカプセル化するための基底タスククラスです。&lt;br>\
+ * `GameTaskControl`によって管理され、`init`、`pre`、`step`、`draw`、`post`などの &lt;br>\
+ * ライフサイクルメソッドを提供します。
+*/
+class GameTask{
+
+	/**
+	 * Task　Unique Identifier
+	 * @type {TaskId}
+	 */ 
+	id;
+	/**
+	 * task step status/
+	 * true: step execute 
+	 * @type {boolean}
+	 */
+	enable;
+	/**
+	 * task draw status/
+	 * true: draw execute　 
+	 * @type {boolean}
+	 */
+	visible;
+	/**
+	 * task running status  
+	 * @type {boolean}
+	*/
+	running;
+	/**
+	 * task using status
+	 * @type {boolean}
+	 */
+	living;
+	/**
+	 * task running proirity
+	 * @type {number}
+	 * @todo function Not implemented
+	*/
+	proirity;
+	/**
+	 * new 1st execute check flag
+	 * @type {boolean}
+	 */
+	preFlag;
+
+	/**
+	 * @param {TaskId} id  Unique Identifier
+	 * @description
+	 * GameTaskインスタンスを初期化します。&lt;br>\
+	 * タスクの一意な識別子（ID）を設定し、実行（enable）、描画（visible） &lt;br>\
+	 * 実行中（running）、生存（living）などの初期状態を定義します。
+	 */ 
+	constructor(id){
+		this.id = id
+		this.enable = true; // true : run step  false: pasue step
+		this.visible = true; // true: run draw  false: pasue draw
+
+		this.preFlag = false;
+
+		this.running = true;
+		this.living = true;
+	}
+
+	/**
+	 * task step and draw stop execute 
+	 * @method
+	 * @description
+	 * タスクのステップ処理と描画処理の両方を停止します。&lt;br>\
+	 * タスクの状態を`enable: false`、`visible: false`、`running: false`に設定し &lt;br>\
+	 * 一時的にタスクの活動を中断させます。
+	 */
+	pause(){
+		this.enable = false; // true : run step  false: pasue step
+		this.visible = false; // true: run draw  false: pasue draw
+
+		this.running = false;
+	}
+
+	/**
+	 * task step and draw resume execute  
+	 * @method
+	 * @description
+	 * 一時停止中のタスクのステップ処理と描画処理を再開します。&lt;br>\
+	 * タスクの状態を`enable: true`、`visible: true`、`running: true`に設定し、&lt;br>\
+	 * タスクの活動を復帰させます。
+	 */
+	resume(){
+		this.enable = true; // true : run step  false: pasue step
+		this.visible = true; // true: run draw  false: pasue draw
+
+		this.running = true;
+	}
+	/**
+	 * @method
+	 * @param {number} num sortorder 
+	 * @todo priority control function Not implemented(2025/08/15) 
+	 * @description
+	 * タスクの実行優先順位を設定します。&lt;br>\
+	 * ただし、この機能は現在未実装であり、&lt;br>\
+	 * 将来の拡張のために予約されています。
+	 */
+	setPriority(num){ this.proirity = num;}
+
+	/**
+	 * user implementation
+	 * @method
+	 * @description
+	 * ユーザーがタスク固有のパラメータや状態をリセットするためのプレースホルダーメソッドです。&lt;br>\
+	 * このメソッドは継承クラスでオーバーライドすることで、&lt;br>\
+	 * タスクの初期状態への復帰処理を実装できます。
+	 */
+	reset(){}
+
+	/**
+	 * task dispose
+	 * @method
+	 * @description
+	 * タスクを「生存していない」（living: false）状態に設定し、破棄のマークを付けます。&lt;br>\
+	 * これにより、`GameTaskControl`がタスクリストからこのタスクを&lt;br>\
+	 * 安全に削除できるようになります。
+	 */
+	kill(){ this.living = false;}
+
+	/**
+	 * TaskControllerからtask.add時に実行される。
+	 * @method
+	 * @param {GameCore} g GameCoreインスタンス
+	 * @description
+	 * タスクが`GameTaskControl`に追加された際に一度だけ実行されます&lt;br>\
+	 * 主に、タスク内で使用するアセットのロードや、&lt;br>\
+	 * 初期設定（コンストラクタで設定できないもの）を行うのに適しています。
+	 */ 
+	init(g){
+		//asset(contents) load
+		//呼び出しタイミングによってはconstuctorで設定してもよい。
+	}
+
+	/**
+	 * TaskControllerから初回の呼び出し時に実行される。
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * タスクが`GameTaskControl`によって最初に実行される直前に一度だけ呼び出されます。&lt;br>\
+	 * パラメータのリセットや、タスクが本格的に動き出す前の&lt;br>\
+	 * 最終的な準備を行うのに適しています。
+	 */ 
+	pre(g){
+    	//paramater reset etc
+	    //this.preFlag = true;　フラグの変更はTaskControlで実行されるので継承側でも実行する必要なし。
+	}
+
+	/**
+	 * TaskControlでループ毎に実行される。(enable :true)
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * `GameTaskControl`によってゲームループ毎に呼び出される、タスクの主要な更新ロジックです。&lt;br>\
+	 * `this.enable`が`true`の場合に実行され、&lt;br>\
+	 * ゲームの進行に関わる計算や状態更新を行います。
+	 */ 
+	step(g){// this.enable が true時にループ毎に実行される。
+
+	}
+
+	/**
+	 * TaskControlでループ毎に実行される。(visible :true)
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * `GameTaskControl`によってゲームループ毎に呼び出される、タスクの描画ロジックです。&lt;br>\
+	 * `this.visible`が`true`の場合に実行され、 &lt;br>\
+	 * 画面へのグラフィック要素の描画を行います。
+	 */ 
+	draw(g){// this.visible が true時にループ毎に実行される。
+
+	}
+
+	/**
+	 * destructor(TaskControllerからtask終了時に呼ばれる)
+	 * @method
+	 * @param {GameCore} g　GameCoreインスタンス
+	 * @description
+	 * タスクが`GameTaskControl`から削除される際に一度だけ呼び出されるデストラクタです。&lt;br>\
+	 * リソースの解放や、タスク終了時に必要なクリーンアップ処理を &lt;br>\
+	 * 実装するのに適しています。
+	 */
+	post(g){// task.delで終了時に実行される。
+
+	}
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 15:22:23 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
