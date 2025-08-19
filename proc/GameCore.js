@@ -467,6 +467,7 @@ class GameCore {
 		/**
 		 * @method
 		 *　@return {boolean} 一定間隔(1.5s/0.5s)でtrue/falseを返す
+		 * @description
 		 * 一定の間隔（1.5秒`true`、0.5秒`false`）で`true`/`false`を繰り返すブール値を返します。<br>\
 		 * UI要素の点滅表示や、周期的なイベントのトリガーなど <br>\
 		 * 視覚的な合図や時間制御に利用できます。
