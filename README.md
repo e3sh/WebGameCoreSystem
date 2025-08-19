@@ -19,8 +19,8 @@ https://e3sh.github.io/OvalRun/OVALRUN.html
 
 　　　Javascript/HTML5理解の為の習作
 
-    Document:
-	https://e3sh.github.io/WebGameCoreSystem/documents/ 
+Document:
+https://e3sh.github.io/WebGameCoreSystem/documents/ 
 
 ----------------------------------------
 
@@ -80,6 +80,7 @@ offsetパラメータはscreen[0]を基準位置としての表示位置offset�
 	game.screen[n].setInterval(数字)	設定画面更新間隔(frame)　0の場合、画面の自動書き換えを行わない。
 	game.screen[0].backgroundColor(色名)	塗りつぶし背景色を指定（指定しなければ透過色でクリア）
 
+GameCore:
 https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html
 
 *ゲームタスク*
@@ -110,8 +111,8 @@ https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html
 
 gにはGameCoreオブジェクトが入るので、
 これ経由でデバイスやアセットにアクセスする。  
-（他タスクのコントロールをして階層制御なども考えられる）
 
+GameTaskControl:
 https://e3sh.github.io/WebGameCoreSystem/documents/GameTaskControl.html
 
 **アセット管理**
@@ -127,9 +128,7 @@ Imageやaudioオブジェクトを管理
 
 	game.asset.*.ready //true:ロード完了　false:ロード未完了または失敗
 
-各種データも管理(未実装)
-遅延ロード(未実装)
-
+GameAssetManager:
 https://e3sh.github.io/WebGameCoreSystem/documents/GameAssetManager.html
 
 **デバイス管理**
@@ -242,7 +241,7 @@ https://e3sh.github.io/WebGameCoreSystem/documents/GameAssetManager.html
 	x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
 	fv:trueで上下反転　fh:trueで左右反転
 
-
+GameSpriteControl:
 https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteControl.html
 
 
@@ -269,9 +268,11 @@ https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteControl.html
 	}
 	
 	game.setSpFont( fontParam );
-
+ 
+GameSpriteFontControl:
 https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteFontControl.html
 
+fontPrintControl:
 https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html
 
 **入力**  
@@ -303,6 +304,7 @@ https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html
 		.akey; .skey; .dkey;
 		.zkey; .xkey; .ckey;
 
+inputKeyboard:
 https://e3sh.github.io/WebGameCoreSystem/documents/inputKeyboard.html
 
 *マウス*
@@ -316,12 +318,14 @@ https://e3sh.github.io/WebGameCoreSystem/documents/inputKeyboard.html
    	.button
 	.wheel
 
+inputMouse:
 https://e3sh.github.io/WebGameCoreSystem/documents/inputMouse.html
 
 *タッチパネル*
 
 	game.touchpad.check();
 
+inputTouchPad:
 https://e3sh.github.io/WebGameCoreSystem/documents/inputTouchPad.html
 
 *ゲームパッド*
@@ -329,6 +333,7 @@ https://e3sh.github.io/WebGameCoreSystem/documents/inputTouchPad.html
 	game.gamepad.check();
 	game.joystick.check();
 
+inputGamepad:
 https://e3sh.github.io/WebGameCoreSystem/documents/inputGamepad.html
 
 **サウンド**  
@@ -340,6 +345,7 @@ https://e3sh.github.io/WebGameCoreSystem/documents/inputGamepad.html
 	game.sound.effect( id );  
 	// 最初から再生
 
+soundControl:
 https://e3sh.github.io/WebGameCoreSystem/documents/soundControl.html
 
 *BEEP/SoundGenerator*
@@ -350,13 +356,8 @@ https://e3sh.github.io/WebGameCoreSystem/documents/soundControl.html
 
 	note.play(score, starttime(game.time();));
 
+Beepcore:
 https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html
-
-
-**ストレージ**
-
-(未実装)
-	game.storage.save( key ,data );とか
 
 **他**
 
@@ -395,6 +396,7 @@ https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html
 
 ## ライセンス
 [MIT License]
+
 
 
 
