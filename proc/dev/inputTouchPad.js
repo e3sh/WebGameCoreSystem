@@ -2,14 +2,16 @@
 //**************************************************************
 /**
  * touchPadControl
- * @description
- * タッチパッド（またはタッチスクリーン）からの入力を管理します。\
- * タッチ開始、移動、終了、キャンセルイベントを処理し、\
+ * @class
+ * @classdesc
+ * タッチパッド（またはタッチスクリーン）からの入力を管理します。<br>\
+ * タッチ開始、移動、終了、キャンセルイベントを処理し、<br>\
  * 複数のタッチポイントの位置を追跡します。
  * @todo スワイプやピンチインアウトの検出
  */
 class inputTouchPad {
     /**
+     * @constructor
      * @param {string} canvas_id CanvasId
      * @example
      * GameCoreでCanvasIdが指定されます。
@@ -52,8 +54,8 @@ class inputTouchPad {
          * @method
          * @param {GameCore} g GameCoreインスタンス
          * @description
-         * フルスクリーンモードかどうかに応じてタッチ座標の変換を調整します。\
-         * これにより、実際の画面解像度と描画Canvasの解像度が異なる場合でも、\
+         * フルスクリーンモードかどうかに応じてタッチ座標の変換を調整します。<br>\
+         * これにより、実際の画面解像度と描画Canvasの解像度が異なる場合でも、<br>\
          * 正確なタッチ位置をゲーム内で取得できます。
          */
         this.mode = function (g) {
@@ -105,8 +107,8 @@ class inputTouchPad {
          * @method
          * @returns {touchpadState} タッチパネル状態 
          * @description
-         * 現在のタッチ入力状態を返します。\
-         * 複数のタッチポイントがある場合、各ポイントのX、Y座標と\
+         * 現在のタッチ入力状態を返します。<br>\
+         * 複数のタッチポイントがある場合、各ポイントのX、Y座標と<br>\
          * IDを含む配列として提供されます。
          */
         this.check = function () {
@@ -120,8 +122,8 @@ class inputTouchPad {
          * @method
          * @returns {touchpadState} タッチパネル状態
          * @description
-         * 最後に記録されたタッチ入力状態を、値をリセットせずに返します。\
-         * このメソッドは、前フレームの状態を参照したい場合や、\
+         * 最後に記録されたタッチ入力状態を、値をリセットせずに返します。<br>\
+         * このメソッドは、前フレームの状態を参照したい場合や、<br>\
          * 値のリセットが不要な場合に利用されます。
          */
         this.check_last = function () {
@@ -135,8 +137,8 @@ class inputTouchPad {
          * @method
          * @param {DisplayControl} context 表示するDisplayControlを指定
          * @description
-         * 現在アクティブなタッチポイントの位置に視覚的な円形インジケータを描画します。\
-         * デバッグや、タッチ操作のフィードバックを表示したい場合に利用でき、\
+         * 現在アクティブなタッチポイントの位置に視覚的な円形インジケータを描画します。<br>\
+         * デバッグや、タッチ操作のフィードバックを表示したい場合に利用でき、<br>\
          * 描画機能を持つオブジェクトを`putFunc`で登録します。
          */
         this.draw = function (context) {

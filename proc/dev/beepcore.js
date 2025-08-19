@@ -1,10 +1,51 @@
+  /**
+   * @typedef {number} wavetypeNumber 0:"sine", 1:"square", 2:"sawtooth", 3:"triangle"
+   * @example
+   * 0:"sine", 1:"square", 2:"sawtooth", 3:"triangle"
+   * @description
+  * - 以下の数値で設定する<br>\
+  * - 0: サイン波 <br>\
+  * - 1: 矩形波   <br>\
+  * - 2: ノコギリ波<br>\
+  * - 3: 三角波   <br>\
+  */
+  /**
+   * LFO setup Paramater
+   * @typedef {object} lfoParam  
+   * @property {number} Freq LFO周波数
+   * @property {waveTypeString } wavetype LFOの波形タイプ
+   * @property {number} depth LFO depth
+   * @example
+   * {Freq:0, wavetype:"none", depth:0};
+   */
+  /** 
+   * waveTypeString
+   * @typedef {string} waveTypeString "sine" or "square" or "sawtooth" or "triangle" or "none"
+   * @example
+   * "sine" or "square" or "sawtooth" or "triangle" or "none"
+   * @description
+   * - 以下の文字列を設定する<br>\
+   * - "sine":サイン波<br>\
+   * - "square":矩形波<br>\
+   * - "sawtooth":ノコギリ波<br>\
+   * - "triangle":三角波<br>\
+   * - "none":なし（LFOの波形タイプを選択時のみ)<br>\
+   */
+  /**
+   * numberVolume
+   * @typedef {number} numberVolume (bitween 0.0~1.0)
+   * @example
+   *  (bitween 0.0~1.0)
+   * @description
+   * ボリュームパラメータ: 0.0から1.0の範囲内で指定すること
+  */
 /**
  * WebAudio Beep Function \
  * BEEPCORE SOUND SYSTEM
- * 
- * @description
- * WebAudio APIを利用したサウンドシステムです。\
- * サイン波、矩形波、ノコギリ波、三角波などの波形を生成し、\
+ * @class
+ * @classdesc
+ * WebAudio APIを利用したサウンドシステムです。<br>\
+ * サイン波、矩形波、ノコギリ波、三角波などの波形を生成し、<br>\
  * プログラムで音色や音階を制御してビープ音を鳴らします
  */
 class Beepcore {
@@ -22,12 +63,16 @@ class Beepcore {
 
     /**
      * SoundNoteClass(AudioContextRapper)
-     * @description
-     * Beepcoreサウンドシステム内で個々の音源を管理します。\
-     * 発振器（oscillator）とゲインノード（gainNode）を制御し、\
+     * @class Beepcore.noteClass
+     * @classdesc
+     * Beepcoreサウンドシステム内で個々の音源を管理します。<br>\
+     * 発振器（oscillator）とゲインノード（gainNode）を制御し、<br>\
      * 音の生成、再生、停止、ボリュームや周波数の変更を行います。　
      */
     class noteClass {
+      /**
+       * 
+       */
       constructor() {
 
         const ctx = new AudioContext();
@@ -48,29 +93,16 @@ class Beepcore {
         const noteTable = Table();
 
         /**
-         * LFO setup Paramater
-         * @typedef {object} lfoParam  
-         * @property {number} Freq LFO Frequency
-         * @property {string} wavetype "sine" or "square" or "sawtooth" or "triangle" or "none"
-         * @property {number} depth LFO depth
-         * @example
-         * {Freq:0, wavetype:"none", depth:0};
-         */
-
-        /**
          * note initialize
          * @method
-         * @param {number} Freq Frequency
-         * @param {string} osc_wavetype "sine" or "square" or "sawtooth" or "triangle"
-         * @param {lfoParam} lfop LFO setup
-         * @param {number} mVol masterVolume 0.0~1.0
-         * @default
-         * Freq = 440, osc_wavetype = "sine", lfop = null, mVol = 0.2
+         * @param {number} [Freq=440] 周波数
+         * @param {waveTypeString} [osc_wavetype="sine"] オシレーターの波形タイプ
+         * @param {lfoParam} [lfop=null] LFO設定
+         * @param {numberVolume} [mVol=0.2] マスターボリューム
          * @description
-         * 音源を初期化します。\
-         * 周波数、オシレーターの波形タイプ、LFO（低周波発振器）の設定、\
+         * 音源を初期化します。<br>\
+         * 周波数、オシレーターの波形タイプ、LFO（低周波発振器）の設定、<br>\
          * およびマスターボリュームをパラメータとして設定します。
-         * 
          */
         this.init = function (Freq = 440, osc_wavetype = "sine", lfop = null, mVol = 0.2) {
           //  lfo param = {Freq:0, wavetype:"none", depth:0};
@@ -100,13 +132,11 @@ class Beepcore {
         /**
          * note on (voice play)
          * @method
-         * @param {number} volume Volume 0.0~1.0
-         * @param {number} delay delay sec
-         * @defalut 
-         * volume = 1.0, delay = 0
+         * @param {numberVolume} [volume=1.0] ボリューム
+         * @param {number} [delay=0] 遅延時間（秒）
          * @description
-         * 音源の再生（ボイスプレイ）を開始します。\
-         * 指定されたボリュームと遅延時間（秒）で音を鳴らし\
+         * 音源の再生（ボイスプレイ）を開始します。<br>\
+         * 指定されたボリュームと遅延時間（秒）で音を鳴らし<br>\
          * ゲインノードを通じてマスターボリュームが適用されます。
          */
         this.on = function (volume = 1, delay = 0) {
@@ -117,10 +147,10 @@ class Beepcore {
         /**
          * change note volume
          * @method
-         * @param {number} volume volume 0.0~1.0　　
+         * @param {numberVolume} volume ボリューム　
          * @description
-         * 音源のボリュームを変更します。\
-         * 新しいボリューム値とマスターボリュームを掛け合わせた値が、\
+         * 音源のボリュームを変更します。<br>\
+         * 新しいボリューム値とマスターボリュームを掛け合わせた値が、<br>\
          * ゲインノードのゲイン値として即座に適用されます。
          */
         this.changeVol = function (volume = 1) {
@@ -129,10 +159,10 @@ class Beepcore {
 
         /**
          * @method
-         * @param {number} Freq Frequency
+         * @param {number} Freq 周波数
          * @description
-         * 音源の周波数を変更します。\
-         * 新しい周波数値をオシレーターに直接設定することで、\
+         * 音源の周波数を変更します。<br>\
+         * 新しい周波数値をオシレーターに直接設定することで、<br>\
          * リアルタイムに音の高さを調整します。
          */
         this.changeFreq = function (Freq) {
@@ -142,10 +172,10 @@ class Beepcore {
         /**
          * note stop play
          * @method
-         * @param {number} dur stop delay sec
+         * @param {number} dur 遅延時間（秒）
          * @description
-         * 音源の再生を停止します。\
-         * 指定された遅延時間（秒）後にオシレーターが停止し、\
+         * 音源の再生を停止します。<br>\
+         * 指定された遅延時間（秒）後にオシレーターが停止し、<br>\
          * オブジェクトは再利用できない状態（living: false）になります。
          */
         this.off = function (dur) {
@@ -156,8 +186,8 @@ class Beepcore {
         /**
          * @method
          * @description
-         * 音源のゲインと周波数をゼロに設定し、一時的に音を止めます。\
-         * 完全に停止させる`off`とは異なり、 \
+         * 音源のゲインと周波数をゼロに設定し、一時的に音を止めます。<br>\
+         * 完全に停止させる`off`とは異なり、 <br>\
          * 音源オブジェクト自体は「生きている」状態を保ちます。
          */
         this.suspend = function () {
@@ -180,8 +210,8 @@ class Beepcore {
          * @param {noteParam[]} setList makeScore method create list array
          * @param {number} now play start system time (game.time()) 
          * @description
-         * 音符のシーケンス（スコア）を再生します。\
-         * `makeScore`メソッドで作成された音符パラメータのリストを受け取り、 \
+         * 音符のシーケンス（スコア）を再生します。<br>\
+         * `makeScore`メソッドで作成された音符パラメータのリストを受け取り、<br>\
          * 指定された開始システム時刻から再生を開始します。
          */
         this.play = function (setList, now) {
@@ -214,8 +244,8 @@ class Beepcore {
          * @method
          * @param {number} now calltime
          * @description
-         * システム内部で使用される再生制御関数です。\
-         * 現在時刻に基づいて`noteList`内の音符の状態を更新し、 \
+         * システム内部で使用される再生制御関数です。<br>\
+         * 現在時刻に基づいて`noteList`内の音符の状態を更新し、 <br>\
          * 適切なタイミングで音量や周波数を変更します。 
          */
         this.step = function (now) {
@@ -272,12 +302,12 @@ class Beepcore {
     /**
      * NOTE CREATE
      * @method
-     * @param {number} Freq Frequency
-     * @returns {noteClass} noteObject
+     * @param {number} Freq 周波数
+     * @returns {noteClass} 音源オブジェクト
      * @description
-     * 新しい`noteClass`オブジェクトを生成して初期化します。\
-     * 指定された周波数、グローバルな波形タイプ、LFO設定、\
-     * およびマスターボリュームで音符を作成し、リストに追加します
+     * 新しい`noteClass`オブジェクトを生成して初期化します。<br>\
+     * 指定された周波数、グローバルな波形タイプ、LFO設定、<br>\
+     * およびマスターボリュームで音源を作成し、リストに追加します
      */
     this.createNote = function (Freq) {
 
@@ -291,12 +321,10 @@ class Beepcore {
      * SETUP BEEPCORE SOUND SYSTEM
      * use OSC Wavetype select
      * @method
-     * @param {number} wavetype 0,1,2,3
+     * @param {wavetypeNumber} wavetype 波形タイプ[0~3]
      * @description
-     * [0:"sine", 1:"square", 2:"sawtooth", 3:"triangle"] \
-     * \
-     * 使用するオシレーターの波形タイプを設定します。 \
-     * 正弦波、矩形波、ノコギリ波、三角波の中から選択し、 \
+     * 使用するオシレーターの波形タイプを設定します。 <br>\
+     * 正弦波、矩形波、ノコギリ波、三角波の中から選択し、 <br>\
      * 以降作成される音符のデフォルト波形として適用されます。
      */
     this.oscSetup = function (wavetype) {
@@ -306,14 +334,12 @@ class Beepcore {
      * SETUP BEEPCORE SOUND SYSTEM
      * LFO setup
      * @method
-     * @param {number} Freq Frequency
-     * @param {number} wavetype 0,1,2,3
-     * @param {number} depth LFO depth
+     * @param {number} Freq LFO周波数
+     * @param {wavetypeNumber} wavetype 波形タイプ[0~3]
+     * @param {number} depth LFOデプス
      * @description
-     * [0:"sine", 1:"square", 2:"sawtooth", 3:"triangle"] \
-     * \
-     * LFO（低周波発振器）を設定します \
-     * LFOの周波数、波形タイプ、デプス（深さ）を指定し、\
+     * LFO（低周波発振器）を設定します <br>\
+     * LFOの周波数、波形タイプ、デプス（深さ）を指定し、<br>\
      * 音に揺らぎやビブラート効果を加えることができます。
      */
     this.lfoSetup = function (Freq, wavetype, depth) {
@@ -324,8 +350,8 @@ class Beepcore {
      * LFO off
      * @method
      * @description
-     * 設定されているLFOを無効にします。\
-     * これにより、以降作成される音符にLFO効果は適用されなくなり、\
+     * 設定されているLFOを無効にします。<br>\
+     * これにより、以降作成される音符にLFO効果は適用されなくなり、<br>\
      * 既存のLFO効果も停止します。
      */
     this.lfoReset = function () { lfo = null; };
@@ -333,10 +359,10 @@ class Beepcore {
      * SETUP BEEPCORE SOUND SYSTEM
      * MasterVolume setup
      * @method
-     * @param {number} vol MasterVolume
+     * @param {numberVolume} vol マスターボリューム
      * @description
-     * BEEPCOREのマスターボリュームを設定します。\
-     * 0.0（無音）から1.0（最大）の範囲で音量を調整し \
+     * BEEPCOREのマスターボリュームを設定します。<br>\
+     * 0.0（無音）から1.0（最大）の範囲で音量を調整し <br>\
      * システム全体にわたる音量バランスを制御します。
      */
     this.masterVolume = function (vol = 0.2) {
@@ -348,8 +374,8 @@ class Beepcore {
      * @method
      * @param {nunmber} now systemtime 
      * @description
-     * BEEPCOREの状態を更新します。\
-     * 現在アクティブな全ての音源（`noteClass`インスタンス）の\
+     * BEEPCOREの状態を更新します。<br>\
+     * 現在アクティブな全ての音源（`noteClass`インスタンス）の<br>\
      * step`メソッドを呼び出し、再生状態を管理します。
      */
     this.step = function (now) {
@@ -370,7 +396,7 @@ class Beepcore {
      * @method
      * @param {string[]} namelist notename array
      * @param {number} time note interval(ms) 
-     * @param {number} vol note volume
+     * @param {numberVolume} vol note volume
      * @returns {noteParam[]} playコマンドで再生可能なパラメータ配列
      * @example namelist: ["G5","C6","E6","C6","D6","G6"];
      * 4/4拍子 テンポ120 60f 3600f/m
@@ -379,8 +405,8 @@ class Beepcore {
      * 16分音符  7.5f 125ms
      * 32分音符 3.75f 62.5ms
      * @description
-     * 再生コマンド用のパラメータリストを作成するユーティリティです。\
-     * 音名の配列を受け取り、各音符の周波数、ボリューム、再生時間を設定した、 \
+     * 再生コマンド用のパラメータリストを作成するユーティリティです。<br>\
+     * 音名の配列を受け取り、各音符の周波数、ボリューム、再生時間を設定した、<br>\
      * `noteClass.play`メソッドで利用可能な形式に変換します。
      */  
     this.makeScore = function (namelist, time = 100, vol = 1) {

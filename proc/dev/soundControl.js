@@ -1,10 +1,10 @@
 //soundControl
-//
 /**
  * soundControl
- * @description
- * `GameAssetManager`によってロードされた音声アセットの再生を制御します。\
- * アセットIDを介して、音声の再生、停止、ボリューム調整、\
+ * @class
+ * @classdesc
+ * `GameAssetManager`によってロードされた音声アセットの再生を制御します。<br>\
+ * アセットIDを介して、音声の再生、停止、ボリューム調整、<br>\
  * そして再生状態の確認といった基本的な操作を提供します。
  */
 class soundControl {
@@ -17,10 +17,10 @@ class soundControl {
 
         /**
          * @method
-         * @param {string} id AssetId
+         * @param {AudioAssetId} id AssetId
          * @description
-         * 指定されたIDの音声アセットを再生します。\
-         * もし音声がすでに終了している場合、再生位置を最初に戻してから再生を開始し、\
+         * 指定されたIDの音声アセットを再生します。<br>\
+         * もし音声がすでに終了している場合、再生位置を最初に戻してから再生を開始し、<br>\
          * 音楽などのループ再生に適しています。
          */
         this.play = function (id) {
@@ -34,10 +34,10 @@ class soundControl {
 
         /**
          * @method
-         * @param {string} id AssetId
+         * @param {AudioAssetId} id AssetId
          * @description
-         * 指定されたIDの音声アセットを効果音として再生します。\
-         * 常に再生位置を最初に戻してから再生を開始するため、\
+         * 指定されたIDの音声アセットを効果音として再生します。<br>\
+         * 常に再生位置を最初に戻してから再生を開始するため、<br>\
          * 複数の効果音を連続して鳴らすのに適しています。
          */
         this.effect = function (id) {
@@ -51,11 +51,11 @@ class soundControl {
 
         /**
          * @method
-         * @param {string} id AssetId
+         * @param {AudioAssetId} id AssetId
          * @returns {boolean} nowPlaying?
          * @description
-         * 指定されたIDの音声アセットが現在再生中であるかどうかを返します。\
-         * 音声が終了していない場合に`true`を返し、\
+         * 指定されたIDの音声アセットが現在再生中であるかどうかを返します。<br>\
+         * 音声が終了していない場合に`true`を返し、<br>\
          * 再生状態の確認に利用できます。
          */
         this.running = function (id) {
@@ -64,11 +64,11 @@ class soundControl {
 
         /**
          * @method
-         * @param {string} id AssetId
+         * @param {AudioAssetId} id AssetId
          * @returns {number} playing%
          * @description
-         * 指定されたIDの音声アセットの現在の再生進行度をパーセンテージで返します。\
-         * 現在の再生位置と音声全体の長さから計算され、\
+         * 指定されたIDの音声アセットの現在の再生進行度をパーセンテージで返します。<br>\
+         * 現在の再生位置と音声全体の長さから計算され、<br>\
          * 再生バーの表示などに利用できます。
          */
         this.info = function (id) {
@@ -79,10 +79,10 @@ class soundControl {
         };
         /**
          * @method
-         * @param {string} id AssetId
+         * @param {AudioAssetId} id AssetId
          * @description
-         * 指定されたIDの音声アセットの再生位置を最初に戻します。\
-         * 再生中の音声を最初からやり直したい場合や、\
+         * 指定されたIDの音声アセットの再生位置を最初に戻します。<br>\
+         * 再生中の音声を最初からやり直したい場合や、<br>\
          * 次に再生する準備として利用できます。
         */
         this.restart = function (id) {
@@ -93,11 +93,11 @@ class soundControl {
 
         /**
          * @method
-         * @param {string} id AssetId
-         * @param {number} vol Volume
+         * @param {AudioAssetId} id AssetId
+         * @param {numberVolume} vol Volume
          * @description
-         * 指定されたIDの音声アセットのボリュームを設定します。\
-         * 0.0（無音）から1.0（最大）の範囲で音量を調整し、\
+         * 指定されたIDの音声アセットのボリュームを設定します。<br>\
+         * 0.0（無音）から1.0（最大）の範囲で音量を調整し、<br>\
          * 個々の音声の音量バランスを制御します。
          */
         this.volume = function (id, vol) {

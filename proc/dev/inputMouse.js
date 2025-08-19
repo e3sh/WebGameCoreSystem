@@ -2,13 +2,15 @@
 //
 /**
  * InputMouse
- * @description
- * マウスの入力を管理する機能を提供します。\
- * マウスの移動、ボタンのクリック、ホイールのスクロールイベントを捕捉し、\
+ * @class
+ * @classdesc
+ * マウスの入力を管理する機能を提供します。<br>\
+ * マウスの移動、ボタンのクリック、ホイールのスクロールイベントを捕捉し、<br>\
  * マウスの位置、ボタンの状態、ホイールの移動量を追跡します。
  */
 class inputMouse {
     /**
+     * @constructor
      * @param {string} element_ID　target getElementById(element_ID);
      * @example
      * element_IDにはGameCoreでCanvasのIDが指定されます。
@@ -45,8 +47,8 @@ class inputMouse {
          * @method
          * @param {GameCore} g GameCoreインスタンス
          * @description
-         * フルスクリーンモードかどうかに応じてマウス座標の変換を調整します。\
-         * これにより、実際の画面解像度と描画Canvasの解像度が異なる場合でも\
+         * フルスクリーンモードかどうかに応じてマウス座標の変換を調整します。<br>\
+         * これにより、実際の画面解像度と描画Canvasの解像度が異なる場合でも<br>\
          * 正確なマウス位置をゲーム内で取得できます。
         */
         this.mode = function (g) {
@@ -81,7 +83,7 @@ class inputMouse {
          * @method
          * @returns {mouseState} マウス状態
          * @description
-         * 現在のマウスの入力状態（位置、ボタン、ホイール）を返します。\
+         * 現在のマウスの入力状態（位置、ボタン、ホイール）を返します。<br>\
          * ボタンの状態とホイールの移動量は、次回の呼び出しのためにリセットされます。
          * @todo ボタン同時押しの検出の為にbuttonsを評価するようにする
          * @todo 多ボタンマウスの動作について検討
@@ -103,8 +105,8 @@ class inputMouse {
          * @method
          * @returns {mouseState} マウス状態
          * @description
-         * 最後に記録されたマウスの入力状態を、値をリセットせずに返します。\
-         * このメソッドは、前フレームの状態を参照したい場合や、\
+         * 最後に記録されたマウスの入力状態を、値をリセットせずに返します。<br>\
+         * このメソッドは、前フレームの状態を参照したい場合や、<br>\
          * 値のリセットが不要な場合に利用されます。
          */
         this.check_last = function () {
@@ -120,8 +122,8 @@ class inputMouse {
          * @method
          * @param {DisplayControl} ctx 表示するDisplayControlを指定
          * @description
-         * 現在のマウスカーソル位置に視覚的なインジケータを描画します。\
-         * デバッグや、カスタムカーソルを表示したい場合に利用でき、\
+         * 現在のマウスカーソル位置に視覚的なインジケータを描画します。<br>\
+         * デバッグや、カスタムカーソルを表示したい場合に利用でき、<br>\
          * 描画機能を持つオブジェクトを`putFunc`で登録します
          */
         this.draw = function (ctx) {

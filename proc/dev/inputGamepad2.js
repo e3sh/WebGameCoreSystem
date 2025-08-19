@@ -1,8 +1,9 @@
 /**
- * inputGamepad
- * @description
- * Gamepad APIを利用してゲームパッドの入力を管理します。\
- * 方向キー、各種ボタン、アナログスティックの状態を検出し、\
+ * inputGamepa
+ * @class
+ * @classdesc
+ * Gamepad APIを利用してゲームパッドの入力を管理します。<br\
+ * 方向キー、各種ボタン、アナログスティックの状態を検出し、<br\
  * ゲームで利用可能なプロパティとして提供します。
  */
 class inputGamepad {
@@ -46,10 +47,10 @@ class inputGamepad {
 
         /**
          * @method
-         * @returns {boolean} readystate
+         * @returns {boolean} ゲームパッド接続状態
          * @description
-         * ゲームパッドの接続状態を確認し、その入力状態を更新します。 \
-         * Gamepad APIがサポートされており、ゲームパッドが認識されている場合に、\
+         * ゲームパッドの接続状態を確認し、その入力状態を更新します。 <br\
+         * Gamepad APIがサポートされており、ゲームパッドが認識されている場合に、<br\
          * 最新のボタンやスティックの入力を取得します。
          */
         this.check = function () {
@@ -82,9 +83,9 @@ class inputGamepad {
          * @method
          * @param {Gamepad} gamepad Gamepadオブジェクト
          * @description
-         * ゲームパッドからの生データ（ボタンや軸の値）を受け取り、\
-         * 内部の入力状態プロパティを更新します。\
-         * 通常は`check`メソッドによって内部的に呼び出され\
+         * ゲームパッドからの生データ（ボタンや軸の値）を受け取り、<br\
+         * 内部の入力状態プロパティを更新します。<br\
+         * 通常は`check`メソッドによって内部的に呼び出され<br\
          * 特定のハードウェアマッピングに対応できます。
          * @todo ハードウェアマッピングの設定切り替え操作
          */
@@ -155,10 +156,10 @@ class inputGamepad {
 
         /**
          * @method
-         * @returns {string[]} infomationText
+         * @returns {string[]} 状態情報テキストリスト
          * @description
-         * 接続されているゲームパッドの識別の詳細情報と、\
-         * 現在のボタン、スティックの入力状態をテキストリストで返します。\
+         * 接続されているゲームパッドの識別の詳細情報と、<br\
+         * 現在のボタン、スティックの入力状態をテキストリストで返します。<br\
          * デバッグやゲームパッドの動作確認に役立ちます。
          */
         this.infodraw = function () {

@@ -9,8 +9,8 @@
  * );
  * 
  * @description
- * ビットマップ画像として用意されたフォントパターンを用いて、\
- * UTF-16文字列を描画する機能を提供します。\
+ * ビットマップ画像として用意されたフォントパターンを用いて、<br>\
+ * UTF-16文字列を描画する機能を提供します。<br>\
  * 半角ASCII文字、半角カナ、全角漢字の描画に対応しています。
  */
 class fontPrintControl {
@@ -70,8 +70,8 @@ class fontPrintControl {
          * @param {number} code UTF-16 Moji Code 
          * @returns {FontLocateImg} 切り出し位置指定情報
          * @description
-         * 文字コードに対応するフォントパターンの画像内位置を計算します。\
-         * ASCII、半角カナ、漢字のそれぞれの文字タイプを判別し、\
+         * 文字コードに対応するフォントパターンの画像内位置を計算します。<br>\
+         * ASCII、半角カナ、漢字のそれぞれの文字タイプを判別し、<br>\
          * 適切なフォント画像と切り出し範囲を特定します。
          */
         function charCodeToLoc(code) {
@@ -142,8 +142,8 @@ class fontPrintControl {
          * @param {number} x 表示位置x座標
          * @param {number} y 表示位置y座標
          * @description
-         * 指定された文字列をフォントパターンを使用して画面に描画します。\
-         * 文字列、X座標、Y座標を指定し、\
+         * 指定された文字列をフォントパターンを使用して画面に描画します。<br>\
+         * 文字列、X座標、Y座標を指定し、<br>\
          * 各文字はフォントパターンから切り出され、順に表示されます。
          */
         this.print = function (str, x, y) {
@@ -173,8 +173,8 @@ class fontPrintControl {
          * @param {number} y 表示位置y座標
          * @param {number} z 拡大率
          * @description
-         * 指定された文字列の各文字を個別に、拡大率を適用して描画します。\
-         * 文字列、X座標、Y座標、そして任意の拡大率（Z）を指定することで、\
+         * 指定された文字列の各文字を個別に、拡大率を適用して描画します。<br>\
+         * 文字列、X座標、Y座標、そして任意の拡大率（Z）を指定することで、<br>\
          * 文字のサイズを調整して表示できます。
          */
         this.putchr = function (str, x, y, z) {
@@ -213,9 +213,9 @@ class fontPrintControl {
          * 
          * @returns {Uint16Array<ArrayBuffer>} table
          * @description
-         * 漢字のUTF-16コードと、フォント画像内の位置（区点コード）を \
-         * マッピングするテーブルを生成します。\
-         * Base64エンコードされたデータからマッピング情報を復元し、\
+         * 漢字のUTF-16コードと、フォント画像内の位置（区点コード）を <br>\
+         * マッピングするテーブルを生成します。<br>\
+         * Base64エンコードされたデータからマッピング情報を復元し、<br>\
          * 漢字の描画を可能にします。
          */
         function utfmap() {

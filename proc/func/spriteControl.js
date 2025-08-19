@@ -1,4 +1,12 @@
 /**
+ * @typedef {number | string} spPtnId SpriteAnimeUniqIdentifer
+ * @description
+ * スプライトアニメーションパターンの登録ID<br>\
+ * 同じIDグループ内で重複しない任意の数値や文字列を設定する<br>\
+ */
+
+/**
+ * @class
  * @summary スプライト制御 スプライトの表示
  * @param {GameCore} g GameCoreInstance
  * @example
@@ -10,10 +18,9 @@
  *	//スプライトアイテム登録/生成
  *  game.sprite.s.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) 
  *	//return item	
- *
- * @description
- * ゲーム内のスプライトオブジェクトの表示と管理を制御します。\
- * スプライトの生成、移動、アニメーション、衝突判定\
+ * @classdesc
+ * ゲーム内のスプライトオブジェクトの表示と管理を制御します。<br>\
+ * スプライトの生成、移動、アニメーション、衝突判定<br>\
  * そして描画優先順位の管理を行います。
  */
 class GameSpriteControl {
@@ -35,16 +42,17 @@ class GameSpriteControl {
 
         /**
          * classスプライトアイテム
-         * @description
-         * 個々のスプライトオブジェクトの属性を定義する内部クラスです。\
-         * 位置、速度、回転、拡大率、表示優先順位、衝突判定設定、\
+         * @class GameSpriteControl.SpItem
+         * @classdesc
+         * 個々のスプライトオブジェクトの属性を定義する内部クラスです。<br>\
+         * 位置、速度、回転、拡大率、表示優先順位、衝突判定設定、<br>\
          * そして生存状態などのプロパティを保持します。
          */
         class SpItem {
             /**
              * @description
-             * `SpItem`インスタンスを初期化します。\
-             * スプライトの位置、速度、回転、優先順位、衝突判定有効/無効、\
+             * `SpItem`インスタンスを初期化します。<br>\
+             * スプライトの位置、速度、回転、優先順位、衝突判定有効/無効、<br>\
              * そして生存状態などの初期プロパティを設定します。
              */
             constructor() {
@@ -110,8 +118,8 @@ class GameSpriteControl {
                  * @param {GameCore} g GameCoreインスタンス
                  * @param {DisplayControl} screen　表示スクリーン
                  * @description
-                 * スプライト固有のカスタム描画ロジックを実装するためのエントリポイントです。\
-                 * 通常のスプライト描画の前後どちらかで呼び出されるように設定でき、\
+                 * スプライト固有のカスタム描画ロジックを実装するためのエントリポイントです。<br>\
+                 * 通常のスプライト描画の前後どちらかで呼び出されるように設定でき、<br>\
                  * 複雑な視覚効果をスプライトに適用できます。
                  */
                 this.customDraw = function (g, screen) { };
@@ -121,8 +129,8 @@ class GameSpriteControl {
                  * @method
                  * @param {number} delta
                  * @description
-                 * スプライトの移動処理を担う関数を設定するためのエントリポイントです。\
-                 * デフォルトでは直線移動関数が設定されていますが、\
+                 * スプライトの移動処理を担う関数を設定するためのエントリポイントです。<br>\
+                 * デフォルトでは直線移動関数が設定されていますが、<br>\
                  * カスタムの移動ロジックを割り当てて多様な動きを実現できます。
                  */
                 this.moveFunc;
@@ -131,8 +139,8 @@ class GameSpriteControl {
                  * 表示する
                  * @method
                  * @description
-                 * スプライトを表示状態に設定します。\
-                 * これにより、スプライトがゲームループの描画フェーズで処理され、\
+                 * スプライトを表示状態に設定します。<br>\
+                 * これにより、スプライトがゲームループの描画フェーズで処理され、<br>\
                  * 画面に表示されるようになります。
                  */
                 this.view = function () { this.visible = true; };
@@ -140,8 +148,8 @@ class GameSpriteControl {
                  * 表示しない
                  * @method
                  * @description
-                 * スプライトを非表示状態に設定します。\
-                 * これにより、スプライトはゲームループの描画フェーズではスキップされ、\
+                 * スプライトを非表示状態に設定します。<br>\
+                 * これにより、スプライトはゲームループの描画フェーズではスキップされ、<br>\
                  * 画面には表示されなくなります。
                  */
                 this.hide = function () { this.visible = false; };
@@ -153,8 +161,8 @@ class GameSpriteControl {
                  * @param {number} r 方向(0-359)(省略可)
                  * @param {number} z 拡大率(省略可)
                  * @description
-                 * スプライトの表示位置、回転角度、拡大率を直接設定します。\
-                 * X座標、Y座標、回転角度（0-359度）、拡大率をパラメータとして受け取り、\
+                 * スプライトの表示位置、回転角度、拡大率を直接設定します。<br>\
+                 * X座標、Y座標、回転角度（0-359度）、拡大率をパラメータとして受け取り、<br>\
                  * スプライトを即座に指定された状態に配置します。
                  */
                 this.pos = function (x, y, r = 0, z = 0) {
@@ -168,8 +176,8 @@ class GameSpriteControl {
                  * @param {number} speed 1f当たりの移動pixel（1/60基準)
                  * @param {number} aliveTime 動作させるフレーム数
                  * @description
-                 * スプライトに移動の指示を与えます。\
-                 * 移動方向（0-359度）、1フレームあたりの速度、動作させるフレーム数を指定し\
+                 * スプライトに移動の指示を与えます。<br>\
+                 * 移動方向（0-359度）、1フレームあたりの速度、動作させるフレーム数を指定し<br>\
                  * スプライトが自動的に移動し、設定された時間後に停止します。
                  */
                 this.move = function (dir, speed, aliveTime) {
@@ -187,8 +195,8 @@ class GameSpriteControl {
                  * 移動処理で呼ばれる関数(default)
                  * @param {number} delta
                  * @description
-                 * `SpItem.moveFunc`のデフォルトとして使用される移動処理関数です。\
-                 * スプライトの速度（`vx`, `vy`）に基づいて位置を更新し,\
+                 * `SpItem.moveFunc`のデフォルトとして使用される移動処理関数です。<br>\
+                 * スプライトの速度（`vx`, `vy`）に基づいて位置を更新し,<br>\
                  *  `alive`カウンタがゼロになると非表示になります。
                  */
                 function normal_move(delta) {
@@ -207,8 +215,8 @@ class GameSpriteControl {
                  * 移動停止
                  * @method
                  * @description
-                 * スプライトの現在の移動を停止させます。\
-                 * `alive`カウンタをゼロに、`vx`と`vy`をゼロに設定することで、\
+                 * スプライトの現在の移動を停止させます。<br>\
+                 * `alive`カウンタをゼロに、`vx`と`vy`をゼロに設定することで、<br>\
                  * スプライトは現在の位置で静止します。
                  */
                 this.stop = function () {
@@ -219,8 +227,8 @@ class GameSpriteControl {
                  * 廃棄
                  * @method
                  * @description
-                 * スプライトを破棄状態に設定します。\
-                 * `alive`カウンタをゼロ、`visible`を`false`、`living`を`false`に設定することで、\
+                 * スプライトを破棄状態に設定します。<br>\
+                 * `alive`カウンタをゼロ、`visible`を`false`、`living`を`false`に設定することで、<br>\
                  * スプライトは表示も処理もされなくなり、最終的にリストから削除されます。
                  */
                 this.dispose = function () {
@@ -237,8 +245,8 @@ class GameSpriteControl {
                  * @param {number} r 方向(0-359)(省略可)
                  * @param {number} z 拡大率(省略可)
                  * @description
-                 * スプライトをオフスクリーンバッファに描画するための内部処理関数です。\
-                 * スプライトの位置、パターン、回転、拡大率に基づいて\
+                 * スプライトをオフスクリーンバッファに描画するための内部処理関数です。<br>\
+                 * スプライトの位置、パターン、回転、拡大率に基づいて<br>\
                  * 最終的な描画を実行します。
                  */
                 this.put = function (x, y, r = 0, z = 1) {
@@ -265,8 +273,8 @@ class GameSpriteControl {
                 /**
                  * @method
                  * @description
-                 * `SpItem`インスタンスの全てのプロパティを初期状態にリセットします。\
-                 * これにより、一度使用されたスプライトオブジェクトを再利用する際に\
+                 * `SpItem`インスタンスの全てのプロパティを初期状態にリセットします。<br>\
+                 * これにより、一度使用されたスプライトオブジェクトを再利用する際に<br>\
                  * クリーンな状態から始めることができます。
                  */
                 this.reset = function () {
@@ -298,8 +306,8 @@ class GameSpriteControl {
                  * @method
                  * @returns {string[]} propertyListText
                  * @description
-                 * `SpItem`インスタンスのプロパティとその値をデバッグ用に文字列配列として返します。\
-                 * スプライトの現在の状態を詳細に確認することができ、\
+                 * `SpItem`インスタンスのプロパティとその値をデバッグ用に文字列配列として返します。<br>\
+                 * スプライトの現在の状態を詳細に確認することができ、<br>\
                  * 開発中のデバッグ作業に役立ちます。
                  */
                 this.debug = function () {
@@ -329,14 +337,14 @@ class GameSpriteControl {
         /**
          * スプライトアイテム登録/生成
          * @method
-         * @param {number | string} Ptn_id UniqID
-         * @param {boolean} col 衝突有効無効(省略時：無効)
-         * @param {number} w 衝突サイズ幅(省略時：0)
-         * @param {number} h 衝突サイズ高さ(省略時：0)
-         * @returns {SpItem} SpriteItemObject
+         * @param {spPtnId} Ptn_id スプライトアニメーションパターンID
+         * @param {boolean} [col=false] 衝突有効無効
+         * @param {number} [w=0] 衝突サイズ幅
+         * @param {number} [h=0] 衝突サイズ高さ
+         * @returns {SpItem} スプライトアイテムオブジェクト
          * @description
-         * 新しいスプライトアイテム（`SpItem`）を生成し、リストに登録します。\
-         * パターンID、衝突判定の有効/無効、衝突判定の幅と高さを指定し、\
+         * 新しいスプライトアイテム（`SpItem`）を生成し、リストに登録します。<br>\
+         * パターンID、衝突判定の有効/無効、衝突判定の幅と高さを指定し、<br>\
          * 新しいスプライトオブジェクトを返します。
          */
         this.itemCreate = function (Ptn_id, col = false, w = 0, h = 0) {
@@ -365,8 +373,8 @@ class GameSpriteControl {
          * @method
          * @returns {SpItem[]} スプライトアイテムオブジェクトの配列
          * @description
-         * 現在管理されている全てのスプライトアイテムの配列を返します。\
-         * これにより、ゲーム内の全てのスプライトにアクセスし、\
+         * 現在管理されている全てのスプライトアイテムの配列を返します。<br>\
+         * これにより、ゲーム内の全てのスプライトにアクセスし、<br>\
          * 一括で操作や状態確認を行うことができます。
          */
         this.itemList = function () {
@@ -377,8 +385,8 @@ class GameSpriteControl {
          * スプライトアイテムリストリセット
          * @method
          * @description
-         * 現在管理されている全てのスプライトアイテムをリストから削除し、リセットします。\
-         * これにより、ゲーム内のスプライトを全てクリアし、\
+         * 現在管理されている全てのスプライトアイテムをリストから削除し、リセットします。<br>\
+         * これにより、ゲーム内のスプライトを全てクリアし、<br>\
          * スプライト管理システムを初期状態に戻します。
          */
         this.itemFlash = function () {
@@ -389,8 +397,8 @@ class GameSpriteControl {
          * @method
          * @returns {SpItem[]} スプライトアイテムオブジェクトの配列
          * @description
-         * リストから破棄済みのスプライトを削除し、残ったスプライトのインデックスを振り直します。\
-         * これにより、スプライトリストを整理し、\
+         * リストから破棄済みのスプライトを削除し、残ったスプライトのインデックスを振り直します。<br>\
+         * これにより、スプライトリストを整理し、<br>\
          * メモリ効率を向上させることができます。
          */
         this.itemIndexRefresh = function () {
@@ -406,10 +414,10 @@ class GameSpriteControl {
         /**
          * 手動更新モードに変更する
          * @method
-         * @param {boolean} bool　true:手動 /false:自動更新に戻す
+         * @param {boolean} [bool=true]　true:手動 /false:自動更新に戻す
          * @returns {void}
          * @description
-         * スプライトの描画モードを自動更新から手動更新に切り替えます。\
+         * スプライトの描画モードを自動更新から手動更新に切り替えます。<br>\
          * `true`を指定すると手動モードになり、開発者が`allDrawSprite`を明示的に呼び出す必要があります。
          */
         this.manualDraw = function (bool = true) {
@@ -423,11 +431,11 @@ class GameSpriteControl {
         /**
          * 表示先SCREENの選択
          * @method
-         * @param {number} screenNo（Layer番号の定数値）TYPE未定の為number
+         * @param {number} num スクリーン番号
          * @returns {void}
          * @description
-         * スプライトを描画する対象のスクリーン（レイヤー）を選択します。\
-         * 指定されたスクリーン番号のオフスクリーンバッファにスプライトが描画され、\
+         * スプライトを描画する対象のスクリーン（レイヤー）を選択します。<br>\
+         * 指定されたスクリーン番号のオフスクリーンバッファにスプライトが描画され、<br>\
          * レイヤー構造での表示が可能になります。
          */
         this.useScreen = function (num) {
@@ -439,33 +447,36 @@ class GameSpriteControl {
         /**
          * スプライトパターン定義パラメータ
          * 
-         *　@param {number | string} image ImageId
-         *　@param {number} wait アニメーション変更間隔（フレーム数）
-         *　@param {number} x イメージ範囲指定x
-         *　@param {number} y イメージ範囲指定y
-         *　@param {number} w イメージ範囲指定w
-         *　@param {number} h イメージ範囲指定h
-         *　@param {number} r 向き(0-359)上基準
-         *　@param {boolean} fv trueで上下反転
-         *　@param {boolean} fh trueで左右反転
-         */
-        const SpPatternParam = {
-            image: "dummy",
-            wait: 0,
-            pattern: [
-                { x: 0, y: 0, w: 0, h: 0, r: 0, fv: false, fh: false },
-                { x: 0, y: 0, w: 0, h: 0, r: 0, fv: false, fh: false }
-            ]
-        };
+         * @typedef {object} spPatternParam アニメーションパターン定義パラメータ
+         * @property {ImageAssetId} image イメージアセットID 
+         * @property {number} wait アニメーション変更間隔（フレーム数）
+         * @property {number} pattern[].x イメージ範囲指定x
+         * @property {number} pattern[].y イメージ範囲指定y
+         * @property {number} pattern[].w イメージ範囲指定w
+         * @property {number} pattern[].h イメージ範囲指定h
+         * @property {number} pattern[].r 向き(0-359)上基準
+         * @property {boolean} pattern[].fv trueで上下反転
+         * @property {boolean} pattern[].fh trueで左右反転
+         * @example
+         * const spPatternParam = {
+         *  image: "dummy",
+         *  wait: 0, 
+         *  pattern: [
+         *      { x: 0, y: 0, w: 0, h: 0, r: 0, fv: false, fh: false },
+         *      { x: 0, y: 0, w: 0, h: 0, r: 0, fv: false, fh: false }
+         *      ]
+         *  };
+        */
+        
         /**
          * スプライトパターン定義
          * @method
-         *　@param {number | string} anim_id animationUniqID
-         *　@param {SpPatternParam} Param パターン定義パラメータ  
+         *　@param {spPtnId} id スプライトアニメーションパターンID
+         *　@param {spPatternParam} Param パターン定義パラメータ  
          * @description
-         * スプライトのアニメーションパターンを定義し、IDと紐づけて登録します。\
-         * 使用する画像アセット、アニメーション間隔、そして各フレームのパターン定義を\
-         * 指定することで、複雑なアニメーションを表現できます。
+         * スプライトのアニメーションパターンを定義し、IDと紐づけて登録します。<br>\
+         * 使用する画像アセット、アニメーション間隔、そして各フレームのパターン定義を<br>\
+         * 指定することでアニメーションを表現できます。
          */
         this.setPattern = function (id, Param) {
             pattern_[id] = { image: g.asset.image[Param.image].img, wait: Param.wait, pattern: Param.pattern };
@@ -474,8 +485,8 @@ class GameSpriteControl {
         /**
          * @method
          * @description
-         * 現在アクティブなスプライトアイテム間の衝突判定を実行します。\
-         * 全ての衝突有効なスプライトに対して総当たりでチェックを行い\
+         * 現在アクティブなスプライトアイテム間の衝突判定を実行します。<br>\
+         * 全ての衝突有効なスプライトに対して総当たりでチェックを行い<br>\
          * 衝突している相手を`hit`プロパティに格納します。
          */
         this.CollisionCheck = function () {
@@ -516,8 +527,8 @@ class GameSpriteControl {
          * @param {number} z 拡大率
          * @param {number} alpha アルファ値
          * @description
-         * スプライトパターンをオフスクリーンバッファに描画するための内部ユーティリティ関数です。\
-         * 画像データ、パターン情報、位置、回転、拡大率、アルファ値を受け取り、\
+         * スプライトパターンをオフスクリーンバッファに描画するための内部ユーティリティ関数です。<br>\
+         * 画像データ、パターン情報、位置、回転、拡大率、アルファ値を受け取り、<br>\
          * 複雑な変換を適用して描画します。
          */
         function spPut(img, d, x, y, r, z, alpha) {
@@ -569,8 +580,8 @@ class GameSpriteControl {
         /**
          * @method
          * @description
-         * 管理されている全てのスプライトを、設定された優先順位に基づいて描画します。\
-         * スプライトの生存状態、可視性、移動ロジック（自動更新モード時）\
+         * 管理されている全てのスプライトを、設定された優先順位に基づいて描画します。<br>\
+         * スプライトの生存状態、可視性、移動ロジック（自動更新モード時）<br>\
          * カスタム描画などを処理し、バッファに反映させます。
          */
         this.allDrawSprite = function () {
@@ -624,8 +635,8 @@ class GameSpriteControl {
         //表示プライオリティ制御
         /**
          * @description
-         * スプライトの描画優先順位を制御するための内部ユーティリティです。\
-         * 登録されたスプライトを`priority`プロパティに基づいてソートし、\
+         * スプライトの描画優先順位を制御するための内部ユーティリティです。<br>\
+         * 登録されたスプライトを`priority`プロパティに基づいてソートし、<br>\
          * 奥から手前への正しい順序で描画できるようにします。
          */
         function priorityBuffer() {

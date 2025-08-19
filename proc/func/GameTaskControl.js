@@ -1,6 +1,14 @@
 // GameTaskControl
 // parent : GameCore
 /**
+ * @typedef {number | string} TaskId UniqIdentifer
+ * @example
+ * "main" or "root" or "system" etc
+ * @description
+ * 同じIDグループ内で重複しない任意の数値や文字列を設定する<br>\
+ */
+
+/**
  * @summry GameTaskController　タスク管理
  * 登録されるゲームタスクの状態管理を行う
  * @param {GameCore} game ゲーム本体のインスタンス
@@ -28,8 +36,8 @@
  *
  *	//gにはGameCoreオブジェクトが入るので経由でデバイスやアセットにアクセスする。
  * @description
- * ゲーム内の個々のタスク（`GameTask`インスタンス）を管理するコントローラです。\
- * タスクの追加、削除、読み込み、そしてゲームループにおける \
+ * ゲーム内の個々のタスク（`GameTask`インスタンス）を管理するコントローラです。<br>\
+ * タスクの追加、削除、読み込み、そしてゲームループにおける <br>\
  * `step`（更新）と`draw`（描画）の実行を制御します。
  * @todo priorityControl 実行は登録順で行われる。priorityプロパティによる実行順序制御は未実装
  * @todo 時間指定実行、一時実行タスクや割り込み制御なども標準機能である方がよいかもしれない
@@ -38,8 +46,8 @@ class GameTaskControl {
 	/**
 	 * @param {GameCore} game GameCoreインスタンス 
 	 * @description
-	 * GameTaskControlのインスタンスを初期化します。\
-	 * 内部でタスクリストを管理するための配列と、\
+	 * GameTaskControlのインスタンスを初期化します。<br>\
+	 * 内部でタスクリストを管理するための配列と、<br>\
 	 * タスク数やタスク名リストを追跡する変数を設定します。
 	 */
 	constructor(game) {
@@ -65,8 +73,8 @@ class GameTaskControl {
 		 * @param {number | string} id  Unique Identifier
 		 * @returns {GameTaskClass} GameTask instance object
 		 * @description
-		 * 指定されたIDを持つ`GameTask`オブジェクトをタスクリストから取得して返します。\
-		 * これにより、特定のタスクに直接アクセスし、\
+		 * 指定されたIDを持つ`GameTask`オブジェクトをタスクリストから取得して返します。<br>\
+		 * これにより、特定のタスクに直接アクセスし、<br>\
 		 * その状態やプロパティを参照・操作できます。
 		 * @todo 結果可否報告とエラーチェック
 		 */
@@ -81,8 +89,8 @@ class GameTaskControl {
 		 * @param {GameTaskClass} GameTask instance object
 		 * @return {void}
 		 * @description
-		 * 新しい`GameTask`インスタンスを実行リストに追加します。\
-		 * タスクの`init`メソッドを呼び出して初期化を行い\
+		 * 新しい`GameTask`インスタンスを実行リストに追加します。<br>\
+		 * タスクの`init`メソッドを呼び出して初期化を行い<br>\
 		 * タスク数とタスク名リストを更新します。
 		 */
 		this.add = function (task) {
@@ -100,8 +108,8 @@ class GameTaskControl {
 		 * @param {number | string} id  Unique Identifier
 		 * @returns {void}
 		 * @description
-		 * 指定されたIDを持つ`GameTask`オブジェクトを実行リストから削除します。\
-		 * 削除前にタスクの`post`メソッドを呼び出して終了処理を行い、\
+		 * 指定されたIDを持つ`GameTask`オブジェクトを実行リストから削除します。<br>\
+		 * 削除前にタスクの`post`メソッドを呼び出して終了処理を行い、<br>\
 		 * その後、リストからタスクを破棄します。
 		 * @todo 結果可否報告とエラーチェック(無いtaskを削除した場合)
 		 */
@@ -121,8 +129,8 @@ class GameTaskControl {
 		 * @param {number | string} id  Unique Identifier
 		 * @returns {void}
 		 * @description
-		 * 指定されたIDの`GameTask`オブジェクトの`init`メソッドを明示的に実行します。\
-		 * これは、タスクの追加時だけでなく、\
+		 * 指定されたIDの`GameTask`オブジェクトの`init`メソッドを明示的に実行します。<br>\
+		 * これは、タスクの追加時だけでなく、<br>\
 		 * 必要なタイミングでタスクの初期化を再度行いたい場合に利用できます。
 		 * @todo 結果可否報告とエラーチェック
 		 */
@@ -137,8 +145,8 @@ class GameTaskControl {
 		 * @method
 		 * @return {void}
 		 * @description
-		 * 実行リストに登録されている全ての`GameTask`の`step`メソッドを呼び出します。\
-		 * 各タスクが`enable`状態であれば、ゲームの更新ロジックが実行され、\
+		 * 実行リストに登録されている全ての`GameTask`の`step`メソッドを呼び出します。<br>\
+		 * 各タスクが`enable`状態であれば、ゲームの更新ロジックが実行され、<br>\
 		 * 初回実行時には`pre`メソッドも呼び出されます。
 		 */
 		this.step = function () {
@@ -162,8 +170,8 @@ class GameTaskControl {
 		 * @method
 		 * @return {void}
 		 * @description
-		 * 実行リストに登録されている全ての`GameTask`の`draw`メソッドを呼び出します。 \
-		 * 各タスクが`visible`状態であれば、画面への描画ロジックが実行され、\
+		 * 実行リストに登録されている全ての`GameTask`の`draw`メソッドを呼び出します。 <br>\
+		 * 各タスクが`visible`状態であれば、画面への描画ロジックが実行され、<br>\
 		 * ゲームのグラフィックが更新されます。
 		 */
 		this.draw = function () {
@@ -185,8 +193,8 @@ class GameTaskControl {
 		 * @method
 		 * @return {number} タスク数
 		 * @description
-		 * 現在実行リストに登録されている`GameTask`の総数を返します。\
-		 * これにより、アクティブなタスクの数を把握できます。\
+		 * 現在実行リストに登録されている`GameTask`の総数を返します。<br>\
+		 * これにより、アクティブなタスクの数を把握できます。<br>\
 		 */
 		this.count = function () {
 			return taskCount_;
@@ -196,8 +204,8 @@ class GameTaskControl {
 		 * @method
 		 * @return {string} Id一覧の文字列
 		 * @description
-		 * 現在実行リストに登録されている全ての`GameTask`のIDを \
-		 * 文字列リストとして返します。\
+		 * 現在実行リストに登録されている全ての`GameTask`のIDを <br>\
+		 * 文字列リストとして返します。<br>\
 		 * これにより、どのタスクが現在管理されているかを一覧で確認できます。
 		 */
 		this.namelist = function () {

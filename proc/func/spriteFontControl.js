@@ -3,9 +3,9 @@
 /**
  * GameSpriteFontControl
  * @description
- * スプライトシートとして用意されたビットマップフォントを利用して\
- * 文字を画面に描画する機能を提供します。\
- * 指定されたフォントパターンと描画先スクリーンを使用して、\
+ * スプライトシートとして用意されたビットマップフォントを利用して<br>\
+ * 文字を画面に描画する機能を提供します。<br>\
+ * 指定されたフォントパターンと描画先スクリーンを使用して、<br>\
  * テキスト表示を実現します。
  */
 class GameSpriteFontControl {
@@ -19,7 +19,7 @@ class GameSpriteFontControl {
         //buffer  (offScreen)
         /**
          * @method
-         * @param {number} num screenLayerNo
+         * @param {number} num スクリーン番号
          * @description
          * ビットマップフォントの描画に使用するスクリーンバッファを選択します。
          */
@@ -40,8 +40,8 @@ class GameSpriteFontControl {
          * @param {number} y 座標
          * @param {number} z 拡大率
          * @description
-         * 指定された文字列の各文字を、定義されたスプライトフォントパターンを用いて描画します。\
-         * 文字列、X座標、Y座標、そして任意の拡大率を指定することで、\
+         * 指定された文字列の各文字を、定義されたスプライトフォントパターンを用いて描画します。<br>\
+         * 文字列、X座標、Y座標、そして任意の拡大率を指定することで、<br>\
          * 文字をカスタマイズして表示できます。
          */
         this.putchr = function (str, x, y, z) {

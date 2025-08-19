@@ -1,13 +1,15 @@
 ﻿/**
  * VirtualPadControl
  * タッチパットから方向とボタン入力コントロール
- * @description 
- * マウスやタッチパッドの入力を仮想ゲームパッドの入力に変換します。\
- * 画面上の仮想パッド領域とボタン領域へのタッチ/クリックを検出し、\
+ * @class
+ * @classdesc 
+ * マウスやタッチパッドの入力を仮想ゲームパッドの入力に変換します。<br>\
+ * 画面上の仮想パッド領域とボタン領域へのタッチ/クリックを検出し、<br>\
  * 方向（角度と距離）とボタンの押下状態として提供します。
  */
 class inputVirtualPad {
     /**
+     * @constructor
      * @param {inputMouse} mouse inputMouseインスタンス 
      * @param {inputTouchPad} touchpad inputTouchPadインスタンス
      */
@@ -73,8 +75,8 @@ class inputVirtualPad {
          * //return deg = 0 -359 ,button[0-n] = false or true;
          * //       distance
          * @description
-         * マウスとタッチパッドの最新の入力状態を処理し、仮想パッドの入力を更新します。\
-         * 仮想パッドの中心からの角度、距離、そして仮想ボタンの押下状態を計算し\
+         * マウスとタッチパッドの最新の入力状態を処理し、仮想パッドの入力を更新します。<br>\
+         * 仮想パッドの中心からの角度、距離、そして仮想ボタンの押下状態を計算し<br>\
          * その結果を返します。
          */
         this.check = function () {
@@ -142,8 +144,8 @@ class inputVirtualPad {
          * @method
          * @returns {vPadState} 仮想ゲームパッド状態
          * @description
-         * 最後に計算された仮想パッドの入力状態を、値をリセットせずに返します。\
-         * このメソッドは、前フレームの状態を参照したい場合や、\
+         * 最後に計算された仮想パッドの入力状態を、値をリセットせずに返します。<br>\
+         * このメソッドは、前フレームの状態を参照したい場合や、<br>\
          * 値のリセットが不要な場合に利用されます。
          */
         this.check_last = function () {
@@ -161,8 +163,8 @@ class inputVirtualPad {
          * @method
          * @param {DisplayControl} context 描画先 
          * @description
-         * 画面上に仮想ゲームパッドのグラフィックを描画します。\
-         * 方向パッドとボタンの形状、そして現在の入力状態を示すインジケータが表示され、\
+         * 画面上に仮想ゲームパッドのグラフィックを描画します。<br>\
+         * 方向パッドとボタンの形状、そして現在の入力状態を示すインジケータが表示され、<br>\
          * タッチやマウス操作に視覚的なフィードバックを提供します。
         */
         this.draw = function (context) {

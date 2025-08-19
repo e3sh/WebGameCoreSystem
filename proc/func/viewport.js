@@ -7,77 +7,92 @@
 //viewtoReal(x,y)ビューポート変換後の画面表示座標
 //（スプライト座標！＝画面表示座標とする処理
 //戻り値｛x:,y:表示座標,in:(true:表示範囲内(false:表示範囲外)}
+//スプライト座標！＝画面表示座標とする処理\
+//ワールド座標系として管理して表示する場合\
+//これを通してビューポート内にあるスプライトのみ表示する
 /**
- * スプライト座標！＝画面表示座標とする処理\
- * ワールド座標系として管理して表示する場合\
- * これを通してビューポート内にあるスプライトのみ表示する
- * @description
- * ワールド座標系と実際の画面表示座標系の変換を管理するクラスです。\
- * ゲーム内のスプライトがどの位置にあり、画面のどこに表示されるべきか、\
+ * @class
+ * @classdesc
+ * ワールド座標系と実際の画面表示座標系の変換を管理するクラスです。<br>\
+ * ゲーム内のスプライトがどの位置にあり、画面のどこに表示されるべきか、<br>\
  * また、表示範囲内にあるかどうかの判定を行います。
- */
+*/
 class viewport {
 
     /**
      * homeposition x (leftup)
      * @type {number}
+     * @description
+     * ワールド座標系におけるビューポート（左上）の水平基準位置
      */
     x;
     /**
      * homeposition y (leftup)
      * @type {number}
+     * @description
+     * ワールド座標系におけるビューポート（左上）の垂直基準位置
      */
     y;
     /**
      * viewport size width
      * @type {number}
+     * @description
+     * ビューポートの表示領域幅
      */
     w;
     /**
      * viewport size height
      * @type {number}
+     * @description
+     * ビューポートの表示領域高さ
      */
     h;
     /**
      * border size x 
      * @type {number}
+     * @description
+     * ビューポート周囲の余白幅
      */
-    ix;
+    bmw;
     /**
      * border size y
      * @type {number}
+     * @description
+     * ビューポート周囲の余白高さ
      */
-    iy;
+    bmh;
 
+    /**
+     * @constructor
+    */
     constructor() {
 
-        let x_, y_, w_, h_, ix_, iy_, repeat_ = true;
-        x_ = 0; y_ = 0, ix_ = 0, iy_ = 0;
+        let x_, y_, w_, h_, bmw_, bmh_, repeat_ = true;
+        x_ = 0; y_ = 0, bmw_ = 0, bmh_ = 0;
 
         this.x = 0;
         this.y = 0;
         this.w = w_;
         this.h = h_;
-        this.ix = ix_;
-        this.iy = iy_;
+        this.bmw = bmw_;
+        this.bmh = bmh_;
 
         const update = () => {
             this.x = x_;
             this.y = y_;
             this.w = w_;
             this.h = h_;
-            this.ix = ix_;
-            this.iy = iy_;
+            this.bmw = bmw_;
+            this.bmh = bmh_;
         }
 
         /**
          * Repeat Mode Enable
-         * @method
-         * @param {boolean} mode setRepeatMode
-         * @default true
+         * @method 
+         * @param {boolean} [mode=true] 有効/無効
          * @description
-         * ビューポートの繰り返しモードを有効/無効にします。\
-         * このモードが`true`の場合、画面外に出たオブジェクトが反対側から現れるように\
+         * ビューポートの繰り返しモードを有効/無効にします。<br>\
+         * このモードが`true`の場合、画面外に出たオブジェクトが反対側から現れるように<br>\
          * 座標が折り返して計算されます。
          */
         this.repeat = function (mode = true) {
@@ -85,12 +100,12 @@ class viewport {
         };
         /**
          * Set viewport size 
-         * @method
-         * @param {number} w 幅 
-         * @param {number} h 高さ
+         * @method 
+         * @param {number} w 表示領域幅 
+         * @param {number} h 表示領域高さ
          * @description
-         * ビューポートの表示領域の幅と高さを設定します。\
-         * 通常、これはゲームの実際の画面解像度に合わせて設定され、\
+         * ビューポートの表示領域の幅と高さを設定します。<br>\
+         * 通常、これはゲームの実際の画面解像度に合わせて設定され、<br>\
          * 表示可能な範囲を定義します。
          */
         this.size = function (w, h) {
@@ -99,12 +114,12 @@ class viewport {
         };
         /**
          * SetHomePotition
-         * @method
-         * @param {number} x homeposion 
-         * @param {number} y homeposion
+         * @method 
+         * @param {number} x 基準位置X
+         * @param {number} y 基準位置Y
          * @description
-         * ワールド座標系におけるビューポートの基準位置（左上）を設定します。\
-         * この位置を移動させることで、ゲームの世界をスクロールさせたり\
+         * ワールド座標系におけるビューポートの基準位置（左上）を設定します。<br>\
+         * この位置を移動させることで、ゲームの世界をスクロールさせたり<br>\
          * カメラの視点を変更したりできます。
          */
         this.setPos = function (x, y) {
@@ -115,35 +130,35 @@ class viewport {
         /**
          * set border margin
          * @method
-         * @param {number} w margin width
-         * @param {number} h margin height
+         * @param {number} w 余白幅
+         * @param {number} h 余白高さ
          * @description
-         * 表示範囲の判定に使用する、ビューポート周囲の余白を設定します。\
-         * オブジェクトがこの余白範囲から外に出るまで\
+         * 表示範囲の判定に使用する、ビューポート周囲の余白を設定します。<br>\
+         * オブジェクトがこの余白範囲から外に出るまで<br>\
          * ビューポート内に存在すると判定されます。
          */
         this.border = function (w, h) {
-            ix_ = w; iy_ = h;
+            bmw_ = w; bmh_ = h;
             update();
         };
 
         /**
          * viewport.viewtoReal Result
          * @typedef {object} viewportResult チェック結果
-         * @property {number} x viewport内での座標x
-         * @property {number} y viewport内での座標y
-         * @property {boolean} in viewport+marginの中かどうか
+         * @property {number} x 表示領域内での座標X
+         * @property {number} y 表示領域内での座標Y
+         * @property {boolean} in 表示領域内+余白の中かどうか
          * @description ワールド座標から実画面座標に変換
          */
         /**
          * in viewport check and positionConvert
          * @method
-         * @param {number} sx world座標x
-         * @param {number} sy world座標y
+         * @param {number} sx ワールド座標X
+         * @param {number} sy ワールド座標Y
          * @returns {viewportResult}
          * @description 
-         * ワールド座標を実際の画面表示座標に変換し、ビューポート内にあるかを判定します。\
-         * スプライトなどのワールド座標をこのメソッドに通すことで、\
+         * ワールド座標を実際の画面表示座標に変換し、ビューポート内にあるかを判定します。<br>\
+         * スプライトなどのワールド座標をこのメソッドに通すことで、<br>\
          * 正しい画面上の位置と表示可否の情報を取得できます。
         */
         this.viewtoReal = function (sx, sy) {
@@ -158,7 +173,7 @@ class viewport {
                 if (ry > h_) ry = ry % h_;
             }
 
-            f = (rx + ix_ < 0 || rx > w_ + ix_ || ry + iy_ < 0 || ry > h_ + iy_) ? false : true;
+            f = (rx + bmw_ < 0 || rx > w_ + bmw_ || ry + bmh_ < 0 || ry > h_ + bmh_) ? false : true;
 
             //console.log("x" + x_ + ",y" + y_ + ",w" + w_);
             return { x: rx, y: ry, in: f };
