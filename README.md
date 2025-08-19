@@ -6,93 +6,86 @@ GameCore　/Javascript
 
 https://e3sh.github.io/WebGameCoreSystem/testConsole.html
 
-使用リポリトジ(サンプル)
+本エンジンの使用サンプル
 
-https://e3sh.github.io/BBD/BLOCKDROPdnc.html
+- https://e3sh.github.io/BBD/BLOCKDROPdnc.html
 
-https://e3sh.github.io/ERA-T/ERATANKdnc.html
+- https://e3sh.github.io/ERA-T/ERATANKdnc.html
 
-https://e3sh.github.io/OvalRun/OVALRUN.html 
+- https://e3sh.github.io/OvalRun/OVALRUN.html 
 
 ----------------------------------------
 `webGameCoreSystem`は、Webブラウザ向けに開発された**JavaScriptベースのゲームエンジン**です。Web標準のAPI（Web Audio API、HTML Canvas API、Web Gamepad APIなど）を活用し、グラフィック描画、サウンド生成、入力処理、スプライト管理、タスク管理といった機能を提供します。
 
 　　　Javascript/HTML5理解の為の習作
 
-Document:
-https://e3sh.github.io/WebGameCoreSystem/documents/ 
+JSDOC Document:
+[Index](https://e3sh.github.io/WebGameCoreSystem/documents/) 
 
 ----------------------------------------
 
-**実行方法**
+**システムの宣言**
+```Javascript
 
-*システムの宣言*
-
-	システム初期パラメータ（表示対象のキャンバスと解像度の指定）
-	
-例：
-
+//システム初期パラメータ（表示対象のキャンバスと解像度の指定）
+//例：
 	const sysParam = {
-	 	canvasId: "Canvas",//キャンバス名指定
+	 	canvasId: "Canvas",//描画対象のcanvas DOM ElementIdを指定
 	     	screen: [
 			{ resolution: { w: 1024, h: 768 , x:0, y:0 }}
 		]
 	}
+//(screenで複数Layerを設定可能、対象指定時は順番にscreen[0][1][2]...となる。）
 
-	(複数Screenで指定可能、対象指定時、順番にscreen[0～]となる。）
-
-宣言：
+//宣言：
 
 	const game = new GameCore( sysParam );
 
-パラメータの説明：
+//パラメータの説明：
 
 	{
-	canvasId: "Canvas",//ページのCanvas名称を指定。
+	canvasId: "Canvas", //ページのCanvas名称(ElementId)を指定
     	screen: [
 		{
 		resolution: {
-			w: 1024,
-			h: 768 ,
-			x:0,//offset X
-			y:0 //offset Y
-		}
+			w: 1024, //Canvas解像度幅　　ページでの実際の大きさはCSSで指定する
+			h: 768 , //Canvas解像度高さ
+			x:0,//表示位置水平方向オフセット　
+			y:0 //表示位置垂直方向オフセット
+		}　//screen[0]設定値　このパラメータで解像度が決定(実際の使用Canvasの解像度となる)
 		},
-		{resolution: { w: 1024, h: 768 , x:0, y:0 } },
-		{resolution: { w: 640, h: 480 , x:0, y:0 } }
+		{resolution: { w: 1024, h: 768 , x:0, y:0 } }, //screen[1]設定値
+		{resolution: { w: 640, h: 480 , x:0, y:0 } }   //screen[2]設定値
 		],
 	}
- 
-セットするパラメータから、
-game.screen[0]のパラメータで解像度が決定(実際の使用Canvasの解像度となる。
+//セットするパラメータのうち、
+//オフセットパラメータはscreen[0]を基準位置としての表示位置オフセット(screen[1以降]で有効)
 
-offsetパラメータはscreen[0]を基準位置としての表示位置offset。(screen[1以降]で有効)
-
-他のScreenはoffscreenBufferとして処理され、指定した解像度で作成される。
-
-
-*ゲームループの開始*
+//ゲームループの開始
 
 	game.run();
 
-	requestAnimationFrameの周期毎にタスクを実行する。
+//requestAnimationFrameの周期毎にタスクを実行する。
 
-	game.screen[n].setInterval(数字)	設定画面更新間隔(frame)　0の場合、画面の自動書き換えを行わない。
-	game.screen[0].backgroundColor(色名)	塗りつぶし背景色を指定（指定しなければ透過色でクリア）
+	game.screen[n].setInterval(数字)	//設定画面更新間隔(frame)　0の場合、画面の自動書き換えを行わない。
+	game.screen[0].backgroundColor(色名)	//塗りつぶし背景色を指定（指定しなければ透過色でクリア）
 
-GameCore:
-https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html
+``` 
+
+JSDOC Document:
+[GameCore](https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html)
 
 *ゲームタスク*
 
 ----------------------------------------
+```Javascript
 	game.task.add( new gametask( id ));
 	game.task.del(  id );
 	game.task.read( id );
 
-	id：管理用に任意の重複しない文字列や数字を指定する。
+	//id：管理用に任意の重複しない文字列や数字を指定する。
 
-	*タスクの雛形*
+	//*タスクの雛形*
 
 	class gametask( id ) extends Gametask {
 		constructor(id){
@@ -109,174 +102,49 @@ https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html
 	this.enable = true; // true : run step  false: pause step
 	this.visible = true; // true: run draw  false: pause draw
 
-gにはGameCoreオブジェクトが入るので、
-これ経由でデバイスやアセットにアクセスする。  
-
-GameTaskControl:
-https://e3sh.github.io/WebGameCoreSystem/documents/GameTaskControl.html
+//gにはGameCoreオブジェクトが入るので、
+//これ経由でデバイスやアセットにアクセスする。  
+```
+JSDOC Document:
+[GameTaskControl](https://e3sh.github.io/WebGameCoreSystem/documents/GameTaskControl.html)
 
 **アセット管理**
 
 ----------------------------------------
-Imageやaudioオブジェクトを管理
 
-	game.asset.imageLoad( id , url ); 戻り値 Imageオブジェクト
-	game.asset.soundLoad( id , url ); 戻り値 audioオブジェクト(拡張子なしで）
+Imageやaudioオブジェクトを管理
+```Javascript
+	game.asset.imageLoad( id , url ); //戻り値 Imageオブジェクト
+	game.asset.soundLoad( id , url ); //戻り値 audioオブジェクト(拡張子なしで）
 
 	game.asset.image[ id ];
 	game.asset.sound[ id ];
 
 	game.asset.*.ready //true:ロード完了　false:ロード未完了または失敗
-
-GameAssetManager:
-https://e3sh.github.io/WebGameCoreSystem/documents/GameAssetManager.html
+```
+JSDOC Document:
+[GameAssetManager](https://e3sh.github.io/WebGameCoreSystem/documents/GameAssetManager.html)
 
 **デバイス管理**
 
 ----------------------------------------
-**スプライトの表示**　
-	
-表示するスプライトの定義
- 
-	(2024/04/12-)//New Function Method
-	game.sprite.set( spNumber, PatternID,   
-		[bool: colisionEnable],   
-		[int: colWidth], [int: colHeight] );  
+**表示関係**
 
-	(2024/04/12-)
-	//New Function Method
-	スプライトアイテム登録/生成
- 	.itemCreate = function(Ptn_id, col=false, w=0, h=0 ) 
-	return item	
+JSDOC Document:
+[DisplayControl](https://e3sh.github.io/WebGameCoreSystem/documents/DisplayControl.html)
 
-個別スプライト操作
- 
-	.spriteItem　//スプライト
-		表示/非表示
-    		.view()/Hide() visible true/false
-		表示位置指定
-    		.pos = function(x, y, r=0, z=0)
-		移動  	
-    		.move = function(dir, speed, aliveTime)
-			frame毎に.moveFuncが呼ばれる(通常は直線移動だが差し替えるとその内容で移動)	
-				
-		移動停止
-			.stop = function()
-    	廃棄
-			.dispose = function()
-    	表示
-			.put = function (x, y, r, z) 
-    		//.reset = function()
+- JSDOC Document:スプライト
+[GameSpriteControl](https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteControl.html)
 
-スプライトリスト操作
- 
-	リスト取得
-	    .itemList = function() return SpriteTable
+- JSDOC Document:スプライトフォント(タイルパターン表示）
+[GameSpriteFontControl](https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteFontControl.html)
 
-	リストリセット
-	    .itemFlash = function()
-
-	リストから廃棄済みのスプライトを削除して再インデックス
-	    .itemIndexRefresh = function()
-
-	衝突判定（リスト内すべてに対して行われる、個別スプライトのhit配列にオブジェクトで返す）  
-	    .CollisionCheck = function()
-
-	表示先SCREENの選択  
-            .useScreen( screen no );  
-		  
- 	    .manualDraw = function (bool) (modeChange)
- 	    //game.sprite.allDrawSprite(); //登録中スプライトの表示　システムが自動的に呼びます。
-	    ↑moveFuncも自動更新の場合に処理される。
-
-プロパティ
-
-	//任意のプロパティを追加する場合は上のメソッドと以下のプロパティに重複しないよう個別変数を割り当てる
-        .x  = 0;
-        .y  = 0;
-        .r  = 0;
-        .z  = 0;//Reserb
-        .vx = 0;
-        .vy = 0;
-	
-    表示順(数値が大きいほど手前に表示)	
-        .priority = 0;
-
-        .collisionEnable = true;
-        .collision = {w:0,h:0};
-        .id = "";
-        .visible = false;
-	
-    CollisionCheckで衝突しているitemのオブジェクトが入る	
-        .hit = [];
-     
-        .alive = 0;
-        .index = 0; 
-        .living = true;
-	
-    通常のスプライトを表示するかどうか	
-        .normalDrawEnable = true;
-	
-    customDrawがnormalDrawの前後どちらで呼ばれるか(後によばれたら手前に表示される。Default:後(手前)
-        .beforeCustomDraw = false;
-	
-    通常は空/内容あるものに変えると処理される
-        .customDraw = function(g, screen){};
-
-	//--------------------------------------------------------
-
-*スプライトパターン定義*
-
-	game.sprite.setPattern( PatternID ,{
-		image: ImageId,
-		wait: アニメーション変更間隔（フレーム数）
-		pattern: [
-		{ x:  , y:  , w:  , h:  , r:  , fv:(bool), fh:(bool) },
-		{ x:  , y:  , w:  , h:  , r:  , fv:(bool), fh:(bool) },
-		
-		{ x:  , y:  , w:  , h:  , r:  , fv:(bool), fh:(bool) }
-			]
-		}
-	)
-	x,y,w,h : イメージ範囲指定　r:向き(0-359)上基準 putでr指定しない場合に有効
-	fv:trueで上下反転　fh:trueで左右反転
-
-GameSpriteControl:
-https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteControl.html
-
-
-*スプライトフォント*  
-
-	game.font[ fontID ].putchr( text, x, y, [zoom] );
-	
-	表示先の変更:  
-
-	game.font[ fontID ].useScreen( screen no );  
-  
-
-*スプライトフォント定義* 
-
-	(ascii code [space]～[~]まで）
-	var fontParam = {
-		name: fontID
-		id: 使用するassetImageのID
-		pattern: [
-			{x: ,y: ,w: ,h: ], //space
-				|
-			{x: ,y: ,w: ,h: ] //~
-		]
-	}
-	
-	game.setSpFont( fontParam );
- 
-GameSpriteFontControl:
-https://e3sh.github.io/WebGameCoreSystem/documents/GameSpriteFontControl.html
-
-fontPrintControl:
-https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html
+- JSDOC Document:スプライトフォント(ASCII/UTF-16文字テーブル固定サイズフォント表示）
+[fontPrintControl](https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html)
 
 **入力**  
 *キーボード*
+```Javascript
 
 	game.keyboard.check();  
 	
@@ -287,13 +155,11 @@ https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html
 	let keystate = game.keyboard.check();
 	//結果:keystate = {32:true};
 
-キーコード直接指定で状態確認する場合は以下のようにしてください
-
-	//[SPACE]が押されている場合
+//キーコード直接指定で状態確認する場合は以下のようにしてください
+	//Example:[SPACE]が押されている場合　(将来的に指定値は変更されます　keyCode:32　code:”Space”）
 	let keydown = game.keyboard.inquiryKey(32);
 	//結果:keydown = true;
-        
-    //注意：keyCodeの使用がMDNで非推奨となっているので、今後指定値変更の可能性あり。(対応処理した場合)
+    //注意：keyCodeの使用がMDNで非推奨となっているので、指定値変更の可能性あり。(codeモード)（現在はKeyCodeで参照）
 
 主要キーはBoolで返すプロパティがあるのでそれらを使用すること。.check()毎に状態の更新チェックがされます
 
@@ -303,11 +169,12 @@ https://e3sh.github.io/WebGameCoreSystem/documents/fontPrintControl.html
 		.qkey; .wkey; .ekey;
 		.akey; .skey; .dkey;
 		.zkey; .xkey; .ckey;
-
-inputKeyboard:
-https://e3sh.github.io/WebGameCoreSystem/documents/inputKeyboard.html
+```
+JSDOC Document:
+[inputKeyboard](https://e3sh.github.io/WebGameCoreSystem/documents/inputKeyboard.html)
 
 *マウス*
+```Javascript
 
 	game.mouse.check();  
 	game.mouse.check_last(); 最後に実行したcheckの戻り値を返す。  
@@ -317,51 +184,55 @@ https://e3sh.github.io/WebGameCoreSystem/documents/inputKeyboard.html
   	.y
    	.button
 	.wheel
-
-inputMouse:
-https://e3sh.github.io/WebGameCoreSystem/documents/inputMouse.html
+```
+JSDOC Document:
+[inputMouse](https://e3sh.github.io/WebGameCoreSystem/documents/inputMouse.html)
 
 *タッチパネル*
+```Javascript
 
 	game.touchpad.check();
-
-inputTouchPad:
-https://e3sh.github.io/WebGameCoreSystem/documents/inputTouchPad.html
+```
+JSDOC Document:
+[inputTouchPad](https://e3sh.github.io/WebGameCoreSystem/documents/inputTouchPad.html)
 
 *ゲームパッド*
+```Javascript
 
 	game.gamepad.check();
 	game.joystick.check();
-
-inputGamepad:
-https://e3sh.github.io/WebGameCoreSystem/documents/inputGamepad.html
+```
+JSDOC Document:
+[inputGamepad](https://e3sh.github.io/WebGameCoreSystem/documents/inputGamepad.html)
 
 **サウンド**  
 *オーディオ再生*
+```Javascript
 
 	game.sound.play( id ); 
 	//id: assetで読み込ませたsoundのID   
 	
 	game.sound.effect( id );  
 	// 最初から再生
+```
+JSDOC Document:
+[soundControl](https://e3sh.github.io/WebGameCoreSystem/documents/soundControl.html)
 
-soundControl:
-https://e3sh.github.io/WebGameCoreSystem/documents/soundControl.html
-
-*BEEP/SoundGenerator*
-	https://e3sh.github.io/BeepFunction
+[*BEEP/SoundGenerator*](https://e3sh.github.io/BeepFunction)
+```Javascript
 
 	note = game.beep.noteCreate();
 	//score [{[name.],Freq:,Vol;,time:,use:false},..]
 
 	note.play(score, starttime(game.time();));
-
-Beepcore:
-https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html
+```
+JSDOC Document:
+[Beepcore](https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html)
 
 **他**
 
 *システムステータス等*
+```Javascript
 
 	game.fpsload.result()
 	(戻り値)
@@ -377,10 +248,11 @@ https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html
 
 	game.blink()
 	(戻り値)bool　1.5秒間隔で1秒true/0.5秒falseを戻す。
+```
+JSDOC Document:
+[GameCore](https://e3sh.github.io/WebGameCoreSystem/documents/GameCore.html)
 
 ----------------------------------------
-追加するjsファイルはincludeで追加しないとロードエラーになります。
-
 ## 技術スタック
 
 *   **JavaScript**: エンジン全体のプログラミング言語。
@@ -396,6 +268,7 @@ https://e3sh.github.io/WebGameCoreSystem/documents/Beepcore.html
 
 ## ライセンス
 [MIT License]
+
 
 
 
