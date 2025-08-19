@@ -54,14 +54,15 @@ class GameCore {
 		/**
 		 * FPSや負荷の計測用(内部関数)
 		 * @class GameCore.bench
-		 * @private
-		 * @inner
 		 * @classdesc
 		 * ゲームのFPS（フレームレート）とワークロード（処理負荷）を計測するユーティリティです。<br>\
 		 * フレームごとの時間間隔と処理時間を記録し<br>\
 		 * 平均、最大、最小値として結果を提供します。
 		 */
 		class bench {
+			/**
+			 * 
+			 */
 			constructor() {
 
 				let oldtime; let newtime; // = Date.now();
