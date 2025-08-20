@@ -43,7 +43,8 @@ class inputKeyboard {
         // a:'KeyA', s:'KeyS', d:'KeyD'
         // z:'KeyZ', x:'KeyX', c:'KeyC'
 
-        let keymap = [];
+        let keyCodemap = [];
+        let codemap = [];
 
         const keyStateReset = ()=> {
 
@@ -72,18 +73,13 @@ class inputKeyboard {
         keyStateReset();
 
         //windowsフォーカスが外れるとキー入力リセットさせとく(押しっぱなし状態となる為）
-        window.addEventListener("blur", function (event) { keymap = []; }, false);
+        window.addEventListener("blur", function (event) { keyCodemap = []; codemap = []; }, false);
 
         //KeyCode を使用するのはいつのまにか非推奨となっているので時間があるか使用不可になる前に書換要
         //@see　https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent
-        if (!Boolean(codesupportmode)){
-            window.addEventListener("keydown", function (event) { keymap[event.keyCode] = true; }, false);
-            window.addEventListener("keyup", function (event) { keymap[event.keyCode] = false; }, false);
-        }else{
-        //code対応用(アプリケーション側での対応も必要)
-            window.addEventListener("keydown", function (event) { keymap[event.code] = true; }, false);
-            window.addEventListener("keyup", function (event) { keymap[event.code] = false; }, false);
-        }
+        window.addEventListener("keydown", function (event) { keyCodemap[event.keyCode] = true; codemap[event.code] = true; }, false);
+        window.addEventListener("keyup", function (event) { keyCodemap[event.keyCode] = false; codemap[event.code] = false; }, false);
+        
         /**
          * 入力状態確認(状態確認用キープロパティの更新)
          * @method
@@ -98,6 +94,13 @@ class inputKeyboard {
         this.check = function(){
 
             keyStateReset();
+
+            let keymap;
+            if (!Boolean(codesupportmode)){
+                keymap = keyCodemap;
+            }else{
+                keymap = codemap;
+            }
 
             for (let i in keymap) {
 
@@ -186,6 +189,18 @@ class inputKeyboard {
             }
             return result;
         };
+        
+        /**
+         * @method
+         * @param {boolean} [mode=true] code/KeyCode(NR)
+         * @description
+         * Select [keyCode/code] code使用する場合はtrue<br>\
+         * KeyCodeはMDN非推奨になっているので切替可能とした<br>\
+         * 起動時は作成したものの為に互換モードでKeyCodeで起動
+         */
+        this.codeMode = function(mode=true){
+            codesupportmode = mode;
+        }
     }
 }
 

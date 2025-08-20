@@ -91,6 +91,8 @@
 
             updatePixelRatio();
 
+            //g.keyboard.codeMode();
+
             g.screen[0].assignFont("32px 'Arial'");//test
             g.screen[1].setInterval(1);
         }
@@ -100,7 +102,7 @@
             const RESO_X = 640;
             const RESO_Y = 480;
 
-            // Input Keyboard ENTRY Check
+            // Input Keyboard ENTRY Check (oldtype) /g.keyboard.akey etc (newtype)
             let w = g.keyboard.check();
 
             let akey = false; if (Boolean(w[65])) {if (w[65]) akey = true;}
