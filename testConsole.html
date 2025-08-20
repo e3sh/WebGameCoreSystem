@@ -51,6 +51,7 @@
         scene;
 
         txt;
+        gfunc;
 
         constructor(id){
             super(id);
@@ -216,7 +217,7 @@
             rstl.push("interval.min:" + result.interval.min);
             rstl.push("interval.ave:" + result.interval.ave);
             rstl.push("workload.log.length:" + result.workload.log.length);
-            rstl.push("interval.log[0]" + result.interval.log[0]);
+            rstl.push("workload.log[0]" + result.workload.log[0]);
             rstl.push("workload.max:" + result.workload.max);
             rstl.push("workload.min:" + result.workload.min);
             rstl.push("workload.ave:" + result.workload.ave);
@@ -225,6 +226,8 @@
             rstl.push("workload(%) :" + p);
 
             this.txt = rstl;
+
+            this.gfunc = new pfmclass(result, 480, 120);
         }
         //----------------------------------------------------------------------
         draw(g){// this.visible が true時にループ毎に実行される。
@@ -256,6 +259,8 @@
                 g.screen[1].print(this.txt[i],360, i*14+10);
                 g.kanji.print(this.txt[i],360, 240 + i*10);
             }
+
+            g.screen[1].putFunc( this.gfunc );
         }
     }
     //----------------------------------------------------------------------
@@ -352,6 +357,66 @@
             }
         }
     }
+    //-------------------------------
+    // performance metor
+    function pfmclass(result, x, y){
+
+        let pdata = [];
+        let cdata = [];
+
+        pdata.push(result.interval.log);
+        pdata.push(result.workload.log);
+
+        //cdata.push(result.interval.max);
+        //cdata.push(result.interval.min);
+        cdata.push(result.interval.ave);
+        //cdata.push(result.workload.max);
+        //cdata.push(result.workload.min);
+        cdata.push(result.workload.ave);
+
+        this.data = pdata;
+        this.dcdt = cdata;
+        this.cx = x;
+        this.cy = y;
+
+        this.draw =(device)=>{
+
+            for (let d of this.dcdt){
+                device.beginPath();
+                device.lineWidth = 1;
+                device.strokeStyle = "yellow";
+
+                device.arc(this.cx, this.cy, d*5, 0, Math.PI*2, true);
+                device.stroke();
+            }
+
+            for (let d of pdata){
+                let x = this.cx;
+                let y = this.cy;
+
+                let r = (Math.PI*2)/d.length;
+            
+                device.beginPath();
+                device.lineWidth = 1;
+                device.strokeStyle = "red";
+
+                for (let i=0; i<d.length; i++){
+                    x = this.cx + Math.cos(r*i)*d[i]*5;
+                    y = this.cy + Math.sin(r*i)*d[i]*5;
+                
+                    if (i==0) {
+                        device.moveTo(x,y);
+                    }else{
+                        device.lineTo(x,y);
+                        device.stroke(); 
+                    }
+                }
+                device.closePath();
+                device.stroke();                
+            }
+        }
+    }
+    
 
     </script>
     <title>[wGcsTestConsole]</title>
