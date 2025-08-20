@@ -229,7 +229,7 @@
 
             this.txt = rstl;
 
-            this.gfunc = new pfmclass(result, 480, 120);
+            this.gfunc = new pfmclass(result, 560, 100, 2.5);
         }
         //----------------------------------------------------------------------
         draw(g){// this.visible が true時にループ毎に実行される。
@@ -263,6 +263,16 @@
             }
 
             g.screen[1].putFunc( this.gfunc );
+
+            let sl =[];
+            sl.push("sc(i)bgCol/max/cnt");  
+            for (let i in g.screen){
+                sl.push(` ${i}(${g.screen[i].getInterval()})${g.screen[i].getBackgroundcolor()}/${g.screen[i].max()}/${g.screen[i].count()}`);
+            }
+            for (let i in sl){
+                g.kanji.print(sl[i],360, 400 + i*10);
+            }
+
         }
     }
     //----------------------------------------------------------------------
@@ -364,15 +374,16 @@
     /**
      * performance metor circle 
      * @param {resultlog} result = GameCore.fpsload.result();
-     * @param {number} circle center x　
-     * @param {number} circle center y
+     * @param {number} x circle center x　
+     * @param {number} y circle center y
+     * @param {number} m mag
      * @description
      * resultlog circle graph Demonstration
      * type{putFuncCustomDraw}
      * use example: GameCore.screen[x].putFunc(new pfmclass(result, x, y));
      * 
      */
-    function pfmclass(result, x, y){
+    function pfmclass(result, x, y, m){
 
         let pdata = [];
         let cdata = [];
@@ -393,8 +404,11 @@
         this.cy = y;
 
         let r = (Math.PI*2)/result.fps;
-        this.wx = x + Math.cos(r*result.logpointer)*result.interval.ave*5;
-        this.wy = y + Math.sin(r*result.logpointer)*result.interval.ave*5;
+        this.wx = x + Math.cos(r*result.logpointer)*result.interval.ave*m;
+        this.wy = y + Math.sin(r*result.logpointer)*result.interval.ave*m;
+
+        this.ix = x + Math.cos(r*result.logpointer)*result.workload.max*m;
+        this.iy = y + Math.sin(r*result.logpointer)*result.workload.max*m;
 
         this.draw =(device)=>{
 
@@ -403,7 +417,7 @@
                 device.lineWidth = 1;
                 device.strokeStyle = "yellow";
 
-                device.arc(this.cx, this.cy, d*5, 0, Math.PI*2, true);
+                device.arc(this.cx, this.cy, d*m, 0, Math.PI*2, true);
                 device.stroke();
             }
 
@@ -418,8 +432,8 @@
                 device.strokeStyle = "red";
 
                 for (let i=0; i<d.length; i++){
-                    x = this.cx + Math.cos(r*i)*d[i]*5;
-                    y = this.cy + Math.sin(r*i)*d[i]*5;
+                    x = this.cx + Math.cos(r*i)*d[i]*m;
+                    y = this.cy + Math.sin(r*i)*d[i]*m;
                 
                     if (i==0) {
                         device.moveTo(x,y);
@@ -433,9 +447,9 @@
             }
 
             device.beginPath();
-            device.lineWidth = 1;
+            device.lineWidth = 3;
             device.strokeStyle = "orange";
-            device.moveTo(this.cx, this.cy);
+            device.moveTo(this.ix, this.iy);
             device.lineTo(this.wx, this.wy);
             device.closePath();
             device.stroke(); 
