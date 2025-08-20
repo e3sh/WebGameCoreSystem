@@ -92,7 +92,7 @@
             updatePixelRatio();
 
             g.screen[0].assignFont("32px 'Arial'");//test
-            //g.screen[1].setInterval(3);
+            g.screen[1].setInterval(1);
         }
         //----------------------------------------------------------------------
         step(g){// this.enable が true時にループ毎に実行される。
@@ -256,7 +256,7 @@
             this.scene["VGpad"].draw(g);
 
             for (let i in this.txt){
-                g.screen[1].print(this.txt[i],360, i*14+10);
+                g.screen[0].print(this.txt[i],360, i*14+10);
                 g.kanji.print(this.txt[i],360, 240 + i*10);
             }
 
@@ -358,7 +358,18 @@
         }
     }
     //-------------------------------
-    // performance metor
+    // performance metor circle
+    /**
+     * performance metor circle 
+     * @param {resultlog} result = GameCore.fpsload.result();
+     * @param {number} circle center x　
+     * @param {number} circle center y
+     * @description
+     * resultlog circle graph Demonstration
+     * type{putFuncCustomDraw}
+     * use example: GameCore.screen[x].putFunc(new pfmclass(result, x, y));
+     * 
+     */
     function pfmclass(result, x, y){
 
         let pdata = [];
@@ -370,14 +381,18 @@
         //cdata.push(result.interval.max);
         //cdata.push(result.interval.min);
         cdata.push(result.interval.ave);
-        //cdata.push(result.workload.max);
-        //cdata.push(result.workload.min);
-        cdata.push(result.workload.ave);
+        cdata.push(result.workload.max);
+        cdata.push(result.workload.min);
+        //cdata.push(result.workload.ave);
 
         this.data = pdata;
         this.dcdt = cdata;
         this.cx = x;
         this.cy = y;
+
+        let r = (Math.PI*2)/result.fps;
+        this.wx = x + Math.cos(r*result.logpointer)*result.interval.ave*5;
+        this.wy = y + Math.sin(r*result.logpointer)*result.interval.ave*5;
 
         this.draw =(device)=>{
 
@@ -414,6 +429,14 @@
                 device.closePath();
                 device.stroke();                
             }
+
+            device.beginPath();
+            device.lineWidth = 1;
+            device.strokeStyle = "orange";
+            device.moveTo(this.cx, this.cy);
+            device.lineTo(this.wx, this.wy);
+            device.closePath();
+            device.stroke(); 
         }
     }
     

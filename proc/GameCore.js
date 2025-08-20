@@ -131,7 +131,8 @@ class GameCore {
 
 				/**
 				 * @typedef {object} resultLog 計測結果
-				 * @property {number} FPS FPS
+				 * @property {number} fps FPS
+				 * @property {number} logpointer ログ配列の最新更新値へのインデックス値
 				 * @property {number[]} interval.log フレーム時間ログ
 				 * @property {number} interval.max　最大値
 				 * @property {number} interval.min　最小値
@@ -182,6 +183,7 @@ class GameCore {
 					let r = {};
 
 					r.fps = fps;
+					r.logpointer = log_cnt;
 
 					let wl = {};
 					wl.log = load_log;
