@@ -184,7 +184,7 @@ class GameCore {
 					r.fps = fps;
 
 					let wl = {};
-					wl.log = fps_log;
+					wl.log = load_log;
 					wl.max = load_max;
 					wl.min = load_min;
 					wl.ave = load_ave;

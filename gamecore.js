@@ -459,6 +459,7 @@ class Beepcore {
  * HTML Canvas要素への画面表示を制御するクラスです。 <br>\
  * オフスクリーンバッファを使用し、指定された解像度で描画を行い、<br>\
  * 実際のCanvas要素に最終的な描画結果を反映させます。
+ * @todo FontFace
  */
 class DisplayControl {
 
@@ -545,12 +546,16 @@ class DisplayControl {
      * 手動での更新制御が可能になります。
      */
     setInterval(num) {
-        if (num == 0) {
-            this.buffer.flip(false);
-        } else {
-            this.buffer.flip(true);
+
+        const _setInterval =(num)=>{ 
+            if (num == 0) {
+                this.buffer.flip(false);
+            } else {
+                this.buffer.flip(true);
+            }
+            this.intervalTime = num;
         }
-        this.intervalTime = num;
+        _setInterval(num);
     };
     /**
      * 背景色設定
@@ -561,14 +566,14 @@ class DisplayControl {
      * `null`または空文字列を指定すると、背景は透過色でクリアされ、<br>\
      * 重ねて表示する際に前の描画が残ります。
      */
-    setBackgroundcolor(str) { this.backgroundcolor = str; };
+    setBackgroundcolor(str) { const _setBgc =(str)=>{ this.backgroundcolor = str;}; _setBgc(str); };
     /**
      * 表示間隔設定値取得
      * @returns {number} 更新間隔(フレーム)
      * @description
      * 現在設定されている画面の更新間隔（フレーム数）を取得します。
      */
-    getInterval() { return this.intervalTime; };
+    getInterval() { const _getInterval =()=>{ return this.intervalTime;}; return _getInterval(); };
     /**
      * 背景色設定値取得
      * @returns {Color} 表示色
@@ -576,7 +581,7 @@ class DisplayControl {
      * 現在設定されている画面の背景色を取得します。<br>\
      * 設定された色指定文字列を返します。
      */
-    getBackgroundcolor() { return this.backgroundcolor; };
+    getBackgroundcolor() { const _getBgc =()=>{return this.backgroundcolor;}; return _getBgc(); };
 
     //-------------------------------------------------------------
     /**
@@ -594,11 +599,15 @@ class DisplayControl {
      */
     putPattern(gr, ptn, x, y, w, h) {
 
-        this.buffer.drawImgXYWHXYWH(
-            gr,
-            ptn.x, ptn.y, ptn.w, ptn.h,
-            x, y, w, h
-        );
+        const _putPtn =(gr, ptn, x, y, w, h)=>{
+            this.buffer.drawImgXYWHXYWH(
+                gr,
+                ptn.x, ptn.y, ptn.w, ptn.h,
+                x, y, w, h
+            );
+        }
+        _putPtn(gr, ptn, x, y, w, h);
+
     };
     //-------------------------------------------------------------
     /**
@@ -618,18 +627,45 @@ class DisplayControl {
      * @param {number} x position
      * @param {number} y position
      * @param {Color} c color
-     * @todo Fontの指定
      * @description
      * 指定された文字列を画面に表示します。<br>\
      * 文字列、X座標、Y座標、表示色（省略時は"limegreen"）を指定し、<br>\
-     * オフスクリーンバッファにテキストを描画します。
+     * オフスクリーンバッファにテキストを描画します。<br>\
+     * フォント展開やベクター表示であることを考えると<br>\
+     * 毎フレーム書き換える用途での使用は限定して<br>\
+     * あまり更新しない画面での使用を推奨します
      */
     print(str, x, y, c) {
 
         if (!Boolean(c)) { c = "limegreen"; }
 
-        this.buffer.fillText(str, x, y, c);
+        const _print =(str, x, y, c)=>{
+            this.buffer.fillText(str, x, y, c);
+        }
+        _print(str, x, y, c);
     };
+
+    /**
+     * @typedef {string} FontTextStyle テキストスタイル
+     * @example
+     * "bold 48px serif"
+     * @description
+     *  CSS の font の記述子と同じ構文
+     * @see https://developer.mozilla.org/ja/docs/Web/CSS/font
+     */
+    /**
+     * フォントの指定
+     * @param {FontTextStyle} [str="16px 'Arial'"] フォントスタイル
+     * @description
+     * print methodで使用するフォントを変更します
+     * @todo 指定した効果が発生しない2025/08/20　
+     */
+    assignFont(str="16px 'Arial'"){
+        const _assignFont =(str)=>{
+            this.device.font = str;
+        }
+        _assignFont(str);
+    }
     //------------------------------------------------------------
     /**
      * 画像イメージを直接取得して表示させる。
@@ -641,7 +677,11 @@ class DisplayControl {
      */
     putImage(gr, x, y) {
 
-        this.buffer.drawImgXY(gr, x, y);
+        const _putImg = (gr, x, y) =>{
+            this.buffer.drawImgXY(gr, x, y);
+        }
+        _putImg(gr, x, y);
+
     };
     //------------------------------------------------------------
     /**
@@ -657,7 +697,10 @@ class DisplayControl {
     */
     putImage2(gr, x, y, w, h) {
 
-        this.buffer.drawImgXYWH(gr, x, y, w, h);
+        const _putImg2 = (gr, x, y, w, h) =>{ 
+            this.buffer.drawImgXYWH(gr, x, y, w, h);
+        }
+        _putImg2(gr, x, y, w, h);
     };
     //------------------------------------------------------------
     /**
@@ -676,7 +719,10 @@ class DisplayControl {
     */
     putImageTransform(gr, x, y, m11, m12, m21, m22) {
 
-        this.buffer.putImageTransform(gr, x, y, m11, m12, m21, m22);
+        const _putImgTr = (gr, x, y, m11, m12, m21, m22)=>{
+            this.buffer.putImageTransform(gr, x, y, m11, m12, m21, m22);
+        }
+        _putImgTr(gr, x, y, m11, m12, m21, m22);
     };
     //---------------------------------------------------------
     /**
@@ -687,8 +733,10 @@ class DisplayControl {
      * @param {number} m22 変換座標
     */
     transform(m11, m12, m21, m22) {
-
-        this.buffer.Transform(m11, m12, m21, m22, 0, 0);
+        const _tr = (m11, m12, m21, m22) =>{
+            this.buffer.Transform(m11, m12, m21, m22, 0, 0);
+        }
+        _tr(m11, m12, m21, m22);
     };
     //------------------------------------------------------------
     /**
@@ -698,9 +746,11 @@ class DisplayControl {
      * `draw(device)`関数を持つカスタム描画オブジェクトを登録し、実行します。
     */
     putFunc(cl) {
-
+        const _putFunc =(cl)=>{
         //ここで登録するクラスには表示の為に"draw( device )" functionを必ず登録
-        this.buffer.putFunc(cl);
+            this.buffer.putFunc(cl);
+        }
+        _putFunc(cl);
     };
     //---------------------------------------------------------
     /**
@@ -712,16 +762,18 @@ class DisplayControl {
      * `setInterval(0)`設定時以外は、毎フレーム自動的に呼び出されます。
     */
     clear(c_str) {
+        const _clear = (c_str) =>{
+            if (this.flip()) {
 
-        if (this.flip()) {
+                this.buffer.allClear(0, 0, this.cw, this.ch);
 
-            this.buffer.allClear(0, 0, this.cw, this.ch);
-
-            if (c_str === void 0) { c_str = this.backgroundcolor; }
-            if (Boolean(c_str)) {
-                this.buffer.fillRect(0, 0, this.cw, this.ch, c_str);
+                if (c_str === void 0) { c_str = this.backgroundcolor; }
+                if (Boolean(c_str)) {
+                    this.buffer.fillRect(0, 0, this.cw, this.ch, c_str);
+                }
             }
         }
+        _clear(c_str);
     };
     //-----------------------------------------------------
     /**
@@ -737,8 +789,11 @@ class DisplayControl {
      * RGBA形式で半透明色も指定可能です。
     */
     fill(x, y, w, h, c_str) {
+        const _fill = (x, y, w, h, c_str)=>{
 
-        this.buffer.fillRect(x, y, w, h, c_str);
+            this.buffer.fillRect(x, y, w, h, c_str);
+        }
+        _fill(x, y, w, h, c_str);
     };
     //----------------------------------------------------------
     /**
@@ -749,8 +804,10 @@ class DisplayControl {
      * バッファの内容を消去して初期状態に戻します。
     */
     reset() {
-
-        this.buffer.reset();
+        const _reset =()=>{
+            this.buffer.reset();
+        }
+        _reset();
     };
     //----------------------------------------------------------
     /**
@@ -760,7 +817,13 @@ class DisplayControl {
      * `enable_reset_flag`が`true`の場合、`reset`メソッドを呼び出して<br>\
      * バッファをクリアします。
     */
-    reflash() { this.buffer.reflash(); };
+    reflash() { 
+        const _reflash =()=>{    
+            this.buffer.reflash(); 
+        }
+        _reflash();
+    
+    };
     //----------------------------------------------------------
     /**
      * 描画
@@ -770,8 +833,10 @@ class DisplayControl {
      * ユーザーに見える形で画面に表示されます。
     */
     draw() {
-
-        this.buffer.draw(this.device);
+        const _draw =()=>{
+            this.buffer.draw(this.device);
+        }
+        _draw();
     };
     //----------------------------------------------------------
     /**
@@ -782,8 +847,10 @@ class DisplayControl {
      * これにより、1フレームあたりの描画負荷の目安を把握できます。
     */
     count() {
-
-        return this.buffer.count();
+        const _c = ()=>{
+            return this.buffer.count();
+        }
+        return _c();
     };
     //----------------------------------------------------------
     /**
@@ -795,8 +862,10 @@ class DisplayControl {
      * パフォーマンス最適化の参考にできます。
     */
     max() {
-
-        return this.buffer.max();
+        const _m =()=>{
+            return this.buffer.max();
+        }
+        return _m();
     };
 }
 
@@ -1624,7 +1693,7 @@ class GameCore {
 					r.fps = fps;
 
 					let wl = {};
-					wl.log = fps_log;
+					wl.log = load_log;
 					wl.max = load_max;
 					wl.min = load_min;
 					wl.ave = load_ave;
@@ -4708,8 +4777,30 @@ class GameSpriteControl {
  */
 class GameSpriteFontControl {
     /**
+     * PCGpatternMap
+     * @typedef {object} FontParam スプライトフォント設定パラメータ 
+     * @property {string} name フォントID
+     * @property {ImageAssetIdA} id 使用するイメージアセットID
+     * @property {number} pattern[].x 切り取り開始位置X
+     * @property {number} pattern[].y 切り取り開始位置Y
+     * @property {number} pattern[].w 文字幅
+     * @property {number} pattern[].h 文字高さ
+     */
+    /**
      * @param {GameCore} g GameCoreインスタンス
      * @param {FontParam} fontParam　フォント設定パラメータ 
+     * @example
+     * //フォント設定パラメータ
+     * //(ascii code [space]～[~]まで）
+     * const fontParam = {
+     * 	name: fontID
+     * 	id: 使用するassetImageのID
+     *  	pattern: [
+     * 		{x: ,y: ,w: ,h: ], //space
+     * 			|
+     * 		{x: ,y: ,w: ,h: ] //~
+     * 	    ]
+     * }
      */
     constructor(g, fontParam) {
 

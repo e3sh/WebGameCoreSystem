@@ -10,8 +10,30 @@
  */
 class GameSpriteFontControl {
     /**
+     * PCGpatternMap
+     * @typedef {object} FontParam スプライトフォント設定パラメータ 
+     * @property {string} name フォントID
+     * @property {ImageAssetIdA} id 使用するイメージアセットID
+     * @property {number} pattern[].x 切り取り開始位置X
+     * @property {number} pattern[].y 切り取り開始位置Y
+     * @property {number} pattern[].w 文字幅
+     * @property {number} pattern[].h 文字高さ
+     */
+    /**
      * @param {GameCore} g GameCoreインスタンス
      * @param {FontParam} fontParam　フォント設定パラメータ 
+     * @example
+     * //フォント設定パラメータ
+     * //(ascii code [space]～[~]まで）
+     * const fontParam = {
+     * 	name: fontID
+     * 	id: 使用するassetImageのID
+     *  	pattern: [
+     * 		{x: ,y: ,w: ,h: ], //space
+     * 			|
+     * 		{x: ,y: ,w: ,h: ] //~
+     * 	    ]
+     * }
      */
     constructor(g, fontParam) {
 

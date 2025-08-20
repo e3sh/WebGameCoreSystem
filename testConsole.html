@@ -12,6 +12,7 @@
         const sysParam = {
             canvasId: "layer0",
             screen: [ 
+                { resolution: { w: 640, h: 480 , x:0, y:0 } },
                 { resolution: { w: 640, h: 480 , x:0, y:0 } }
             ]
         }
@@ -49,7 +50,7 @@
 
         scene;
 
-
+        txt;
 
         constructor(id){
             super(id);
@@ -59,7 +60,8 @@
             this.scene = [];
 
             this.scene[	"Gpad"	] = new SceneGPad();
-            this.scene[	"VGpad"	] = new SceneVGPad();
+            this.scene[	"VGpad"	] = new SceneVGPad(g);
+ 
 
             g.kanji.useScreen(0);
 
@@ -87,6 +89,9 @@
             };
 
             updatePixelRatio();
+
+            g.screen[0].assignFont("32px 'Arial'");//test
+            g.screen[1].setInterval(3);
         }
         //----------------------------------------------------------------------
         step(g){// this.enable が true時にループ毎に実行される。
@@ -184,7 +189,7 @@
                 this._x = Math.cos(r);//this._x + vx;
                 this._y = Math.sin(r);//this._y + vy;
 
-                console.log("" + r + "," + this._x + "," + this._y);
+                //console.log("" + r + "," + this._x + "," + this._y);
 
             } else {
                 this._x = (leftkey)?-1:(rightkey)?1:0;//this._x + vx;
@@ -199,14 +204,35 @@
 
             this.scene["Gpad"].step(g, input, null);
             this.scene["VGpad"].step(g, input, null);
+
+            let result = g.fpsload.result();
+
+            let rstl = [];
+            rstl.push("= information: GameCore.fpsload.result() =");
+            rstl.push("FPS:" + result.fps);
+            rstl.push("interval.log.length:" + result.interval.log.length);
+            rstl.push("interval.log[0]:" + result.interval.log[0]);
+            rstl.push("interval.max:" + result.interval.max);
+            rstl.push("interval.min:" + result.interval.min);
+            rstl.push("interval.ave:" + result.interval.ave);
+            rstl.push("workload.log.length:" + result.workload.log.length);
+            rstl.push("interval.log[0]" + result.interval.log[0]);
+            rstl.push("workload.max:" + result.workload.max);
+            rstl.push("workload.min:" + result.workload.min);
+            rstl.push("workload.ave:" + result.workload.ave);
+            let p = (result.workload.ave/result.interval.ave)*100;
+            rstl.push("-- (workload.ave/interval.ave)*100 --");
+            rstl.push("workload(%) :" + p);
+
+            this.txt = rstl;
         }
         //----------------------------------------------------------------------
         draw(g){// this.visible が true時にループ毎に実行される。
-            g.kanji.print("起動OK",0,8);
+            g.kanji.print(" 起動OK",0,8);
 
             let t = g.time();
-            g.kanji.print("t:" + Math.trunc(t),0,16);
-            g.kanji.print("d:" + g.deltaTime().toString().substring(0,5),0,24);
+            g.kanji.print(" runtime:" + Math.trunc(t),0,16);
+            g.kanji.print(" deltaTime:" + g.deltaTime().toString().substring(0,5),0,24);
 
             if (document.fullscreenElement){
             g.kanji.print("FullScreen:" + document.fullscreenElement?.nodeName, 120, 8); 
@@ -225,6 +251,11 @@
 
             this.scene["Gpad"].draw(g);
             this.scene["VGpad"].draw(g);
+
+            for (let i in this.txt){
+                g.screen[1].print(this.txt[i],360, i*14+10);
+                g.kanji.print(this.txt[i],360, 240 + i*10);
+            }
         }
     }
     //----------------------------------------------------------------------
@@ -280,13 +311,12 @@
     }
     //----------------------------------------------------------------------
     // VGPadScene(I/Ostatus)
-    function SceneVGPad(){
+    function SceneVGPad(g){
 
-        const X = 300;
-        const Y = 0;
+        const X=0;
+        const Y=g.screen[0].ch-48;
 
         let st;
-        //let m;
 
         this.step = function(g, i, p){
 
@@ -294,14 +324,14 @@
 
             st = [];
 
-            //st.push("state button:" + s.button);
-            //st.push("state deg   :" + s.deg);
-            //st.push("state distance:" + s.distance);
+            st.push("state button:" + s.button);
+            st.push("state deg   :" + s.deg);
+            st.push("state distance:" + s.distance);
 
-            //st.push("canvas_w:" + g.systemCanvas.width);
-            //st.push("canvas_h:" + g.systemCanvas.height);
+            st.push("canvas_w:" + g.systemCanvas.width);
+            st.push("canvas_h:" + g.systemCanvas.height);
 
-            //m = i.mouse;
+            m = i.mouse;
         }
         this.draw = function(g){
 
@@ -318,7 +348,7 @@
             g.touchpad.draw(g.screen[0]);
 
             for (let i in st){
-            //	g.kanji.print(st[i],X, Y+i*8);
+            	g.kanji.print(st[i],X, Y+i*8);
             }
         }
     }
