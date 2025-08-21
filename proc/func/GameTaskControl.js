@@ -39,8 +39,6 @@
  * ゲーム内の個々のタスク（`GameTask`インスタンス）を管理するコントローラです。<br>\
  * タスクの追加、削除、読み込み、そしてゲームループにおける <br>\
  * `step`（更新）と`draw`（描画）の実行を制御します。
- * @todo priorityControl 実行は登録順で行われる。priorityプロパティによる実行順序制御は未実装
- * @todo 時間指定実行、一時実行タスクや割り込み制御なども標準機能である方がよいかもしれない
  */
 class GameTaskControl {
 	/**
@@ -52,12 +50,17 @@ class GameTaskControl {
 	 */
 	constructor(game) {
 
-		let task_ = [];
-
+		let task_ = []; //taskObject array
+	
 		let taskCount_ = 0;
 		let taskNamelist_ = "";
 
+		let signal_ = []; //signal_stack
+
 		const taskCheck =()=> {
+
+			task_.sort((a, b)=>{b.priority - a.priority}); //Fast LevelHi -LevelLow defalut:0 
+
 			taskCount_ = 0;
 			taskNamelist_ = "";
 
@@ -65,6 +68,17 @@ class GameTaskControl {
 				taskNamelist_ += n + " ";
 				taskCount_++;
 			}
+		}
+
+		const taskExistence = (taskid)=>{
+
+			let result = false;
+			for (let n in task_){
+				if (taskid == n){
+					result = true;
+				}
+			}
+			return result;
 		}
 
 		/**
@@ -76,11 +90,10 @@ class GameTaskControl {
 		 * 指定されたIDを持つ`GameTask`オブジェクトをタスクリストから取得して返します。<br>\
 		 * これにより、特定のタスクに直接アクセスし、<br>\
 		 * その状態やプロパティを参照・操作できます。
-		 * @todo 結果可否報告とエラーチェック
 		 */
 		this.read = function (taskid) {
 
-			return task_[taskid];
+			return taskExistence(taskid)?task_[taskid]: null;
 		};
 
 		/**
@@ -111,16 +124,21 @@ class GameTaskControl {
 		 * 指定されたIDを持つ`GameTask`オブジェクトを実行リストから削除します。<br>\
 		 * 削除前にタスクの`post`メソッドを呼び出して終了処理を行い、<br>\
 		 * その後、リストからタスクを破棄します。
-		 * @todo 結果可否報告とエラーチェック(無いtaskを削除した場合)
 		 */
 		this.del = function (taskid) {
-			//task post process
-			task_[taskid].post(); //deconstract
 
-			//task delete
-			delete task_[taskid];
+			let result = false;
+			if (taskExistence(taskid)){
+				//task post process
+				task_[taskid].post(); //deconstract
 
+				//task delete
+				delete task_[taskid];
+				result = true;
+			}
 			taskCheck();
+
+			return result;//削除に成功でtrue/なかったらfalse
 		};
 
 		/**
@@ -132,12 +150,36 @@ class GameTaskControl {
 		 * 指定されたIDの`GameTask`オブジェクトの`init`メソッドを明示的に実行します。<br>\
 		 * これは、タスクの追加時だけでなく、<br>\
 		 * 必要なタイミングでタスクの初期化を再度行いたい場合に利用できます。
-		 * @todo 結果可否報告とエラーチェック
 		 */
 		this.init = function (taskid) {
 
-			task_[taskid].init(game);
+			if (taskExistence(taskid)) task_[taskid].init(game);
+
+			taskCheck();
 		};
+
+		/**
+		 * set signal
+		 * @method 
+		 * @param {taskId} target 対象(送信先)のタスクID
+		 * @param {taskId} from 送信元のタスクID　
+		 * @param {number | string} id シグナルID(処理側で決定)
+		 * @param {*} desc (何を入れる/どう使うかなどは処理側で決定)　
+		 * @description
+		 * メッセージシグナルを登録します。 <br>\
+		 * 次のステップが処理される際に対象のタスクの<br>\
+		 * signalメソッドが呼び出されます。
+		 * @todo broadcastメッセージの実装（必要な場合)
+		*/
+		this.signal = function( target, from, id, desc){
+			signal_.push({target:target, from:from, id:id, desc:desc});
+		}
+
+		this.flash_signalstack = function(){signal_ = [];
+		}
+
+		this.get_signalstack = function(){return signal_;
+		}
 
 		/**
 		 * 実行リストにあるGameTaskのstepを呼ぶ(処理Op)
@@ -151,6 +193,15 @@ class GameTaskControl {
 		 */
 		this.step = function () {
 
+			//signal check
+			while (signal_.length > 0){
+				let s = signal_.pop();
+				if (taskExistence(s.target)){
+					task_[s.target].signal(game, s.from, s.id, s.desc);
+				}
+			}
+
+			//step
 			for (let i in task_) {
 				let w_ = task_[i];
 
@@ -158,7 +209,6 @@ class GameTaskControl {
 					w_.pre(game);
 					w_.preFlag = true;
 				}
-
 				if (w_.enable) {
 					w_.step(game);
 				}

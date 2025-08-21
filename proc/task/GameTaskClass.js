@@ -40,7 +40,7 @@ class GameTask{
 	 */
 	living;
 	/**
-	 * task running proirity
+	 * task running proirityLevel
 	 * @type {number}
 	 * @todo function Not implemented
 	*/
@@ -62,6 +62,8 @@ class GameTask{
 		this.id = id
 		this.enable = true; // true : run step  false: pasue step
 		this.visible = true; // true: run draw  false: pasue draw
+
+		this.proirity = 0; //priorityLevel
 
 		this.preFlag = false;
 
@@ -100,12 +102,10 @@ class GameTask{
 	}
 	/**
 	 * @method
-	 * @param {number} num sortorder 
-	 * @todo priority control function Not implemented(2025/08/15) 
+	 * @param {number} num 実行優先レベル 
 	 * @description
 	 * タスクの実行優先順位を設定します。<br>\
-	 * ただし、この機能は現在未実装であり、<br>\
-	 * 将来の拡張のために予約されています。
+	 * 大きいほど実行時の優先順位が高くなります(降順で実行)
 	 */
 	setPriority(num){ this.proirity = num;}
 
@@ -141,6 +141,7 @@ class GameTask{
 	init(g){
 		//asset(contents) load
 		//呼び出しタイミングによってはconstuctorで設定してもよい。
+
 	}
 
 	/**
@@ -155,6 +156,9 @@ class GameTask{
 	pre(g){
     	//paramater reset etc
 	    //this.preFlag = true;　フラグの変更はTaskControlで実行されるので継承側でも実行する必要なし。
+
+
+
 	}
 
 	/**
@@ -167,7 +171,7 @@ class GameTask{
 	 * ゲームの進行に関わる計算や状態更新を行います。
 	 */ 
 	step(g){// this.enable が true時にループ毎に実行される。
-
+		//Extends先による
 	}
 
 	/**
@@ -180,6 +184,22 @@ class GameTask{
 	 * 画面へのグラフィック要素の描画を行います。
 	 */ 
 	draw(g){// this.visible が true時にループ毎に実行される。
+		//Extends先による
+	}
+
+	/**
+	 * 自分宛にsignalMessageが発行される毎に呼ばれる
+	 * @method
+	 * @param {GameCore} g GameCoreインスタンス
+	 * @param {TaskId} from 発行元タスクId
+	 * @param {number | string} id　signalMessage 
+	 * @param {*} desc 任意の追加情報
+	 * @description
+	 * `GameTaskControl`によって自TaskId宛のSignalMessageを受信した場合に<br>\
+	 * 呼び出される、割り込み処理ロジックです。<br>\
+	 */
+	signal(g, from, id, desc){
+		//if (from == "you") if (id == "Hello") console.log("Hi!"); 
 
 	}
 
