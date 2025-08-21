@@ -165,7 +165,12 @@ class inputKeyboard {
          * これにより、キーの個別の状態を直接参照できます。
          */
         this.state = function () {
-
+            let keymap;
+            if (!Boolean(codesupportmode)){
+                keymap = keyCodemap;
+            }else{
+                keymap = codemap;
+            }
             return keymap;
         };
 
