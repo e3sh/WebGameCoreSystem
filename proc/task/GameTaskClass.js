@@ -42,7 +42,6 @@ class GameTask{
 	/**
 	 * task running proirityLevel
 	 * @type {number}
-	 * @todo function Not implemented
 	*/
 	proirity;
 	/**
