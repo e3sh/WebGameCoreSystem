@@ -263,7 +263,17 @@
             this.gfunc = new pfmclass(result, 560, 100, 2.5);
 
             let f = leftbutton || rightbutton || trigger
-            if (!f) this.count++;
+            if (!f) {
+                this.count++;
+            }else{
+                g.textScreen[1].clear();
+                for (let i in rstl){
+                    let s = rstl[i];
+                    //g.textScreen[0].mvprintw(s, 0, i);
+                    g.textScreen[1].move(0, Math.trunc(12+Number(i)));
+                    g.textScreen[1].printw(s);
+                }
+            }
 
             if (this.count < 15) return;
             g.textScreen[1].scrolllock(false);
