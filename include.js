@@ -25,6 +25,7 @@ const w = [
     ,"proc/func/spriteControl.js"
     ,"proc/func/spriteFontControl.js"
     ,"proc/func/fontPrintControl.js"
+    ,"proc/func/textConsole.js"
     ,"proc/func/viewport.js"
     ,"proc/task/GameTaskClass.js"
 

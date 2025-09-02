@@ -27,6 +27,22 @@
             ,game.asset.image["JISLV1"].img,12, 8
         )
 
+        const c0 = new textConsole(50,25);  
+		c0.setFontId("std");
+		c0.setPrompt( ["#" ,"_"]);
+		c0.setLinewidth(10);
+		c0.setCharwidth(6);
+
+        const c1 = new textConsole(50,40);  
+		c1.setFontId("std");
+		c1.setPrompt( ["#" ,"_"]);
+		c1.setLinewidth(10);
+		c1.setCharwidth(6);
+
+        const textConsl = [c0, c1];
+
+        game.textScreen = textConsl;
+
         //Game Task Setup
         game.task.add(new GameTask_Main("main"));
 
@@ -42,6 +58,16 @@
     function pictdata(g){
         g.asset.imageLoad( "JISLV1" ,"pict/k12x8_jisx0208c.png");
         g.asset.imageLoad( "ASCII"  ,"pict/k12x8_jisx0201c.png");
+
+        let sp = [];
+        for (let i = 2; i < 13; i++) {
+            for (j = 0; j <16; j++) {
+                ptn = { x:  6 * j, y: 8 * i, w:  6, h: 8};
+                sp.push(ptn);
+            }
+        }
+        //8_8_font
+        g.setSpFont({ name: "std", id: "ASCII", pattern: sp });
     }
 
     // ----------------------------------------------------------------------
@@ -52,6 +78,8 @@
 
         txt;
         gfunc;
+
+        count;
 
         constructor(id){
             super(id);
@@ -95,6 +123,8 @@
 
             g.screen[0].assignFont("32px 'Arial'");//test
             g.screen[1].setInterval(1);
+
+            this.count = 0;
         }
         //----------------------------------------------------------------------
         step(g){// this.enable が true時にループ毎に実行される。
@@ -230,6 +260,28 @@
             this.txt = rstl;
 
             this.gfunc = new pfmclass(result, 560, 100, 2.5);
+
+            this.count++;
+
+            if (this.count < 30) return;
+            g.textScreen[1].scrolllock(false);
+            g.textScreen[1].wscrl(15);
+            
+            g.textScreen[0].move(0, 0);
+            g.textScreen[0].deleteln();
+
+            this.count = 0;
+
+            for (let i in rstl){
+                let s = rstl[i];
+                //g.textScreen[0].mvprintw(s, 0, i);
+                g.textScreen[1].move(0, Math.trunc(25+Number(i)));
+                g.textScreen[1].printw(s);
+            }
+            let wi = rstl.length-1;
+            g.textScreen[0].mvprintw(rstl[wi], 0, 20);
+            g.textScreen[0].mvprintw(rstl[1], 0, 21);
+            g.textScreen[0].move(0, 0);
         }
         //----------------------------------------------------------------------
         draw(g){// this.visible が true時にループ毎に実行される。
@@ -258,9 +310,11 @@
             this.scene["VGpad"].draw(g);
 
             for (let i in this.txt){
-                g.screen[0].print(this.txt[i],360, i*14+10);
-                g.kanji.print(this.txt[i],360, 240 + i*10);
+                //g.screen[0].print(this.txt[i],360, i*14+10);
+                //g.kanji.print(this.txt[i],360, 240 + i*10);
             }
+            g.textScreen[0].draw(g, 0, 200);
+            g.textScreen[1].draw(g, 320, 50);
 
             g.screen[1].putFunc( this.gfunc );
 
