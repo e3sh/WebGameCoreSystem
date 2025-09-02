@@ -28,10 +28,10 @@
         )
 
         const c0 = new textConsole(50,15);  
-		c0.setFontId("std");
+		c0.setFontId("wide");
 		//c0.setPrompt( ["#" ,"_"]);
 		c0.setLinewidth(15);
-		c0.setCharwidth(6);
+		c0.setCharwidth(8);
 
         const c1 = new textConsole(50,35);  
 		c1.setFontId("std");
@@ -58,6 +58,7 @@
     function pictdata(g){
         g.asset.imageLoad( "JISLV1" ,"pict/k12x8_jisx0208c.png");
         g.asset.imageLoad( "ASCII"  ,"pict/k12x8_jisx0201c.png");
+        g.asset.imageLoad( "ASC8x8"  ,"pict/font.png");
         //g.asset.imageLoad( "ASCII"  ,"pict/cha.png");
 
         let sp = [];
@@ -69,6 +70,16 @@
         }
         //8_8_font
         g.setSpFont({ name: "std", id: "ASCII", pattern: sp });
+
+        sp = [];
+        for (let i = 0; i < 7; i++) {
+            for (j = 0; j <16; j++) {
+                ptn = { x:  8 * j, y: 8 * i, w:  8, h: 8};
+                sp.push(ptn);
+            }
+        }
+        //8_8_font
+        g.setSpFont({ name: "wide", id: "ASC8x8", pattern: sp });
     }
 
     // ----------------------------------------------------------------------
