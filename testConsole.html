@@ -27,13 +27,13 @@
             ,game.asset.image["JISLV1"].img,12, 8
         )
 
-        const c0 = new textConsole(50,25);  
+        const c0 = new textConsole(50,15);  
 		c0.setFontId("std");
-		c0.setPrompt( ["#" ,"_"]);
-		c0.setLinewidth(10);
+		//c0.setPrompt( ["#" ,"_"]);
+		c0.setLinewidth(15);
 		c0.setCharwidth(6);
 
-        const c1 = new textConsole(50,40);  
+        const c1 = new textConsole(50,35);  
 		c1.setFontId("std");
 		c1.setPrompt( ["#" ,"_"]);
 		c1.setLinewidth(10);
@@ -58,6 +58,7 @@
     function pictdata(g){
         g.asset.imageLoad( "JISLV1" ,"pict/k12x8_jisx0208c.png");
         g.asset.imageLoad( "ASCII"  ,"pict/k12x8_jisx0201c.png");
+        //g.asset.imageLoad( "ASCII"  ,"pict/cha.png");
 
         let sp = [];
         for (let i = 2; i < 13; i++) {
@@ -261,27 +262,32 @@
 
             this.gfunc = new pfmclass(result, 560, 100, 2.5);
 
-            this.count++;
+            let f = leftbutton || rightbutton || trigger
+            if (!f) this.count++;
 
-            if (this.count < 30) return;
+            if (this.count < 15) return;
             g.textScreen[1].scrolllock(false);
             g.textScreen[1].wscrl(15);
             
             g.textScreen[0].move(0, 0);
-            g.textScreen[0].deleteln();
+            g.textScreen[0].insertln();
 
             this.count = 0;
 
             for (let i in rstl){
                 let s = rstl[i];
                 //g.textScreen[0].mvprintw(s, 0, i);
-                g.textScreen[1].move(0, Math.trunc(25+Number(i)));
+                g.textScreen[1].move(0, Math.trunc(22+Number(i)));
                 g.textScreen[1].printw(s);
             }
             let wi = rstl.length-1;
-            g.textScreen[0].mvprintw(rstl[wi], 0, 20);
-            g.textScreen[0].mvprintw(rstl[1], 0, 21);
+
+            let s = `- ${rstl[1].substring(0,10)} / ${rstl[wi].substring(0,20)}`; 
+
+            g.textScreen[0].mvprintw(s, 0, 0);
             g.textScreen[0].move(0, 0);
+            //g.textScreen[0].mvprintw(rstl[1], 0, 21);
+            //g.textScreen[0].move(0, 0);
         }
         //----------------------------------------------------------------------
         draw(g){// this.visible が true時にループ毎に実行される。
