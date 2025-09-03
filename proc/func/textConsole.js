@@ -23,6 +23,7 @@ class textConsole{
    constructor(width, column){
 
         const textbuffer = [];
+        const rewritecount = [];
 
         const BUFW = width;
         const BUFH = column;
@@ -133,6 +134,7 @@ class textConsole{
             }
 
             textbuffer[cursor.y] = d;
+            rewritecount[cursor.y]++;
         }
         /**
          * @method
@@ -162,6 +164,7 @@ class textConsole{
             //d = d.slice(0, BUFW);
 
             textbuffer[cursor.y] = d;
+            rewritecount[cursor.y]++;
         }
         /**
          * @method
@@ -174,6 +177,7 @@ class textConsole{
                 textbuffer[i] = textbuffer[i-1];
             }
             textbuffer[cursor.y] = " ".repeat(BUFW);
+            rewritecount[cursor.y]++;
 
             shift = {ready:true, pos:linew, v:1};
         }
@@ -193,6 +197,7 @@ class textConsole{
                 d = s.slice(1,BUFW-1);
             }
             textbuffer[cursor.y] = d;
+            rewritecount[cursor.y]++;
         }
         /**
          * @method
@@ -217,7 +222,8 @@ class textConsole{
         this.clear = ()=>{
             
             for (let i=0; i<BUFH; i++){
-                textbuffer[i] = " ".repeat(BUFW);                
+                textbuffer[i] = " ".repeat(BUFW); 
+                rewritecount[i] = 0;               
             }
         }
         // textbuffer initialize.
@@ -254,8 +260,20 @@ class textConsole{
         function scrollUp(startLn){
             for (let i = startLn; i<BUFH-1; i++ ){
                 textbuffer[i] = textbuffer[i+1];
+                rewritecount[i]++;
             }
             textbuffer[BUFH-1] = " ".repeat(BUFW);
+        }
+
+        this.rewritecheck = ()=>{
+            let c = 0;
+            for (let i=0; i<BUFH; i++){
+                c = c + rewritecount[i];               
+            }
+            c = c + scrollCount;
+            c = c + ((shift.ready)?1:0);
+
+            return c;
         }
         /**
          * @method
@@ -293,8 +311,14 @@ class textConsole{
                 }        
                 if (Boolean(prompt)){   
                     let d = (g.blink())?prompt[1]:prompt[0];   
-                    g.font[fontId].putchr(d,x + cursor.x*charw ,y + cursor.y*linew);                
+                    g.font[fontId].putchr(d,x + cursor.x*charw ,y + cursor.y*linew);    
                 }
+                
+                //g.font[fontId].putchr(`${this.rewritecheck()}`,x,y);    
+            }
+
+            for (let i=0; i<BUFH; i++){
+                rewritecount[i] = 0;               
             }
         }
     } 
