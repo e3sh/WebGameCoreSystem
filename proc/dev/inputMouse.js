@@ -65,7 +65,11 @@ class inputMouse {
 
                 tr.x = rt; tr.y = rt; tr.offset_x = ((scw * rt) - cw) / rt / 2;
             } else {
-                tr.x = 1; tr.y = 1; tr.offset_x = 0;
+                const cv = g.systemCanvas;
+
+                tr.x = cv.clientWidth / cv.width;
+                tr.y = cv.clientHeight / cv.height;
+                tr.offset_x = 0;
             }
         };
 

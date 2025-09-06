@@ -333,6 +333,9 @@
             g.kanji.print("canvas_w:" + g.systemCanvas.width, 240, 16);
             g.kanji.print("canvas_h:" + g.systemCanvas.height,240, 24);
 
+            g.kanji.print("canvas_clientWidth:" + g.systemCanvas.clientWidth , 240, 32);
+            g.kanji.print("canvas_clientHeight:" + g.systemCanvas.clientHeight,240, 40);
+
             this.scene["Gpad"].draw(g);
             this.scene["VGpad"].draw(g);
 
