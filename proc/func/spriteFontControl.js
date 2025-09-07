@@ -13,11 +13,12 @@ class GameSpriteFontControl {
      * PCGpatternMap
      * @typedef {object} FontParam スプライトフォント設定パラメータ 
      * @property {string} name フォントID
-     * @property {ImageAssetIdA} id 使用するイメージアセットID
+     * @property {ImageAssetId} id 使用するイメージアセットID
      * @property {number} pattern[].x 切り取り開始位置X
      * @property {number} pattern[].y 切り取り開始位置Y
      * @property {number} pattern[].w 文字幅
      * @property {number} pattern[].h 文字高さ
+     * @property {boolean} [ucc=false] UseControlCharFlag
      */
     /**
      * @param {GameCore} g GameCoreインスタンス
@@ -25,6 +26,7 @@ class GameSpriteFontControl {
      * @example
      * //フォント設定パラメータ
      * //(ascii code [space]～[~]まで）
+     * //ucc=true指定で　char[0]～char[255]となる
      * const fontParam = {
      * 	name: fontID
      * 	id: 使用するassetImageのID
@@ -50,8 +52,12 @@ class GameSpriteFontControl {
             buffer_ = g.screen[num].buffer;
         };
 
-        let tex_c = fontParam.Image;
-        let sp_ch_ptn = fontParam.pattern;
+        const tex_c = fontParam.Image;
+        const sp_ch_ptn = fontParam.pattern;
+        const useControlChar = Boolean(fontParam.ucc);
+
+        const STARTNUM = (useControlChar)?0:32; 
+        const ENDNUM = (useControlChar)?255:128;
 
         //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
         //    this.putchr = chr8x8put;
@@ -80,8 +86,8 @@ class GameSpriteFontControl {
             for (let i = 0, loopend = str.length; i < loopend; i++) {
                 let n = str.charCodeAt(i);
 
-                if ((n >= 32) && (n < 128)) { // space ～ "~" まで
-                    let d = sp_ch_ptn[n - 32];
+                if ((n >= STARTNUM) && (n < ENDNUM)) { // space ～ "~" まで
+                    let d = sp_ch_ptn[n - STARTNUM];
 
                     let wx = x + i * (d.w * z);
                     let wy = y;

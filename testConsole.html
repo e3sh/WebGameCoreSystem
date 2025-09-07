@@ -62,14 +62,14 @@
         //g.asset.imageLoad( "ASCII"  ,"pict/cha.png");
 
         let sp = [];
-        for (let i = 2; i < 13; i++) {
+        for (let i = 0; i < 13; i++) {
             for (j = 0; j <16; j++) {
                 ptn = { x:  6 * j, y: 8 * i, w:  6, h: 8};
                 sp.push(ptn);
             }
         }
         //8_8_font
-        g.setSpFont({ name: "std", id: "ASCII", pattern: sp });
+        g.setSpFont({ name: "std", id: "ASCII", pattern: sp, ucc: true });
 
         sp = [];
         for (let i = 0; i < 7; i++) {

@@ -306,7 +306,8 @@ class GameCore {
 
 			let fprm = {
 				Image: asset_.image[fontParam.id].img,
-				pattern: fontParam.pattern
+				pattern: fontParam.pattern,
+				ucc:  fontParam.ucc
 			};
 			let wf = new GameSpriteFontControl(this, fprm);
 
