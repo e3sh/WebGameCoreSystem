@@ -1597,8 +1597,7 @@ class GameCore {
 
 				/**
 				 * @typedef {object} resultLog 計測結果
-				 * @property {number} fps FPS
-				 * @property {number} logpointer ログ配列の最新更新値へのインデックス値
+				 * @property {number} FPS FPS
 				 * @property {number[]} interval.log フレーム時間ログ
 				 * @property {number} interval.max　最大値
 				 * @property {number} interval.min　最小値
@@ -1649,7 +1648,6 @@ class GameCore {
 					let r = {};
 
 					r.fps = fps;
-					r.logpointer = log_cnt;
 
 					let wl = {};
 					wl.log = load_log;
@@ -1772,8 +1770,7 @@ class GameCore {
 
 			let fprm = {
 				Image: asset_.image[fontParam.id].img,
-				pattern: fontParam.pattern,
-				ucc:  fontParam.ucc
+				pattern: fontParam.pattern
 			};
 			let wf = new GameSpriteFontControl(this, fprm);
 
@@ -2018,8 +2015,9 @@ class GameTask{
 	 */
 	living;
 	/**
-	 * task running proirityLevel
+	 * task running proirity
 	 * @type {number}
+	 * @todo function Not implemented
 	*/
 	proirity;
 	/**
@@ -2039,8 +2037,6 @@ class GameTask{
 		this.id = id
 		this.enable = true; // true : run step  false: pasue step
 		this.visible = true; // true: run draw  false: pasue draw
-
-		this.proirity = 0; //priorityLevel
 
 		this.preFlag = false;
 
@@ -2079,10 +2075,12 @@ class GameTask{
 	}
 	/**
 	 * @method
-	 * @param {number} num 実行優先レベル 
+	 * @param {number} num sortorder 
+	 * @todo priority control function Not implemented(2025/08/15) 
 	 * @description
 	 * タスクの実行優先順位を設定します。<br>\
-	 * 大きいほど実行時の優先順位が高くなります(降順で実行)
+	 * ただし、この機能は現在未実装であり、<br>\
+	 * 将来の拡張のために予約されています。
 	 */
 	setPriority(num){ this.proirity = num;}
 
@@ -2118,7 +2116,6 @@ class GameTask{
 	init(g){
 		//asset(contents) load
 		//呼び出しタイミングによってはconstuctorで設定してもよい。
-
 	}
 
 	/**
@@ -2133,9 +2130,6 @@ class GameTask{
 	pre(g){
     	//paramater reset etc
 	    //this.preFlag = true;　フラグの変更はTaskControlで実行されるので継承側でも実行する必要なし。
-
-
-
 	}
 
 	/**
@@ -2148,7 +2142,7 @@ class GameTask{
 	 * ゲームの進行に関わる計算や状態更新を行います。
 	 */ 
 	step(g){// this.enable が true時にループ毎に実行される。
-		//Extends先による
+
 	}
 
 	/**
@@ -2161,22 +2155,6 @@ class GameTask{
 	 * 画面へのグラフィック要素の描画を行います。
 	 */ 
 	draw(g){// this.visible が true時にループ毎に実行される。
-		//Extends先による
-	}
-
-	/**
-	 * 自分宛にsignalMessageが発行される毎に呼ばれる
-	 * @method
-	 * @param {GameCore} g GameCoreインスタンス
-	 * @param {TaskId} from 発行元タスクId
-	 * @param {number | string} id　signalMessage 
-	 * @param {*} desc 任意の追加情報
-	 * @description
-	 * `GameTaskControl`によって自TaskId宛のSignalMessageを受信した場合に<br>\
-	 * 呼び出される、割り込み処理ロジックです。<br>\
-	 */
-	signal(g, from, id, desc){
-		//if (from == "you") if (id == "Hello") console.log("Hi!"); 
 
 	}
 
@@ -2234,6 +2212,8 @@ class GameTask{
  * ゲーム内の個々のタスク（`GameTask`インスタンス）を管理するコントローラです。<br>\
  * タスクの追加、削除、読み込み、そしてゲームループにおける <br>\
  * `step`（更新）と`draw`（描画）の実行を制御します。
+ * @todo priorityControl 実行は登録順で行われる。priorityプロパティによる実行順序制御は未実装
+ * @todo 時間指定実行、一時実行タスクや割り込み制御なども標準機能である方がよいかもしれない
  */
 class GameTaskControl {
 	/**
@@ -2245,17 +2225,12 @@ class GameTaskControl {
 	 */
 	constructor(game) {
 
-		let task_ = []; //taskObject array
-	
+		let task_ = [];
+
 		let taskCount_ = 0;
 		let taskNamelist_ = "";
 
-		let signal_ = []; //signal_stack
-
 		const taskCheck =()=> {
-
-			task_.sort((a, b)=>{b.priority - a.priority}); //Fast LevelHi -LevelLow defalut:0 
-
 			taskCount_ = 0;
 			taskNamelist_ = "";
 
@@ -2263,17 +2238,6 @@ class GameTaskControl {
 				taskNamelist_ += n + " ";
 				taskCount_++;
 			}
-		}
-
-		const taskExistence = (taskid)=>{
-
-			let result = false;
-			for (let n in task_){
-				if (taskid == n){
-					result = true;
-				}
-			}
-			return result;
 		}
 
 		/**
@@ -2285,10 +2249,11 @@ class GameTaskControl {
 		 * 指定されたIDを持つ`GameTask`オブジェクトをタスクリストから取得して返します。<br>\
 		 * これにより、特定のタスクに直接アクセスし、<br>\
 		 * その状態やプロパティを参照・操作できます。
+		 * @todo 結果可否報告とエラーチェック
 		 */
 		this.read = function (taskid) {
 
-			return taskExistence(taskid)?task_[taskid]: null;
+			return task_[taskid];
 		};
 
 		/**
@@ -2319,21 +2284,16 @@ class GameTaskControl {
 		 * 指定されたIDを持つ`GameTask`オブジェクトを実行リストから削除します。<br>\
 		 * 削除前にタスクの`post`メソッドを呼び出して終了処理を行い、<br>\
 		 * その後、リストからタスクを破棄します。
+		 * @todo 結果可否報告とエラーチェック(無いtaskを削除した場合)
 		 */
 		this.del = function (taskid) {
+			//task post process
+			task_[taskid].post(); //deconstract
 
-			let result = false;
-			if (taskExistence(taskid)){
-				//task post process
-				task_[taskid].post(); //deconstract
+			//task delete
+			delete task_[taskid];
 
-				//task delete
-				delete task_[taskid];
-				result = true;
-			}
 			taskCheck();
-
-			return result;//削除に成功でtrue/なかったらfalse
 		};
 
 		/**
@@ -2345,36 +2305,12 @@ class GameTaskControl {
 		 * 指定されたIDの`GameTask`オブジェクトの`init`メソッドを明示的に実行します。<br>\
 		 * これは、タスクの追加時だけでなく、<br>\
 		 * 必要なタイミングでタスクの初期化を再度行いたい場合に利用できます。
+		 * @todo 結果可否報告とエラーチェック
 		 */
 		this.init = function (taskid) {
 
-			if (taskExistence(taskid)) task_[taskid].init(game);
-
-			taskCheck();
+			task_[taskid].init(game);
 		};
-
-		/**
-		 * set signal
-		 * @method 
-		 * @param {taskId} target 対象(送信先)のタスクID
-		 * @param {taskId} from 送信元のタスクID　
-		 * @param {number | string} id シグナルID(処理側で決定)
-		 * @param {*} desc (何を入れる/どう使うかなどは処理側で決定)　
-		 * @description
-		 * メッセージシグナルを登録します。 <br>\
-		 * 次のステップが処理される際に対象のタスクの<br>\
-		 * signalメソッドが呼び出されます。
-		 * @todo broadcastメッセージの実装（必要な場合)
-		*/
-		this.signal = function( target, from, id, desc){
-			signal_.push({target:target, from:from, id:id, desc:desc});
-		}
-
-		this.flash_signalstack = function(){signal_ = [];
-		}
-
-		this.get_signalstack = function(){return signal_;
-		}
 
 		/**
 		 * 実行リストにあるGameTaskのstepを呼ぶ(処理Op)
@@ -2388,15 +2324,6 @@ class GameTaskControl {
 		 */
 		this.step = function () {
 
-			//signal check
-			while (signal_.length > 0){
-				let s = signal_.pop();
-				if (taskExistence(s.target)){
-					task_[s.target].signal(game, s.from, s.id, s.desc);
-				}
-			}
-
-			//step
 			for (let i in task_) {
 				let w_ = task_[i];
 
@@ -2404,6 +2331,7 @@ class GameTaskControl {
 					w_.pre(game);
 					w_.preFlag = true;
 				}
+
 				if (w_.enable) {
 					w_.step(game);
 				}
@@ -2746,8 +2674,7 @@ class inputKeyboard {
         // a:'KeyA', s:'KeyS', d:'KeyD'
         // z:'KeyZ', x:'KeyX', c:'KeyC'
 
-        let keyCodemap = [];
-        let codemap = [];
+        let keymap = [];
 
         const keyStateReset = ()=> {
 
@@ -2776,13 +2703,18 @@ class inputKeyboard {
         keyStateReset();
 
         //windowsフォーカスが外れるとキー入力リセットさせとく(押しっぱなし状態となる為）
-        window.addEventListener("blur", function (event) { keyCodemap = []; codemap = []; }, false);
+        window.addEventListener("blur", function (event) { keymap = []; }, false);
 
         //KeyCode を使用するのはいつのまにか非推奨となっているので時間があるか使用不可になる前に書換要
         //@see　https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent
-        window.addEventListener("keydown", function (event) { keyCodemap[event.keyCode] = true; codemap[event.code] = true; }, false);
-        window.addEventListener("keyup", function (event) { keyCodemap[event.keyCode] = false; codemap[event.code] = false; }, false);
-        
+        if (!Boolean(codesupportmode)){
+            window.addEventListener("keydown", function (event) { keymap[event.keyCode] = true; }, false);
+            window.addEventListener("keyup", function (event) { keymap[event.keyCode] = false; }, false);
+        }else{
+        //code対応用(アプリケーション側での対応も必要)
+            window.addEventListener("keydown", function (event) { keymap[event.code] = true; }, false);
+            window.addEventListener("keyup", function (event) { keymap[event.code] = false; }, false);
+        }
         /**
          * 入力状態確認(状態確認用キープロパティの更新)
          * @method
@@ -2797,13 +2729,6 @@ class inputKeyboard {
         this.check = function(){
 
             keyStateReset();
-
-            let keymap;
-            if (!Boolean(codesupportmode)){
-                keymap = keyCodemap;
-            }else{
-                keymap = codemap;
-            }
 
             for (let i in keymap) {
 
@@ -2868,12 +2793,7 @@ class inputKeyboard {
          * これにより、キーの個別の状態を直接参照できます。
          */
         this.state = function () {
-            let keymap;
-            if (!Boolean(codesupportmode)){
-                keymap = keyCodemap;
-            }else{
-                keymap = codemap;
-            }
+
             return keymap;
         };
 
@@ -2897,18 +2817,6 @@ class inputKeyboard {
             }
             return result;
         };
-        
-        /**
-         * @method
-         * @param {boolean} [mode=true] code/KeyCode(NR)
-         * @description
-         * Select [keyCode/code] code使用する場合はtrue<br>\
-         * KeyCodeはMDN非推奨になっているので切替可能とした<br>\
-         * 起動時は作成したものの為に互換モードでKeyCodeで起動
-         */
-        this.codeMode = function(mode=true){
-            codesupportmode = mode;
-        }
     }
 }
 
@@ -2979,11 +2887,7 @@ class inputMouse {
 
                 tr.x = rt; tr.y = rt; tr.offset_x = ((scw * rt) - cw) / rt / 2;
             } else {
-                const cv = g.systemCanvas;
-
-                tr.x = cv.clientWidth / cv.width;
-                tr.y = cv.clientHeight / cv.height;
-                tr.offset_x = 0;
+                tr.x = 1; tr.y = 1; tr.offset_x = 0;
             }
         };
 
@@ -3140,11 +3044,7 @@ class inputTouchPad {
 
                 tr.x = rt; tr.y = rt; tr.offset_x = ((scw * rt) - cw) / rt / 2;
             } else {
-                const cv = g.systemCanvas;
-
-                tr.x = cv.clientWidth / cv.width;
-                tr.y = cv.clientHeight / cv.height;
-                tr.offset_x = 0;
+                tr.x = 1; tr.y = 1; tr.offset_x = 0;
             }
         };
 
@@ -4837,12 +4737,11 @@ class GameSpriteFontControl {
      * PCGpatternMap
      * @typedef {object} FontParam スプライトフォント設定パラメータ 
      * @property {string} name フォントID
-     * @property {ImageAssetId} id 使用するイメージアセットID
+     * @property {ImageAssetIdA} id 使用するイメージアセットID
      * @property {number} pattern[].x 切り取り開始位置X
      * @property {number} pattern[].y 切り取り開始位置Y
      * @property {number} pattern[].w 文字幅
      * @property {number} pattern[].h 文字高さ
-     * @property {boolean} [ucc=false] UseControlCharFlag
      */
     /**
      * @param {GameCore} g GameCoreインスタンス
@@ -4850,7 +4749,6 @@ class GameSpriteFontControl {
      * @example
      * //フォント設定パラメータ
      * //(ascii code [space]～[~]まで）
-     * //ucc=true指定で　char[0]～char[255]となる
      * const fontParam = {
      * 	name: fontID
      * 	id: 使用するassetImageのID
@@ -4876,12 +4774,8 @@ class GameSpriteFontControl {
             buffer_ = g.screen[num].buffer;
         };
 
-        const tex_c = fontParam.Image;
-        const sp_ch_ptn = fontParam.pattern;
-        const useControlChar = Boolean(fontParam.ucc);
-
-        const STARTNUM = (useControlChar)?0:32; 
-        const ENDNUM = (useControlChar)?255:128;
+        let tex_c = fontParam.Image;
+        let sp_ch_ptn = fontParam.pattern;
 
         //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
         //    this.putchr = chr8x8put;
@@ -4910,8 +4804,8 @@ class GameSpriteFontControl {
             for (let i = 0, loopend = str.length; i < loopend; i++) {
                 let n = str.charCodeAt(i);
 
-                if ((n >= STARTNUM) && (n < ENDNUM)) { // space ～ "~" まで
-                    let d = sp_ch_ptn[n - STARTNUM];
+                if ((n >= 32) && (n < 128)) { // space ～ "~" まで
+                    let d = sp_ch_ptn[n - 32];
 
                     let wx = x + i * (d.w * z);
                     let wy = y;
@@ -4934,331 +4828,6 @@ class GameSpriteFontControl {
     }
 }
 
-/**
- * @class
- * @classdesc
- * TEXT CONSOLE DISPLAY EMU LIB 
- * javascript ncurses
- * @example
- * consl = new textConsole(80, 30);
- * consl.setFontId("std"); 
- * consl.setPrompt( ["#" ,"_"]);
- * consl.setCharwidth(8);
- * consl.setLinewidth(16);
- * 
- * consl.draw(gameCore, 0 ,0);
- */
-class textConsole{
-    /**
-     * @constructor
-     * @param {number} width textBufferWidthSize
-     * @param {number} column textBufferLineSize
-     * @description
-     * instance create
-     */
-   constructor(width, column){
-
-        const textbuffer = [];
-        const rewritecount = [];
-
-        const BUFW = width;
-        const BUFH = column;
-
-        const cursor = {x:0, y:0};
-        let enableScroll = false;
-        let scrollCount = 0;
-
-        let fontId;
-        let prompt;
-        let charw = 8;
-        let linew = 16;
-
-        let shift = {ready:false, pos:15, v:0};
-
-        /**
-         * @member
-         * @type {string[]}
-         * @description
-         * textBuffer
-         */
-        this.buffer = textbuffer;
-        /**
-         * @member
-         * @type {object}
-         * @description
-         * cursorPosition
-         */
-        this.cursor = cursor;
-        /**
-         * @method
-         * @param {number | string} Id
-         * @description
-         * 使用するフォントIDの指定/ASCII font Id
-         */
-        this.setFontId = (fId)=>{
-            fontId = fId;
-        }
-        /**
-         * @method
-         * @param {string[]} p 
-         * @description
-         * カーソル文字の指定
-         * @example
-         * ["_","#"]
-         */
-        this.setPrompt = (p)=>{
-            prompt = p;
-        }
-        /**
-         * @method
-         * @param {number} num 行間pixel
-         * @description
-         * 改行幅の指定
-         */
-        this.setLinewidth = (num)=>{
-            linew = num;
-        }
-        /**
-         * @method
-         * @param {number} num 文字幅pixel
-         * @description
-         * 文字幅の指定
-         */
-        this.setCharwidth = (num)=>{
-            charw = num;
-        }
-
-        /**
-         * @method
-         * @param {number} new_x 移動先ｘ座標
-         * @param {number} new_y 移動先ｙ座標
-         * @description
-         * カーソルを任意の位置（座標）に移動
-         */
-        this.move = (new_x, new_y)=>{
-            if ((new_x >= 0)&&(new_x <= BUFW-1)) cursor.x = new_x;
-            if ((new_y >= 0)&&(new_y <= BUFH-1)) cursor.y = new_y;
-        }
-        /**
-         * @method
-         * @param {string} chr_to_add 文字
-         * @description
-         * カーソル位置に1文字表示 
-         */
-        this.addch = (chr_to_add) =>{
-            this.printw(chr_to_add);
-        }
-        /**
-         * @method
-         * @param {string} text 文字列
-         * @description
-         * カーソル位置から右方向に文字列を表示 
-         */
-        this.printw = (text) =>{
-            let s = textbuffer[cursor.y];
-
-           // console.log(s + cursor.x + cursor.y);
-
-            let d = s.slice(0,cursor.x);
-
-            let n = cursor.x + text.length; 
-            if (n < BUFW) {
-                d = d + text + s.slice(n,BUFW-1);
-            } else {
-                d = d + text;
-                d = d.slice(0, BUFW);
-            }
-
-            textbuffer[cursor.y] = d;
-            rewritecount[cursor.y]++;
-        }
-        /**
-         * @method
-         * @param {string} text 文字列
-         * @param {number} x 開始ｘ座標
-         * @param {number} y 開始ｙ座標
-         * @description
-         * カーソル位置を指定して右方向に文字列を表示<br>\
-         * move関数とprintw関数を組み合わせた関数
-         */
-        this.mvprintw = (text, x, y) =>{
-            this.move(x, y);
-            this.printw(text);
-        }
-        /**
-         * @method
-         * @param {string} string
-         * @description
-         * カーソル位置に文字を挿入し、それより右の文字列を右に1文字分ずらす 
-         */
-        this.insch = (str) =>{
-            let s = textbuffer[cursor.y];
-
-            let d = s.slice(0,cursor.x);
-
-            d = d + str + s.slice(cursor.x, BUFW-1);
-            //d = d.slice(0, BUFW);
-
-            textbuffer[cursor.y] = d;
-            rewritecount[cursor.y]++;
-        }
-        /**
-         * @method
-         * @description
-         * カーソル位置に空行を挿入し、それより下の行を下方向に1行分スクロールする 
-         */
-        this.insertln = () =>{
-
-            for (let i = BUFH-1; i>cursor.y; i-- ){
-                textbuffer[i] = textbuffer[i-1];
-            }
-            textbuffer[cursor.y] = " ".repeat(BUFW);
-            rewritecount[cursor.y]++;
-
-            shift = {ready:true, pos:linew, v:1};
-        }
-        /**
-         * @method
-         * @description
-         * カーソル位置の文字を削除し、それより右の文字列を左に1文字分ずらす
-         */
-        this.delch = () =>{
-            let s = textbuffer[cursor.y];
-
-            let d;
-            if (cursor.x > 0){
-                d = s.slice(0,cursor.x);
-                d = d + s.slice(cursor.x+1, BUFW-1);
-            } else {
-                d = s.slice(1,BUFW-1);
-            }
-            textbuffer[cursor.y] = d;
-            rewritecount[cursor.y]++;
-        }
-        /**
-         * @method
-         * @description
-         * カーソル位置の行を削除し、それより下の行を上に1行分スクロールする
-         */
-        this.deleteln = () =>{
-            scrollUp(cursor.y);
-            /*
-            for (let i = cursor.y; i<BUFH-1; i++ ){
-                textbuffer[i] = textbuffer[i+1];
-            }
-            textbuffer[BUFH-1] = " ".repeat(BUFW);
-            */
-            shift = {ready:true, pos:linew, v:-1};
-        }
-        /**
-         * @method
-         * @description
-         * 画面全体を消去
-         */
-        this.clear = ()=>{
-            
-            for (let i=0; i<BUFH; i++){
-                textbuffer[i] = " ".repeat(BUFW); 
-                rewritecount[i] = 0;               
-            }
-        }
-        // textbuffer initialize.
-        this.clear();
-        /**
-         * @method
-         * @param {boolean} mode
-         * @description
-         * スクロール可能/不可を設定
-         * (Scroll:false/free ,true/lock 
-         */
-        this.scrolllock =(mode) =>{
-            enableScroll = !mode;
-        }
-        /**
-         * @method
-         * @param {number} linenum
-         * @description 
-         * 指定行数をスクロール
-         */
-        this.wscrl = (linenum) =>{
-
-            if (enableScroll && (scrollCount < 1)) { //action 
-                scrollCount = linenum;
-            }
-            //console.log(scrollCount +" "+ enableScroll);
-        }
-        /**
-         * 
-         * @param {number} startLn
-         * @description
-         * inner function 
-         */
-        function scrollUp(startLn){
-            for (let i = startLn; i<BUFH-1; i++ ){
-                textbuffer[i] = textbuffer[i+1];
-                rewritecount[i]++;
-            }
-            textbuffer[BUFH-1] = " ".repeat(BUFW);
-        }
-
-        this.rewritecheck = ()=>{
-            let c = 0;
-            for (let i=0; i<BUFH; i++){
-                c = c + rewritecount[i];               
-            }
-            c = c + scrollCount;
-            c = c + ((shift.ready)?1:0);
-
-            return c;
-        }
-        /**
-         * @method
-         * @param {GameCore} g　gameCoreインスタンス
-         * @param {number} [x=0] 描画位置x 
-         * @param {number} [y=0] 描画位置y
-         * @description
-         * draw funciton/描画してscreenに反映する
-        */
-        this.draw = (g, x = 0, y = 0)=>{
-
-            let pos = 0;
-            if (shift.ready){
-                shift.pos--;
-
-                if (shift.v > 0){
-                    pos = (-shift.pos+linew)-linew;
-                }else{
-                    pos = shift.pos;
-                }
-
-                if (shift.pos < 1) shift.ready = false;
-
-            }
-            if (scrollCount >0){
-                scrollUp(0);
-                scrollCount--;
-            }
-            if (Boolean(fontId)){
-                for (let i in textbuffer){
-                    let w = 0;
-                    if (i >= cursor.y) w = pos;
-
-                    g.font[fontId].putchr(textbuffer[i], x,  y + i*linew + w);
-                }        
-                if (Boolean(prompt)){   
-                    let d = (g.blink())?prompt[1]:prompt[0];   
-                    g.font[fontId].putchr(d,x + cursor.x*charw ,y + cursor.y*linew);    
-                }
-                
-                //g.font[fontId].putchr(`${this.rewritecheck()}`,x,y);    
-            }
-
-            for (let i=0; i<BUFH; i++){
-                rewritecount[i] = 0;               
-            }
-        }
-    } 
-}
 //viewport
 //x, y, w, h
 //repeat  //折り返し表示の有無　overflow してる場合反対側に表示するか

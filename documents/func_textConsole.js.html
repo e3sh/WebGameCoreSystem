@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: textConsole.js</title>
+    <title>JSDoc: Source: func/textConsole.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: textConsole.js</h1>
+    <h1 class="page-title">Source: func/textConsole.js</h1>
 
     
 
@@ -51,6 +51,7 @@ class textConsole{
    constructor(width, column){
 
         const textbuffer = [];
+        const rewritecount = [];
 
         const BUFW = width;
         const BUFH = column;
@@ -161,6 +162,7 @@ class textConsole{
             }
 
             textbuffer[cursor.y] = d;
+            rewritecount[cursor.y]++;
         }
         /**
          * @method
@@ -190,6 +192,7 @@ class textConsole{
             //d = d.slice(0, BUFW);
 
             textbuffer[cursor.y] = d;
+            rewritecount[cursor.y]++;
         }
         /**
          * @method
@@ -202,6 +205,7 @@ class textConsole{
                 textbuffer[i] = textbuffer[i-1];
             }
             textbuffer[cursor.y] = " ".repeat(BUFW);
+            rewritecount[cursor.y]++;
 
             shift = {ready:true, pos:linew, v:1};
         }
@@ -221,6 +225,7 @@ class textConsole{
                 d = s.slice(1,BUFW-1);
             }
             textbuffer[cursor.y] = d;
+            rewritecount[cursor.y]++;
         }
         /**
          * @method
@@ -245,7 +250,8 @@ class textConsole{
         this.clear = ()=>{
             
             for (let i=0; i&lt;BUFH; i++){
-                textbuffer[i] = " ".repeat(BUFW);                
+                textbuffer[i] = " ".repeat(BUFW); 
+                rewritecount[i] = 0;               
             }
         }
         // textbuffer initialize.
@@ -282,8 +288,20 @@ class textConsole{
         function scrollUp(startLn){
             for (let i = startLn; i&lt;BUFH-1; i++ ){
                 textbuffer[i] = textbuffer[i+1];
+                rewritecount[i]++;
             }
             textbuffer[BUFH-1] = " ".repeat(BUFW);
+        }
+
+        this.rewritecheck = ()=>{
+            let c = 0;
+            for (let i=0; i&lt;BUFH; i++){
+                c = c + rewritecount[i];               
+            }
+            c = c + scrollCount;
+            c = c + ((shift.ready)?1:0);
+
+            return c;
         }
         /**
          * @method
@@ -321,8 +339,14 @@ class textConsole{
                 }        
                 if (Boolean(prompt)){   
                     let d = (g.blink())?prompt[1]:prompt[0];   
-                    g.font[fontId].putchr(d,x + cursor.x*charw ,y + cursor.y*linew);                
+                    g.font[fontId].putchr(d,x + cursor.x*charw ,y + cursor.y*linew);    
                 }
+                
+                //g.font[fontId].putchr(`${this.rewritecheck()}`,x,y);    
+            }
+
+            for (let i=0; i&lt;BUFH; i++){
+                rewritecount[i] = 0;               
             }
         }
     } 
@@ -337,13 +361,13 @@ class textConsole{
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="textConsole.html">textConsole</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="textConsole.html">textConsole</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Sep 02 2025 13:49:22 GMT+0900 (日本標準時)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Sep 08 2025 15:09:34 GMT+0900 (日本標準時)
 </footer>
 
 <script> prettyPrint(); </script>

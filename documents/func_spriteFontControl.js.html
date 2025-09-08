@@ -41,11 +41,12 @@ class GameSpriteFontControl {
      * PCGpatternMap
      * @typedef {object} FontParam スプライトフォント設定パラメータ 
      * @property {string} name フォントID
-     * @property {ImageAssetIdA} id 使用するイメージアセットID
+     * @property {ImageAssetId} id 使用するイメージアセットID
      * @property {number} pattern[].x 切り取り開始位置X
      * @property {number} pattern[].y 切り取り開始位置Y
      * @property {number} pattern[].w 文字幅
      * @property {number} pattern[].h 文字高さ
+     * @property {boolean} [ucc=false] UseControlCharFlag
      */
     /**
      * @param {GameCore} g GameCoreインスタンス
@@ -53,6 +54,7 @@ class GameSpriteFontControl {
      * @example
      * //フォント設定パラメータ
      * //(ascii code [space]～[~]まで）
+     * //ucc=true指定で　char[0]～char[255]となる
      * const fontParam = {
      * 	name: fontID
      * 	id: 使用するassetImageのID
@@ -78,8 +80,12 @@ class GameSpriteFontControl {
             buffer_ = g.screen[num].buffer;
         };
 
-        let tex_c = fontParam.Image;
-        let sp_ch_ptn = fontParam.pattern;
+        const tex_c = fontParam.Image;
+        const sp_ch_ptn = fontParam.pattern;
+        const useControlChar = Boolean(fontParam.ucc);
+
+        const STARTNUM = (useControlChar)?0:32; 
+        const ENDNUM = (useControlChar)?255:128;
 
         //表示位置はx,yが左上となるように表示されます。拡大するとずれます。
         //    this.putchr = chr8x8put;
@@ -108,8 +114,8 @@ class GameSpriteFontControl {
             for (let i = 0, loopend = str.length; i &lt; loopend; i++) {
                 let n = str.charCodeAt(i);
 
-                if ((n >= 32) &amp;&amp; (n &lt; 128)) { // space ～ "~" まで
-                    let d = sp_ch_ptn[n - 32];
+                if ((n >= STARTNUM) &amp;&amp; (n &lt; ENDNUM)) { // space ～ "~" まで
+                    let d = sp_ch_ptn[n - STARTNUM];
 
                     let wx = x + i * (d.w * z);
                     let wy = y;
@@ -142,13 +148,13 @@ class GameSpriteFontControl {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Beepcore.html">Beepcore</a></li><li><a href="Beepcore.noteClass.html">noteClass</a></li><li><a href="DisplayControl.html">DisplayControl</a></li><li><a href="DisplayControl.offScreenTypeC.html">offScreenTypeC</a></li><li><a href="GameAssetManager.html">GameAssetManager</a></li><li><a href="GameAssetManager.audioAsset.html">audioAsset</a></li><li><a href="GameAssetManager.imageAsset.html">imageAsset</a></li><li><a href="GameCore.html">GameCore</a></li><li><a href="GameCore.bench.html">bench</a></li><li><a href="GameSpriteControl.html">GameSpriteControl</a></li><li><a href="GameSpriteControl.SpItem.html">SpItem</a></li><li><a href="GameSpriteFontControl.html">GameSpriteFontControl</a></li><li><a href="GameTask.html">GameTask</a></li><li><a href="GameTaskControl.html">GameTaskControl</a></li><li><a href="SpItem.html">SpItem</a></li><li><a href="audioAsset.html">audioAsset</a></li><li><a href="bench.html">bench</a></li><li><a href="fontPrintControl.html">fontPrintControl</a></li><li><a href="imageAsset.html">imageAsset</a></li><li><a href="inputGamepad.html">inputGamepad</a></li><li><a href="inputKeyboard.html">inputKeyboard</a></li><li><a href="inputMouse.html">inputMouse</a></li><li><a href="inputTouchPad.html">inputTouchPad</a></li><li><a href="inputVirtualPad.html">inputVirtualPad</a></li><li><a href="noteClass.html">noteClass</a></li><li><a href="offScreenTypeC.html">offScreenTypeC</a></li><li><a href="soundControl.html">soundControl</a></li><li><a href="textConsole.html">textConsole</a></li><li><a href="viewport.html">viewport</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Aug 20 2025 10:02:37 GMT+0900 (日本標準時)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Sep 08 2025 15:09:34 GMT+0900 (日本標準時)
 </footer>
 
 <script> prettyPrint(); </script>
